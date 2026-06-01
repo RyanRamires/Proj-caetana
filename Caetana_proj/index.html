@@ -66,7 +66,36 @@
         border-radius: 6px;
         transition: all 0.2s;
     }
-     .nav-links a:hover {color: var(--gold-light); background:rgba(200,133,26,0.1);}
+    .nav-links a:hover {color: var(--gold-light); background:rgba(200,133,26,0.1);}
+
+    .nav-dropdown { position: relative; }
+
+    .nav-drop-toggle { cursor: pointer; }
+
+    .dropdown-menu {
+        display: none; position: absolute; top: calc(100% + 4px); left: 0;
+        background: rgba(26,10,4,0.98); border: 1px solid rgba(200,133,26,0.25);
+        border-radius: 10px; list-style: none; min-width: 240px;
+         padding: 0.5rem 0; box-shadow: 0 12px 40px rgba(0,0,0,0.5); z-index: 200;
+    }
+
+    .nav-dropdown:hover .dropdown-menu { display: block; }
+    /* bridge invisível para cobrir o gap entre toggle e menu */
+    .nav-dropdown::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 16px;
+    }
+
+    .dropdown-menu li a {
+        display: block; padding: 0.6rem 1.25rem;
+        color: rgba(255,255,255,0.75); font-size: 0.83rem; white-space: nowrap; border-radius: 0;
+    }
+
+    .dropdown-menu li a:hover { color: var(--gold-light); background: rgba(200,133,26,0.1); }
 
      .hero {
         min-height: 100vh;
@@ -231,17 +260,26 @@
 </head>
 <body>
     <nav>
-        <a class="nav-brand" href="index.html">
-            <div class="nav-brand-text">
-                <strong>CAETANA DISSE NÃO</strong>
-                <span>uma historia de resistência</span>
-            </div>
-        </a>
-        <ul class="nav-links">
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="">Etapa 1</a></li>
-        </ul>
-    </nav>
+  <a class="nav-brand" href="index.html">
+    <div class="nav-brand-text">
+      <strong>CAETANA DISSE NÃO</strong>
+      <span>uma história de resistência</span>
+    </div>
+  </a>
+ <ul class="nav-links">
+  <li><a href="index.html">Início</a></li>
+  <li class="nav-dropdown">
+    <a href="#" class="nav-drop-toggle">Etapas ▾</a>
+    <ul class="dropdown-menu">
+      <li><a href="etapa_1.html">Etapa 1 – Quem foi Caetana?</a></li>
+      <li><a href="etapa2.html">Etapa 2 – Princesas também decidem</a></li>
+      <li><a href="etapa3.html">Etapa 3 – O processo judicial</a></li>
+      <li><a href="etapa4.html">Etapa 4 – Que tipo de resistência?</a></li>
+      <li><a href="etapa5.html">Etapa 5 – Produção final</a></li>
+    </ul>
+  </li>
+</ul>
+</nav>
 
     <section class="hero">
         
@@ -271,7 +309,9 @@
             </div>
 
             <div class="hero-body">
-                <p>Há muito tempo, por volta de <strong>1835</strong>, no Vale do Paraíba, localizado no interior de São Paulo, vivia uma jovem escrava chamada Caetana. Ela tinha cerca de 17 anos e trabalhava como <strong>mucama</strong>, também conhecida como criada doméstica na fazenda de café Rio Claro, cuidando das filhas do seu senhor, o capitão Luís Mariano de Tolosa </p>
+                <p>No material a seguir, você irá conhecer uma incrível história de resistência.</p>
+                
+                <p> Há muito tempo, por volta de <strong>1835</strong>, no Vale do Paraíba, localizado no interior de São Paulo, vivia uma jovem escrava chamada Caetana. Ela tinha cerca de 17 anos e trabalhava como <strong>mucama</strong>, também conhecida como criada doméstica na fazenda de café Rio Claro, cuidando das filhas do seu senhor, o capitão Luís Mariano de Tolosa. </p>
 
                 <p>Certo dia, Tolosa decidiu que Caetana deveria se casar com outro escravo da fazenda, chamado Custódio, que trabalhava como alfaiate. Mas <strong>Caetana não queria esse casamento.</strong> Ela disse não ao seu senhor, disse não ao noivo, disse não à sua família e, depois do casamento realizado sem seu consentimento, não deixou que o marido a tocasse. Mais do que isso: Caetana foi à Justiça da Igreja pedir a anulação do casamento.</p>
 
