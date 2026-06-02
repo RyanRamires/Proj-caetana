@@ -31,7 +31,7 @@
     overflow-x: hidden;
   }
 
-  /* ── NAV ── */
+
   nav {
     position: fixed; top: 0; width: 100%; z-index: 100;
     background: rgba(26,10,4,0.96);
@@ -65,7 +65,7 @@
     padding: 0.5rem 0; box-shadow: 0 12px 40px rgba(0,0,0,0.5); z-index: 200;
   }
   .nav-dropdown:hover .dropdown-menu { display: block; }
-  /* bridge invisível cobre o gap entre toggle e menu */
+
   .nav-dropdown::after {
     content: '';
     position: absolute;
@@ -82,7 +82,7 @@
   .dropdown-menu li a:hover { color: var(--gold-light); background: rgba(200,133,26,0.1); }
   .nav-links .active { color: var(--gold-light) !important; }
 
-  /* ── HERO DA PÁGINA ── */
+
   .page-hero {
     background: var(--dark);
     padding: 6.5rem 3rem 3.5rem;
@@ -110,7 +110,7 @@
   }
   .page-hero h1 em { color: var(--gold); font-style: italic; }
 
-  /* ── LAYOUT PRINCIPAL ── */
+
   .main-grid {
     max-width: 1200px; margin: 0 auto;
     display: grid; grid-template-columns: 1fr 1fr;
@@ -118,7 +118,7 @@
     align-items: start;
   }
 
-  /* ── ATIVAÇÃO ── */
+
   .card {
     background: var(--white); border-radius: 20px;
     border: 1px solid rgba(90,45,145,0.1);
@@ -203,7 +203,7 @@
     border: 1px solid rgba(200,133,26,0.25);
   }
 
-  /* ── CARROSSEL ── */
+
   .carousel-card { display: flex; flex-direction: column; }
   .carousel-wrapper {
     position: relative; overflow: hidden; border-radius: 14px;
@@ -274,7 +274,7 @@
     font-size: 0.78rem; color: var(--purple);
   }
 
-  /* ── PLACEHOLDER SLIDES sem imagem ── */
+
   .slide-placeholder {
     position: absolute; inset: 0;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -282,7 +282,7 @@
   }
   .slide-placeholder span { font-size: 2.5rem; }
 
-  /* ── SEÇÃO INFERIOR ── */
+
   .bottom-section {
     max-width: 1200px; margin: 0 auto;
     padding: 0 2rem 4rem;
@@ -312,7 +312,6 @@
     color: rgba(255,255,255,0.55); font-size: 0.88rem; font-style: italic;
   }
 
-  /* ── HIPÓTESE ── */
   .hipotese-grid {
     display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
   }
@@ -343,7 +342,6 @@
   textarea.hipotese-text:focus { border-color: var(--purple-mid); }
   textarea.hipotese-text::placeholder { color: #b0a0c8; }
 
-  /* canvas de desenho */
   .canvas-toolbar {
     display: flex; gap: 0.5rem; margin-bottom: 0.75rem;
     flex-wrap: wrap; align-items: center;
@@ -405,7 +403,6 @@
     margin-top: 1rem;
   }
 
-  /* ── NAVEGAÇÃO ENTRE ETAPAS ── */
   .etapa-nav {
     max-width: 1200px; margin: 0 auto;
     padding: 0 2rem 3rem;
@@ -420,7 +417,6 @@
   }
   .btn-next-etapa:hover { background: var(--gold-light); transform: translateY(-2px); }
 
-  /* ── ANIMAÇÕES ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(18px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -439,7 +435,7 @@
 </head>
 <body>
 
-<!-- NAV -->
+
 <nav>
   <a class="nav-brand" href="index.html">
     <div class="nav-brand-text">
@@ -452,17 +448,17 @@
     <li class="nav-dropdown">
       <a href="#" class="nav-drop-toggle active">Etapas ▾</a>
       <ul class="dropdown-menu">
-        <li><a href="etapa1.html" style="color:var(--gold-light)">Etapa 1 – Quem foi Caetana?</a></li>
-        <li><a href="etapa2.html">Etapa 2 – Princesas também decidem</a></li>
-        <li><a href="etapa3.html">Etapa 3 – O processo judicial</a></li>
-        <li><a href="etapa4.html">Etapa 4 – Que tipo de resistência?</a></li>
-        <li><a href="etapa5.html">Etapa 5 – Produção final</a></li>
+        <li><a href="etapa_1.html" style="color:var(--gold-light)">Etapa 1 – Quem foi Caetana?</a></li>
+        <li><a href="etapa_2.html">Etapa 2 – Princesas também decidem</a></li>
+        <li><a href="etapa_3.html">Etapa 3 – O processo judicial</a></li>
+        <li><a href="etapa_4.html">Etapa 4 – Que tipo de resistência?</a></li>
+        <li><a href="etapa_5.html">Etapa 5 – Produção final</a></li>
       </ul>
     </li>
   </ul>
 </nav>
 
-<!-- HERO DA PÁGINA -->
+
 <div class="page-hero">
   <div class="page-hero-inner fade-up">
     <div class="etapa-pill">✦ Etapa 1 de 5</div>
@@ -470,10 +466,9 @@
   </div>
 </div>
 
-<!-- GRID PRINCIPAL: Ativação | Carrossel -->
+
 <div class="main-grid">
 
-  <!-- ── BLOCO 1: ATIVAÇÃO ── -->
   <div class="card fade-up">
     <div class="card-header">
       <div class="card-header-icon">🧠</div>
@@ -542,7 +537,7 @@
     </div>
   </div>
 
-  <!-- ── BLOCO 2: CARROSSEL ── -->
+
   <div class="card carousel-card fade-up">
     <div class="card-header">
       <div class="card-header-icon">📖</div>
@@ -623,7 +618,7 @@
         <button class="carousel-nav-btn carousel-next" onclick="moveSlide(1)">›</button>
       </div>
 
-      <!-- Miniaturas -->
+
       <div class="thumbnails" id="thumbnails">
         <div class="thumb active" onclick="goSlide(0)"><img src="imgs/quadrinho_1.jpeg" alt="1"></div>
         <div class="thumb" onclick="goSlide(1)"><img src="imgs/quadrinho_2.jpeg" alt="2"></div>
@@ -647,7 +642,6 @@
         <div class="thumb" onclick="goSlide(19)"><img src="imgs/quadrinho_20.jpeg" alt="20"></div>
       </div>
 
-      <!-- Dots -->
       <div class="dots" id="dots">
         <div class="dot active" onclick="goSlide(0)"></div>
         <div class="dot" onclick="goSlide(1)"></div>
@@ -679,10 +673,9 @@
   </div>
 </div>
 
-<!-- SEÇÃO INFERIOR -->
+
 <div class="bottom-section">
 
-  <!-- Pergunta mobilizadora -->
   <div class="mobilizadora-card fade-up">
     <div class="mob-inner">
       <span class="mob-tag">✦ Pergunta mobilizadora</span>
@@ -691,10 +684,8 @@
     </div>
   </div>
 
-  <!-- Hipótese: texto + desenho -->
   <div class="hipotese-grid">
 
-    <!-- Texto -->
     <div class="hipotese-panel fade-up">
       <div class="hipotese-panel-header">
         <span>✍️</span>
@@ -709,7 +700,6 @@
       </div>
     </div>
 
-    <!-- Desenho -->
     <div class="hipotese-panel fade-up">
       <div class="hipotese-panel-header">
         <span>🖌️</span>
@@ -741,7 +731,6 @@
 
   </div>
 
-  <!-- Botão salvar hipótese -->
   <div class="salvar-hipotese">
     <button class="btn-primary" onclick="salvarHipotese()">
       💾 Salvar minha opinião
@@ -753,21 +742,19 @@
 
 </div>
 
-<!-- NAVEGAR PARA PRÓXIMA ETAPA -->
 <div class="etapa-nav">
-  <a href="etapa2.html" class="btn-next-etapa">Etapa 2 →</a>
+  <a href="etapa_2.html" class="btn-next-etapa">Etapa 2 →</a>
 </div>
 
 
 <script>
-  /* ── VOTAÇÃO ── */
+
   function votar(btn, tipo) {
     const grupo = btn.closest('.vote-btns').querySelectorAll('.vote-btn');
     grupo.forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
   }
 
-  /* ── CARROSSEL ── */
   let current = 0;
   const total = 20;
 
@@ -787,13 +774,13 @@
     updateCarousel();
   }
 
-  // Teclado
+
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight') moveSlide(1);
     if (e.key === 'ArrowLeft')  moveSlide(-1);
   });
 
-  // Touch / swipe
+
   let touchStartX = 0;
   document.getElementById('slides').addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
   document.getElementById('slides').addEventListener('touchend', e => {
@@ -801,7 +788,7 @@
     if (Math.abs(diff) > 40) moveSlide(diff > 0 ? 1 : -1);
   });
 
-  /* ── CANVAS ── */
+
   const canvas = document.getElementById('desenho');
   const ctx = canvas.getContext('2d');
   let drawing = false;
@@ -809,7 +796,6 @@
   let cor = '#3d1f6e';
   let espessura = 4;
 
-  // Ajustar resolução do canvas ao tamanho real
   function resizeCanvas() {
     const ratio = window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
@@ -870,7 +856,6 @@
     link.click();
   }
 
-  /* ── SALVAR HIPÓTESE ── */
   function salvarHipotese() {
     const texto = document.getElementById('hipoteseTexto').value.trim();
     if (!texto) {

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Etapa 2 – Caetana disse não: analisando o processo judicial</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark:         #1a0a04;
+    --gold:         #c8851a;
+    --gold-light:   #e8a832;
+    --cream:        #f5ede0;
+    --warm:         #faf3e8;
+    --purple:       #3d1f6e;
+    --purple-mid:   #5a2d91;
+    --purple-light: #ede8f7;
+    --text:         #2a1206;
+    --text-muted:   #6b5c7c;
+    --white:        #ffffff;
+    --green:        #2d6a4f;
+    --orange:       #c1440e;
+    --blue:         #1a4a7a;
+    --blue-light:   #e8f0f8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--warm); color: var(--text); overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(26,10,4,0.96); backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 64px;
+    border-bottom: 1px solid rgba(200,133,26,0.25);
+  }
+  .nav-brand { display: flex; align-items: center; text-decoration: none; }
+  .nav-brand-text strong { display: block; font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.05rem; letter-spacing: 0.08em; }
+  .nav-brand-text span { font-family: 'Lora', serif; color: var(--gold); font-style: italic; font-size: 0.75rem; }
+  .nav-links { display: flex; gap: 0.25rem; list-style: none; }
+  .nav-links a { display: block; padding: 0.5rem 1rem; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; font-weight: 500; border-radius: 6px; transition: all 0.2s; }
+  .nav-links a:hover { color: var(--gold-light); background: rgba(200,133,26,0.1); }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown::after { content: ''; position: absolute; top: 100%; left: 0; width: 100%; height: 16px; }
+  .nav-drop-toggle { cursor: pointer; }
+  .dropdown-menu { display: none; position: absolute; top: calc(100% + 4px); left: 0; background: rgba(26,10,4,0.98); border: 1px solid rgba(200,133,26,0.25); border-radius: 10px; list-style: none; min-width: 240px; padding: 0.5rem 0; box-shadow: 0 12px 40px rgba(0,0,0,0.5); z-index: 200; }
+  .nav-dropdown:hover .dropdown-menu { display: block; }
+  .dropdown-menu li a { display: block; padding: 0.6rem 1.25rem; color: rgba(255,255,255,0.75); font-size: 0.83rem; white-space: nowrap; border-radius: 0; }
+  .dropdown-menu li a:hover { color: var(--gold-light); background: rgba(200,133,26,0.1); }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    background: var(--dark); padding: 6.5rem 3rem 3rem;
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(107,50,16,0.4) 0%, transparent 70%);
+  }
+  .page-hero-inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; }
+  .etapa-nav-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+  .etapa-pill { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(200,133,26,0.15); border: 1px solid rgba(200,133,26,0.35); color: var(--gold-light); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 999px; }
+  .nav-etapa-btns { display: flex; gap: 0.75rem; }
+  .btn-etapa { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1.1rem; border-radius: 8px; font-size: 0.82rem; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+  .btn-etapa-prev { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.15); }
+  .btn-etapa-prev:hover { background: rgba(255,255,255,0.15); color: var(--white); }
+  .btn-etapa-next { background: var(--gold); color: var(--dark); }
+  .btn-etapa-next:hover { background: var(--gold-light); }
+  .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3.5vw, 2.6rem); color: var(--white); font-weight: 900; line-height: 1.15; margin-bottom: 0.75rem; }
+  .page-hero h1 em { color: var(--gold); font-style: normal; }
+  .fonte-documental { background: rgba(255,255,255,0.06); border: 1px solid rgba(200,133,26,0.2); border-left: 3px solid var(--gold); border-radius: 0 10px 10px 0; padding: 0.75rem 1.25rem; margin-top: 0.5rem; display: flex; align-items: flex-start; gap: 0.75rem; }
+  .fonte-documental .icon-slot { width: 28px; height: 28px; flex-shrink: 0; background: rgba(200,133,26,0.15); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+  .fonte-documental p { color: rgba(255,255,255,0.7); font-size: 0.85rem; line-height: 1.5; }
+  .fonte-documental strong { color: var(--gold-light); }
+
+  /* ── CONTAINER ── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+  /* ── SEÇÃO COMO COMEÇOU ── */
+  .section-inicio { padding: 2.5rem 0 0; }
+  .section-label { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
+  .section-label .icon-slot { width: 30px; height: 30px; flex-shrink: 0; background: var(--purple-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+  .section-label h2 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--purple); font-weight: 700; }
+  .inicio-text { font-size: 0.92rem; line-height: 1.75; color: var(--text); margin-bottom: 1.5rem; background: var(--white); border-radius: 12px; padding: 1.25rem 1.5rem; border: 1px solid rgba(90,45,145,0.1); }
+
+  /* ── GRID PARTES DO PROCESSO ── */
+  .processo-info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  .info-card { background: var(--white); border-radius: 14px; padding: 1.1rem 1.25rem; border: 1px solid rgba(90,45,145,0.1); display: flex; align-items: flex-start; gap: 0.9rem; }
+  .info-card .icon-slot { width: 42px; height: 42px; min-width: 42px; border-radius: 10px; background: var(--purple-light); display: flex; align-items: center; justify-content: center; }
+  .info-card .icon-slot img { width: 26px; height: 26px; object-fit: contain; }
+  .info-card-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.3rem; }
+  .info-card-value { font-size: 0.85rem; color: var(--text); line-height: 1.45; }
+  .info-card-value strong { color: var(--purple-mid); }
+
+  /* ── LAYOUT CENTRAL: argumentos + imagem ── */
+  .central-grid { display: grid; grid-template-columns: 1fr 340px; gap: 2rem; padding: 2rem 0; align-items: start; }
+
+  /* ── ARGUMENTOS ── */
+  .args-col { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .arg-block { background: var(--white); border-radius: 16px; border: 1px solid rgba(90,45,145,0.1); overflow: hidden; }
+  .arg-header { padding: 0.85rem 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
+  .arg-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.85rem; color: var(--white); flex-shrink: 0; }
+  .arg-header h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; }
+  .arg-body { padding: 1rem 1.25rem 1.25rem; }
+  .arg-body p { font-size: 0.88rem; line-height: 1.65; color: var(--text); margin-bottom: 0.5rem; }
+  .arg-body ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.5rem; }
+  .arg-body ul li { font-size: 0.85rem; line-height: 1.5; color: var(--text); padding-left: 1.1rem; position: relative; }
+  .arg-body ul li::before { content: '→'; position: absolute; left: 0; color: var(--purple); font-weight: 700; }
+
+  /* cores por argumento */
+  .arg-caetana .arg-header { background: #f0ebfa; }
+  .arg-caetana .arg-num { background: var(--purple); }
+  .arg-caetana .arg-header h3 { color: var(--purple); }
+
+  .arg-contra .arg-header { background: #fef0eb; }
+  .arg-contra .arg-num { background: var(--orange); }
+  .arg-contra .arg-header h3 { color: var(--orange); }
+
+  .arg-decisao .arg-header { background: #fff8e6; }
+  .arg-decisao .arg-num { background: var(--gold); }
+  .arg-decisao .arg-header h3 { color: #7a5010; }
+
+  .arg-apelacao .arg-header { background: var(--blue-light); }
+  .arg-apelacao .arg-num { background: var(--blue); }
+  .arg-apelacao .arg-header h3 { color: var(--blue); }
+
+  .arg-final .arg-header { background: #fce8e8; }
+  .arg-final .arg-num { background: #9b2020; }
+  .arg-final .arg-header h3 { color: #9b2020; }
+
+  .arg-pratica .arg-header { background: #e8f8f0; }
+  .arg-pratica .arg-num { background: var(--green); }
+  .arg-pratica .arg-header h3 { color: var(--green); }
+
+  /* quote */
+  .quote-box { background: rgba(90,45,145,0.07); border-left: 3px solid var(--purple); border-radius: 0 10px 10px 0; padding: 0.85rem 1rem; margin: 0.75rem 0; font-family: 'Lora', serif; font-style: italic; font-size: 0.92rem; color: var(--purple); line-height: 1.5; }
+
+  /* sub-args na apelação */
+  .sub-arg { background: var(--cream); border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 0.75rem; }
+  .sub-arg:last-child { margin-bottom: 0; }
+  .sub-arg-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.35rem; }
+  .sub-arg-label.caetana { color: var(--purple); }
+  .sub-arg-label.contra { color: var(--orange); }
+  .sub-arg p { font-size: 0.84rem; line-height: 1.55; color: var(--text); }
+
+  /* fiat justitia */
+  .fiat-badge { background: var(--dark); border-radius: 12px; padding: 0.75rem 1.25rem; display: flex; align-items: center; gap: 0.75rem; margin-top: 0.75rem; }
+  .fiat-latin { font-family: 'Playfair Display', serif; font-style: italic; color: var(--gold); font-size: 1.1rem; }
+  .fiat-badge span { color: rgba(255,255,255,0.6); font-size: 0.82rem; }
+
+  /* ── COLUNA DIREITA ── */
+  .right-col { display: flex; flex-direction: column; gap: 1.5rem; position: sticky; top: 80px; }
+
+  /* imagem Caetana */
+  .caetana-img-card { background: var(--white); border-radius: 16px; overflow: hidden; border: 1px solid rgba(90,45,145,0.1); }
+    .caetana-img-slot { width: 100%; height: 497px; background: var(--cream); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .caetana-img-slot img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .img-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; color: rgba(90,45,145,0.3); font-size: 0.8rem; text-align: center; padding: 1rem; }
+  .img-placeholder span { font-size: 2.5rem; }
+  .caetana-img-caption { padding: 0.6rem 1rem; font-size: 0.75rem; color: var(--text-muted); font-style: italic; border-top: 1px solid rgba(90,45,145,0.08); }
+
+  /* ── DUPLAS ── */
+  .duplas-card { background: var(--white); border-radius: 16px; border: 1px solid rgba(90,45,145,0.1); overflow: hidden; }
+  .duplas-header { background: var(--purple); padding: 0.9rem 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
+  .duplas-header .icon-slot { width: 32px; height: 32px; flex-shrink: 0; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .duplas-header .icon-slot img { width: 20px; height: 20px; object-fit: contain; }
+  .duplas-header h3 { color: var(--white); font-size: 0.9rem; font-weight: 700; }
+  .duplas-body { padding: 1rem 1.25rem; }
+  .duplas-question { font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.75rem; }
+  .duplas-question .icon-slot { width: 22px; height: 22px; min-width: 22px; background: var(--purple-light); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+  .duplas-question .icon-slot img { width: 14px; height: 14px; object-fit: contain; }
+  .duplas-question p { font-size: 0.83rem; color: var(--purple); font-weight: 600; padding-top: 2px; }
+  textarea.duplas-text { width: 100%; min-height: 90px; resize: vertical; border: 1.5px solid rgba(90,45,145,0.2); border-radius: 10px; padding: 0.75rem 0.9rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; line-height: 1.55; color: var(--text); background: #faf8ff; outline: none; transition: border-color 0.2s; }
+  textarea.duplas-text:focus { border-color: var(--purple-mid); }
+  textarea.duplas-text::placeholder { color: #b0a0c8; }
+  .btn-save-sm { margin-top: 0.6rem; width: 100%; background: var(--purple); color: var(--white); border: none; border-radius: 8px; padding: 0.6rem 1rem; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+  .btn-save-sm:hover { background: var(--purple-mid); }
+
+  /* ── REFLEXÃO ── */
+  .reflexao-section { padding: 2.5rem 0 0; }
+  .reflexao-card {
+    background: var(--dark); border-radius: 20px; padding: 1.75rem 2rem;
+    position: relative; overflow: hidden; margin-bottom: 2rem;
+    display: grid; grid-template-columns: 80px 1fr; gap: 1.5rem; align-items: center;
+  }
+  .reflexao-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(90,45,145,0.45) 0%, transparent 70%); pointer-events: none; }
+  .reflexao-inner { position: relative; z-index: 1; }
+  .reflexao-icon-big {
+    width: 72px; height: 72px; min-width: 72px;
+    border-radius: 16px; background: rgba(200,133,26,0.15);
+    border: 1px solid rgba(200,133,26,0.3);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; z-index: 1;
+  }
+  .reflexao-icon-big img { width: 44px; height: 44px; object-fit: contain; }
+  .reflexao-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+  .reflexao-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--white); margin-bottom: 0.45rem; line-height: 1.3; }
+  .reflexao-card p { color: rgba(255,255,255,0.7); font-size: 0.88rem; line-height: 1.65; }
+
+  /* ── EUSÁBRIA ── */
+  .eusabria-section {
+    background: var(--white); border-radius: 20px;
+    border: 1px solid rgba(90,45,145,0.1); overflow: hidden; margin-bottom: 3rem;
+  }
+  .eusabria-header {
+    background: var(--purple-light); border-bottom: 1px solid rgba(90,45,145,0.12);
+    padding: 0.9rem 1.5rem; display: flex; align-items: center; gap: 0.75rem;
+  }
+  .eusabria-header .icon-slot { width: 30px; height: 30px; flex-shrink: 0; background: var(--purple); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .eusabria-header .icon-slot img { width: 18px; height: 18px; object-fit: contain; }
+  .eusabria-header h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--purple); font-weight: 700; }
+      .eusabria-body { display: grid; grid-template-columns: 380px 1fr; }
+   .eusabria-img-col { background: var(--cream); display: flex; flex-direction: column; border-right: 1px solid rgba(90,45,145,0.1); width: 380px; }
+.eusabria-img-slot { width: 380px; height: 100%; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--cream); flex: 1; }
+.eusabria-img-slot img { width: 100%; height: 100%; object-fit: cover; object-position: center center; display: block; }
+  .eusabria-img-caption { padding: 0.55rem 0.8rem; font-size: 0.7rem; color: var(--text-muted); font-style: italic; text-align: center; border-top: 1px solid rgba(90,45,145,0.08); background: var(--white); }
+  .eusabria-content { padding: 1.5rem 1.75rem; display: flex; flex-direction: column; gap: 1.25rem; }
+  .eusabria-intro { font-size: 0.9rem; line-height: 1.75; color: var(--text); }
+
+  /* linha do tempo */
+  .timeline { position: relative; display: flex; flex-direction: column; }
+  .timeline::before {
+    content: ''; position: absolute;
+    left: 13px;
+    top: 14px;
+    bottom: 14px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--purple), rgba(90,45,145,0.15));
+    z-index: 0;
+  }
+  .tl-item { display: flex; gap: 1rem; align-items: flex-start; padding-bottom: 1.25rem; position: relative; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-dot {
+    width: 28px; height: 28px; min-width: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--white);
+    box-shadow: 0 0 0 2px var(--purple);
+    display: flex; align-items: center; justify-content: center;
+    background: var(--white); overflow: hidden;
+    flex-shrink: 0;
+    position: relative; z-index: 1;
+  }
+  .tl-dot img { width: 16px; height: 16px; object-fit: contain; }
+  .tl-year { font-size: 0.67rem; font-weight: 700; color: var(--purple); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.15rem; }
+  .tl-desc { font-size: 0.84rem; line-height: 1.55; color: var(--text); }
+  .tl-desc strong { color: var(--purple-mid); }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+  .btn-nav-lg { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 2rem; border-radius: 10px; font-size: 0.9rem; font-weight: 700; text-decoration: none; transition: all 0.25s; }
+  .btn-prev-lg { background: rgba(90,45,145,0.1); color: var(--purple); border: 1px solid rgba(90,45,145,0.2); }
+  .btn-prev-lg:hover { background: rgba(90,45,145,0.18); }
+  .btn-next-lg { background: var(--gold); color: var(--dark); }
+  .btn-next-lg:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  /* ── RESPONSIVO ── */
+  @media (max-width: 900px) {
+    .central-grid { grid-template-columns: 1fr; }
+    .right-col { position: static; }
+    .reflexao-grid { grid-template-columns: 1fr; }
+    .processo-info-grid { grid-template-columns: 1fr 1fr; }
+    nav { padding: 0 1.25rem; }
+    .nav-links { display: none; }
+    .page-hero { padding: 5.5rem 1.5rem 2rem; }
+  }
+  @media (max-width: 600px) {
+    .processo-info-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="index.html">
+    <div class="nav-brand-text">
+      <strong>CAETANA DISSE NÃO</strong>
+      <span>uma história de resistência</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-drop-toggle">Etapas ▾</a>
+      <ul class="dropdown-menu">
+        <li><a href="etapa_1.html">Etapa 1 – Quem foi Caetana?</a></li>
+        <li><a href="etapa_2.html" style="color:var(--gold-light)">Etapa 2 – O processo judicial</a></li>
+        <li><a href="etapa_3.html">Etapa 3 – Princesas também decidem</a></li>
+        <li><a href="etapa_4.html">Etapa 4 – Que tipo de resistência?</a></li>
+        <li><a href="etapa_5.html">Etapa 5 – Produção final</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="etapa-nav-top">
+      <div class="etapa-pill">✦ Etapa 2 de 5</div>
+      <div class="nav-etapa-btns">
+        <a href="etapa_1.html" class="btn-etapa btn-etapa-prev">← Etapa anterior</a>
+        <a href="etapa_3.html" class="btn-etapa btn-etapa-next">Próxima etapa →</a>
+      </div>
+    </div>
+    <h1>Caetana disse não: <em>analisando o processo judicial</em></h1>
+    <div class="fonte-documental">
+      <div class="icon-slot">
+        <!-- ÍCONE: substitua pela imagem desejada -->
+        📄
+      </div>
+      <p><strong>Análise de fonte documental:</strong> o processo original contém cerca de 200 páginas manuscritas. Devido a isso, o texto abaixo se trata de um resumo adaptado do caso.</p>
+    </div>
+  </div>
+</div>
+
+<!-- COMO COMEÇOU -->
+<div class="container section-inicio">
+  <div class="section-label">
+    <div class="icon-slot">
+      <!-- ÍCONE "Como começou": coloque sua imagem aqui -->
+      🔍
+    </div>
+    <h2>Como começou o processo?</h2>
+  </div>
+  <div class="inicio-text">
+    Depois que Caetana recusou o casamento e não deixava que o marido encostasse nela, seu senhor, o capitão Tolosa, autorizou que ela pedisse a anulação do casamento à Justiça da Igreja (tribunal eclesiástico). O processo começou em fevereiro de 1836, menos de quatro meses após a cerimônia.
+  </div>
+
+  <!-- Cards informativos -->
+  <div class="processo-info-grid">
+
+    <div class="info-card">
+      <div class="icon-slot">
+        <!-- ÍCONE Querelante -->
+        <img src="assets/icone_querelante.png" alt="Querelante" onerror="this.style.display='none';this.parentElement.innerHTML='👩🏿';">
+      </div>
+      <div>
+        <div class="info-card-label">Querelante</div>
+        <div class="info-card-value"><em style="font-size:0.75rem;color:var(--text-muted)">quem pede a anulação</em><br><strong>Caetana</strong></div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="icon-slot">
+        <!-- ÍCONE Réu -->
+        <img src="assets/icone_reu.png" alt="Réu" onerror="this.style.display='none';this.parentElement.innerHTML='👨🏿';">
+      </div>
+      <div>
+        <div class="info-card-label">Réu</div>
+        <div class="info-card-value"><em style="font-size:0.75rem;color:var(--text-muted)">quem é acusado</em><br><strong>Custódio</strong> (o marido)</div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="icon-slot">
+        <!-- ÍCONE Advogados -->
+        <img src="assets/icone_advogados.png" alt="Advogados" onerror="this.style.display='none';this.parentElement.innerHTML='⚖️';">
+      </div>
+      <div>
+        <div class="info-card-label">Advogados</div>
+        <div class="info-card-value">Dois foram nomeados para representá-los, pois os escravos não eram considerados adultos pela lei.</div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="icon-slot">
+        <!-- ÍCONE Local -->
+        <img src="assets/icone_local.png" alt="Local" onerror="this.style.display='none';this.parentElement.innerHTML='🏠';">
+      </div>
+      <div>
+        <div class="info-card-label">Local do julgamento</div>
+        <div class="info-card-value">Foi montado na própria sala da casa de Tolosa.</div>
+      </div>
+    </div>
+
+    <div class="info-card" style="grid-column: span 2;">
+      <div class="icon-slot">
+        <!-- ÍCONE Testemunhas -->
+        <img src="assets/icone_testemunhas.png" alt="Testemunhas" onerror="this.style.display='none';this.parentElement.innerHTML='👥';">
+      </div>
+      <div>
+        <div class="info-card-label">Testemunhas</div>
+        <div class="info-card-value">O juiz ouviu nove testemunhas – quatro eram escravos, as outras livres. <strong>Todas, exceto o padre, disseram que Caetana não queria casar.</strong></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- GRID CENTRAL -->
+<div class="container">
+  <div class="central-grid">
+
+    <!-- ── COLUNA ARGUMENTOS ── -->
+    <div class="args-col">
+
+      <!-- 1. Argumento de Caetana -->
+      <div class="arg-block arg-caetana">
+        <div class="arg-header">
+          <div class="arg-num">1</div>
+          <h3>O argumento de Caetana</h3>
+        </div>
+        <div class="arg-body">
+          <p>A petição (pedido oficial) dizia que Caetana havia casado contra a sua vontade, por medo das consequências.</p>
+        </div>
+      </div>
+
+      <!-- 2. Argumento contra Caetana -->
+      <div class="arg-block arg-contra">
+        <div class="arg-header">
+          <div class="arg-num">2</div>
+          <h3>O argumento do advogado contra Caetana</h3>
+        </div>
+        <div class="arg-body">
+          <p>Havia um advogado chamado "defensor do matrimônio". Ele disse:</p>
+          <ul>
+            <li>Não havia motivo para anular o casamento, porque Caetana compareceu à cerimônia e isso significava que ela havia consentido.</li>
+            <li>O senhor Tolosa era uma pessoa boa e jamais maltrataria seus escravos, portanto ela não poderia dizer que casou por medo de castigos.</li>
+            <li>Caetana era escrava, então não tinha honra nem reputação para sustentar suas acusações.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 3. Primeira decisão -->
+      <div class="arg-block arg-decisao">
+        <div class="arg-header">
+          <div class="arg-num">3</div>
+          <h3>A primeira decisão</h3>
+        </div>
+        <div class="arg-body">
+          <p>O juiz eclesiástico concordou com o advogado defensor e, em 1838, disse a Caetana:</p>
+          <div class="quote-box">"Vá viver com seu marido" – ou seja, negou a anulação.</div>
+        </div>
+      </div>
+
+      <!-- 4. Apelação -->
+      <div class="arg-block arg-apelacao">
+        <div class="arg-header">
+          <div class="arg-num">4</div>
+          <h3>A apelação (recurso)</h3>
+        </div>
+        <div class="arg-body">
+          <p>Dois dias depois, Caetana e Tolosa recorreram (pediram que outro tribunal revisasse o caso). O processo foi para Salvador, Bahia, no Tribunal da Relação Metropolitana.</p>
+        </div>
+      </div>
+
+      <!-- 5. Argumentos na apelação -->
+      <div class="arg-block arg-apelacao">
+        <div class="arg-header">
+          <div class="arg-num">5</div>
+          <h3>Os argumentos na apelação</h3>
+        </div>
+        <div class="arg-body">
+          <div class="sub-arg">
+            <div class="sub-arg-label caetana">Advogado de Caetana</div>
+            <p>Disse que uma escrava não podia consentir livremente, porque vivia com medo do seu senhor. Uma pessoa livre e uma escrava não sentem o mesmo medo.</p>
+          </div>
+          <div class="sub-arg">
+            <div class="sub-arg-label contra">Advogado de defesa do casamento</div>
+            <p>Preferiu não discutir o consentimento do escravo. Disse que Caetana não mostrou medo nenhum ao recusar o marido, então não podia alegar que casou por medo. Também elogiou Tolosa, dizendo que ele era um bom senhor.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Decisão final -->
+      <div class="arg-block arg-final">
+        <div class="arg-header">
+          <div class="arg-num">6</div>
+          <h3>A decisão final (1840)</h3>
+        </div>
+        <div class="arg-body">
+          <p>Os juízes eclesiásticos, em Salvador, foram unânimes: confirmaram a decisão anterior e julgaram o casamento indissolúvel (que não podia ser desfeito). Eles assinaram a sentença com a expressão em latim:</p>
+          <div class="fiat-badge">
+            <div>
+              <div class="fiat-latin">"Fiat justitia"</div>
+              <span>"Que a justiça seja feita"</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Na prática -->
+      <div class="arg-block arg-pratica">
+        <div class="arg-header">
+          <div class="arg-num">7</div>
+          <h3>E o que aconteceu na prática?</h3>
+        </div>
+        <div class="arg-body">
+          <p>Mesmo perdendo o processo oficial, Caetana nunca viveu como esposa de Custódio. Ela morava separada dele, não consumou o casamento e contou com o apoio de seu senhor. Por isso, os historiadores acreditam que, na prática, Caetana conseguiu o que queria: <strong>continuar solteira.</strong></p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── COLUNA DIREITA ── -->
+    <div class="right-col">
+
+      <!-- Imagem Caetana -->
+      <div class="caetana-img-card">
+        <div class="caetana-img-slot">
+          <!-- IMAGEM PRINCIPAL: substitua pelo src correto -->
+          <img src="imgs/imagem_caetanal.jpeg" alt="Caetana nossos nãos"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="img-placeholder" style="display:none;">
+            <span>🖼️</span>
+            <p>Insira a imagem<br><code>caetana_protesto.png</code><br>na pasta assets/</p>
+          </div>
+        </div>
+        <div class="caetana-img-caption">Caetana nossos nãos (Foto: Juliana dos Santos / Divulgação)</div>
+      </div>
+
+      <div class="duplas-card">
+        <div class="duplas-header">
+          <div class="icon-slot">
+            <img src="assets/icone_duplas.png" alt="Duplas" onerror="this.style.display='none';this.parentElement.innerHTML='👥';">
+          </div>
+          <h3>Em duplas, responder:</h3>
+        </div>
+        <div class="duplas-body">
+          <div class="duplas-question">
+            <div class="icon-slot">
+              <img src="assets/icone_pergunta.png" alt="Pergunta" onerror="this.style.display='none';this.parentElement.innerHTML='❓';">
+            </div>
+            <p>O que ela buscava conseguir com todo o processo?</p>
+          </div>
+          <textarea class="duplas-text" placeholder="Escreva a resposta da dupla aqui..."></textarea>
+          <button class="btn-save-sm" onclick="salvarResposta(this)">💾 Salvar resposta</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="container reflexao-section">
+  <div class="reflexao-card">
+    <div class="reflexao-icon-big">
+      <img src="assets/icone_reflexao.png" alt="Reflexão"
+           onerror="this.style.display='none';this.parentElement.innerHTML='<span style=font-size:2rem>⚖️</span>';">
+    </div>
+    <div class="reflexao-inner">
+      <div class="reflexao-tag">Reflexão sobre resistência jurídica</div>
+      <h3>Caetana não usou força física. Ela usou a Justiça.</h3>
+      <p>Você sabia que escravizados podiam ir à Justiça? Era raro, mas acontecia. Resistir também pode ser usar as leis e a Justiça para lutar por liberdade e dignidade.</p>
+    </div>
+  </div>
+
+  <div class="eusabria-section">
+    <div class="eusabria-header">
+      <div class="icon-slot">
+        <img src="assets/icone_eusabria.png" alt="Exemplo"
+             onerror="this.style.display='none';this.parentElement.innerHTML='👩🏿';">
+      </div>
+      <h3>Exemplo: Eusábria</h3>
+    </div>
+
+    <div class="eusabria-body">
+
+      <div class="eusabria-img-col">
+        <div class="eusabria-img-slot">
+          <img src="imgs/imagem_eusabria.jpeg" alt="Eusábria"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="img-placeholder" style="display:none; flex-direction:column; align-items:center; gap:0.5rem; color:rgba(90,45,145,0.3); font-size:0.78rem; text-align:center; padding:1rem;">
+            <span style="font-size:2.5rem;">🖼️</span>
+            <p>eusabria.png<br>em assets/</p>
+          </div>
+        </div>
+        <div class="eusabria-img-caption">Mulher carregando uma criança, Trinidad, c. década de 1830. 
+</div>
+      </div>
+
+      <div class="eusabria-content">
+        <p class="eusabria-intro">Eusábria foi transferida do Maranhão para Campinas e, um ano depois, já na década de 1880, usou a Justiça para tentar comprar sua liberdade.</p>
+
+        <div class="timeline">
+
+          <div class="tl-item">
+            <div class="tl-dot">
+              <img src="assets/icone_pessoa_roxo.png" alt="Pessoa"
+                   onerror="this.style.display='none';this.parentElement.innerHTML='👤';">
+            </div>
+            <div>
+              <div class="tl-year">Início — anos 1880</div>
+              <div class="tl-desc">Eusábria foi transferida do <strong>Maranhão para Campinas</strong>. Um ano depois, depositou <strong>800 mil-réis</strong> na Justiça para comprar sua alforria.</div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot">
+              <img src="assets/icone_casa.png" alt="Fazenda"
+                   onerror="this.style.display='none';this.parentElement.innerHTML='🏠';">
+            </div>
+            <div>
+              <div class="tl-year">1ª Instância</div>
+              <div class="tl-desc">Seu senhor <strong>não aceitou o valor</strong> depositado e o caso foi para a segunda instância.</div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot">
+              <img src="assets/icone_tribunal.png" alt="Tribunal"
+                   onerror="this.style.display='none';this.parentElement.innerHTML='🏛️';">
+            </div>
+            <div>
+              <div class="tl-year">2ª Instância</div>
+              <div class="tl-desc">Mesmo <strong>grávida de sete meses</strong>, o juiz definiu um preço de liberdade <strong>maior</strong> do que ela havia conseguido juntar.</div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot">
+              <img src="assets/icone_pessoa_vermelho.png" alt="Resultado"
+                   onerror="this.style.display='none';this.parentElement.innerHTML='⚖️';">
+            </div>
+            <div>
+              <div class="tl-year">Resultado</div>
+              <div class="tl-desc">Mesmo sem conseguir a alforria, sua história mostra que escravizadas <strong>usaram as leis do próprio sistema</strong> para lutar por seus direitos.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="bottom-nav">
+  <a href="etapa_1.html" class="btn-nav-lg btn-prev-lg">← Etapa 1</a>
+  <a href="etapa_3.html" class="btn-nav-lg btn-next-lg">Etapa 3 →</a>
+</div>
+
+<script>
+  function salvarResposta(btn) {
+    const ta = btn.previousElementSibling;
+    if (!ta.value.trim()) { alert('Escreva a resposta antes de salvar! 😊'); return; }
+    btn.textContent = '✅ Salvo!';
+    btn.style.background = '#2d6a4f';
+    setTimeout(() => { btn.textContent = '💾 Salvar resposta'; btn.style.background = ''; }, 3000);
+  }
+</script>
+
+</body>
+</html>
