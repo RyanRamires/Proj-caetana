@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Etapa 4 – Que tipo de resistência é essa? E hoje?</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark:         #1a0a04;
+    --gold:         #c8851a;
+    --gold-light:   #e8a832;
+    --cream:        #f5ede0;
+    --warm:         #faf3e8;
+    --purple:       #3d1f6e;
+    --purple-mid:   #5a2d91;
+    --purple-light: #ede8f7;
+    --text:         #2a1206;
+    --text-muted:   #6b5c7c;
+    --white:        #ffffff;
+    --green:        #2d6a4f;
+    --orange:       #c1440e;
+    --blue:         #1a4a7a;
+    --blue-light:   #e8f0f8;
+
+    /* Cores por tipo de resistência */
+    --r1: #2d6a4f; /* fuga */
+    --r1-bg: #e8f5ef;
+    --r2: #7b4a1a; /* quilombos */
+    --r2-bg: #f8efe3;
+    --r3: #1a4a7a; /* jurídica */
+    --r3-bg: #e8f0f8;
+    --r4: #9b2020; /* revoltas */
+    --r4-bg: #fce8e8;
+    --r5: #5a4a00; /* sabotagem */
+    --r5-bg: #fdf6d8;
+    --r6: #4a1a6e; /* cultural */
+    --r6-bg: #ede8f7;
+    --r7: #1a5a5a; /* negociação */
+    --r7-bg: #e3f5f5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--warm); color: var(--text); overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(26,10,4,0.96); backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 64px;
+    border-bottom: 1px solid rgba(200,133,26,0.25);
+  }
+  .nav-brand { display: flex; align-items: center; text-decoration: none; }
+  .nav-brand-text strong { display: block; font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.05rem; letter-spacing: 0.08em; }
+  .nav-brand-text span { font-family: 'Lora', serif; color: var(--gold); font-style: italic; font-size: 0.75rem; }
+  .nav-links { display: flex; gap: 0.25rem; list-style: none; }
+  .nav-links a { display: block; padding: 0.5rem 1rem; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; font-weight: 500; border-radius: 6px; transition: all 0.2s; }
+  .nav-links a:hover { color: var(--gold-light); background: rgba(200,133,26,0.1); }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown::after { content: ''; position: absolute; top: 100%; left: 0; width: 100%; height: 16px; }
+  .nav-drop-toggle { cursor: pointer; }
+  .dropdown-menu { display: none; position: absolute; top: calc(100% + 4px); left: 0; background: rgba(26,10,4,0.98); border: 1px solid rgba(200,133,26,0.25); border-radius: 10px; list-style: none; min-width: 240px; padding: 0.5rem 0; box-shadow: 0 12px 40px rgba(0,0,0,0.5); z-index: 200; }
+  .nav-dropdown:hover .dropdown-menu { display: block; }
+  .dropdown-menu li a { display: block; padding: 0.6rem 1.25rem; color: rgba(255,255,255,0.75); font-size: 0.83rem; white-space: nowrap; border-radius: 0; }
+  .dropdown-menu li a:hover { color: var(--gold-light); background: rgba(200,133,26,0.1); }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    background: var(--dark); padding: 6.5rem 3rem 3rem;
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(155,32,32,0.35) 0%, transparent 70%);
+  }
+  .page-hero-inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; }
+  .etapa-nav-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+  .etapa-pill { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(200,133,26,0.15); border: 1px solid rgba(200,133,26,0.35); color: var(--gold-light); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 999px; }
+  .nav-etapa-btns { display: flex; gap: 0.75rem; }
+  .btn-etapa { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1.1rem; border-radius: 8px; font-size: 0.82rem; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+  .btn-etapa-prev { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.15); }
+  .btn-etapa-prev:hover { background: rgba(255,255,255,0.15); color: var(--white); }
+  .btn-etapa-next { background: var(--gold); color: var(--dark); }
+  .btn-etapa-next:hover { background: var(--gold-light); }
+  .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3.5vw, 2.6rem); color: var(--white); font-weight: 900; line-height: 1.15; margin-bottom: 0.75rem; }
+  .page-hero h1 em { color: var(--gold); font-style: normal; }
+
+  /* símbolo resistência no hero */
+  .hero-simbolo {
+    position: absolute; right: 3rem; top: 50%; transform: translateY(-50%);
+    width: 90px; height: 90px; opacity: 0.18; z-index: 0;
+  }
+  .hero-simbolo img { width: 100%; height: 100%; object-fit: contain; }
+
+  .hero-grid { display: grid; grid-template-columns: 1fr 100px; gap: 2rem; align-items: center; }
+  .hero-simbolo-visible {
+    width: 90px; height: 90px; flex-shrink: 0;
+    border-radius: 50%; overflow: hidden;
+    background: rgba(155,32,32,0.2);
+    border: 2px solid rgba(200,133,26,0.3);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-simbolo-visible img { width: 76px; height: 76px; object-fit: contain; }
+
+  .fonte-documental { background: rgba(255,255,255,0.06); border: 1px solid rgba(200,133,26,0.2); border-left: 3px solid var(--gold); border-radius: 0 10px 10px 0; padding: 0.75rem 1.25rem; margin-top: 0.5rem; display: flex; align-items: flex-start; gap: 0.75rem; }
+  .fonte-documental .icon-slot { width: 28px; height: 28px; flex-shrink: 0; background: rgba(200,133,26,0.15); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+  .fonte-documental p { color: rgba(255,255,255,0.7); font-size: 0.85rem; line-height: 1.5; }
+  .fonte-documental strong { color: var(--gold-light); }
+
+  /* ── CONTAINER ── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+  /* ── SECTION LABEL ── */
+  .section-label { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
+  .section-label .icon-slot { width: 30px; height: 30px; flex-shrink: 0; background: var(--purple-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+  .section-label h2 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--purple); font-weight: 700; }
+
+  /* ── INTRO TEXT ── */
+  .intro-section { padding: 2.5rem 0 0; }
+  .intro-grid { display: grid; grid-template-columns: 1fr 380px; gap: 1.75rem; align-items: start; margin-bottom: 2.5rem; }
+  .intro-text { font-size: 0.92rem; line-height: 1.8; color: var(--text); background: var(--white); border-radius: 12px; padding: 1.35rem 1.5rem; border: 1px solid rgba(90,45,145,0.1); }
+  .intro-text p { margin-bottom: 0.75rem; }
+  .intro-text p:last-child { margin-bottom: 0; }
+
+  /* ── IMAGEM CAPOEIRA / PALMARES ── */
+  .img-placeholder-card {
+    background: var(--white); border-radius: 16px;
+    border: 1px solid rgba(90,45,145,0.1); overflow: hidden;
+  }
+  .img-slot-main {
+    width: 100%; aspect-ratio: 3 / 2; background: var(--cream);
+    overflow: hidden; position: relative;
+  }
+  /* palmares 960x540 ~= 16:9 */
+  .img-slot-main.wide { aspect-ratio: 16 / 9; }
+  .img-slot-main img {
+    width: 100%; height: 100%; object-fit: cover;
+    object-position: center center; display: block;
+    position: absolute; top: 0; left: 0;
+  }
+  .img-slot-placeholder {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.5rem;
+    color: rgba(90,45,145,0.3); font-size: 0.78rem; text-align: center; padding: 1rem;
+  }
+  .img-slot-placeholder span { font-size: 2.5rem; }
+  .img-caption {
+    padding: 0.55rem 1rem; font-size: 0.73rem; color: var(--text-muted);
+    font-style: italic; border-top: 1px solid rgba(90,45,145,0.08); background: var(--white);
+  }
+
+  /* ── LAYOUT CENTRAL: TIMELINE + PALMARES ── */
+  .resistencias-section { padding: 0 0 2rem; }
+  .resistencias-grid { display: grid; grid-template-columns: 1fr 340px; gap: 2rem; align-items: start; }
+
+  /* ── TIMELINE VERTICAL ── */
+  .vtimeline { position: relative; }
+  .vtimeline-track {
+    position: absolute; left: 40px; top: 20px; bottom: 20px; width: 3px;
+    background: linear-gradient(to bottom, var(--orange) 0%, var(--purple) 50%, var(--green) 100%);
+    border-radius: 2px; z-index: 0;
+  }
+
+  .vt-item {
+    display: flex; gap: 1.1rem; align-items: flex-start;
+    padding-bottom: 1.5rem; position: relative; z-index: 1;
+  }
+  .vt-item:last-child { padding-bottom: 0; }
+
+  /* círculo ícone — espaço pronto para imagem */
+  .vt-circle {
+    width: 80px; min-width: 80px; height: 80px;
+    border-radius: 50%;
+    border: 3px solid var(--white);
+    box-shadow: 0 0 0 3px currentColor, 0 4px 16px rgba(0,0,0,0.12);
+    display: flex; align-items: center; justify-content: center;
+    background: var(--white); overflow: hidden;
+    flex-shrink: 0; position: relative; z-index: 2;
+  }
+  /* Base para todos os ícones circulares */
+  .vt-circle img {
+    display: block;
+    object-fit: contain;
+    object-position: center center;
+  }
+
+  /* Fuga 400x400 e Quilombo 400x400 — maiores, preenchem bem o círculo */
+  .vt-circle img.icone-fuga,
+  .vt-circle img.icone-quilombo {
+    width: 120%; height: 120%;
+  }
+
+  /* Negociação 328x328 — quase do tamanho do círculo, cabe com folga mínima */
+  .vt-circle img.icone-negociacao {
+    width: 110%; height: 110%;
+  }
+
+  /* Cultura 333x333 — similar ao anterior */
+  .vt-circle img.icone-cultura {
+    width: 120%; height: 120%;
+  }
+
+  /* Sabotagem 295x295 — um pouco menor, leve padding */
+  .vt-circle img.icone-sabotagem {
+    width: 110%; height: 110%;
+  }
+
+  /* Jurídico 280x280 — menor, mais padding */
+  .vt-circle img.icone-juridico {
+    width: 100%; height: 100%;
+  }
+
+  /* Resistência 266x266 — menor de todas */
+  .vt-circle img.icone-resistencia {
+    width: 110%; height: 110%;
+  }
+  .vt-circle .emoji-fallback { font-size: 1.8rem; }
+
+  /* cores por item */
+  .vt-fuga       { color: var(--r1); } .vt-fuga .vt-circle { box-shadow: 0 0 0 3px var(--r1), 0 4px 16px rgba(0,0,0,0.1); }
+  .vt-quilombos  { color: var(--r2); } .vt-quilombos .vt-circle { box-shadow: 0 0 0 3px var(--r2), 0 4px 16px rgba(0,0,0,0.1); }
+  .vt-juridica   { color: var(--r3); } .vt-juridica .vt-circle { box-shadow: 0 0 0 3px var(--r3), 0 4px 16px rgba(0,0,0,0.1); }
+  .vt-revoltas   { color: var(--r4); } .vt-revoltas .vt-circle { box-shadow: 0 0 0 3px var(--r4), 0 4px 16px rgba(0,0,0,0.1); }
+  .vt-sabotagem  { color: var(--r5); } .vt-sabotagem .vt-circle { box-shadow: 0 0 0 3px var(--r5), 0 4px 16px rgba(0,0,0,0.1); }
+  .vt-cultural   { color: var(--r6); } .vt-cultural .vt-circle { box-shadow: 0 0 0 3px var(--r6), 0 4px 16px rgba(0,0,0,0.1); }
+  .vt-negociacao { color: var(--r7); } .vt-negociacao .vt-circle { box-shadow: 0 0 0 3px var(--r7), 0 4px 16px rgba(0,0,0,0.1); }
+
+  .vt-content { flex: 1; }
+  .vt-card {
+    border-radius: 14px; padding: 0.9rem 1.1rem 1rem;
+    border: 1px solid rgba(0,0,0,0.07);
+  }
+  .vt-fuga .vt-card       { background: var(--r1-bg); border-color: rgba(45,106,79,0.15); }
+  .vt-quilombos .vt-card  { background: var(--r2-bg); border-color: rgba(123,74,26,0.15); }
+  .vt-juridica .vt-card   { background: var(--r3-bg); border-color: rgba(26,74,122,0.15); }
+  .vt-revoltas .vt-card   { background: var(--r4-bg); border-color: rgba(155,32,32,0.15); }
+  .vt-sabotagem .vt-card  { background: var(--r5-bg); border-color: rgba(90,74,0,0.15); }
+  .vt-cultural .vt-card   { background: var(--r6-bg); border-color: rgba(74,26,110,0.15); }
+  .vt-negociacao .vt-card { background: var(--r7-bg); border-color: rgba(26,90,90,0.15); }
+
+  .vt-titulo {
+    font-family: 'Playfair Display', serif; font-size: 0.97rem; font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+  .vt-fuga .vt-titulo       { color: var(--r1); }
+  .vt-quilombos .vt-titulo  { color: var(--r2); }
+  .vt-juridica .vt-titulo   { color: var(--r3); }
+  .vt-revoltas .vt-titulo   { color: var(--r4); }
+  .vt-sabotagem .vt-titulo  { color: var(--r5); }
+  .vt-cultural .vt-titulo   { color: var(--r6); }
+  .vt-negociacao .vt-titulo { color: var(--r7); }
+
+  .vt-desc { font-size: 0.84rem; line-height: 1.6; color: var(--text); }
+
+  .vt-exemplo {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    margin-top: 0.6rem; padding: 0.3rem 0.7rem;
+    border-radius: 8px; font-size: 0.75rem; font-weight: 700;
+    color: var(--white);
+  }
+  .vt-fuga .vt-exemplo       { background: var(--r1); }
+  .vt-quilombos .vt-exemplo  { background: var(--r2); }
+  .vt-juridica .vt-exemplo   { background: var(--r3); }
+  .vt-revoltas .vt-exemplo   { background: var(--r4); }
+  .vt-sabotagem .vt-exemplo  { display: none; }
+  .vt-cultural .vt-exemplo   { display: none; }
+  .vt-negociacao .vt-exemplo { display: none; }
+
+  /* ── COLUNA DIREITA: Palmares + Atividade ── */
+  .right-col { display: flex; flex-direction: column; gap: 1.5rem; position: sticky; top: 80px; }
+
+  /* ── ATIVIDADE IDENTIFICAÇÃO ── */
+  .ativ-card {
+    background: var(--white); border-radius: 16px;
+    border: 1px solid rgba(90,45,145,0.12); overflow: hidden;
+  }
+  .ativ-header {
+    background: var(--purple-light); padding: 0.85rem 1.25rem;
+    border-bottom: 1px solid rgba(90,45,145,0.12);
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .ativ-header .icon-slot {
+    width: 32px; height: 32px; background: var(--purple);
+    border-radius: 8px; display: flex; align-items: center;
+    justify-content: center; font-size: 1rem; flex-shrink: 0;
+  }
+  .ativ-header h3 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--purple); font-weight: 700; }
+  .ativ-body { padding: 1.1rem 1.25rem; }
+  .ativ-pergunta { font-size: 0.87rem; line-height: 1.6; color: var(--text); margin-bottom: 0.5rem; }
+  .ativ-pergunta strong { color: var(--purple-mid); }
+  .ativ-opcoes { display: flex; flex-direction: column; gap: 0.5rem; margin: 0.75rem 0; }
+  .ativ-opcao {
+    display: flex; align-items: center; gap: 0.7rem;
+    padding: 0.55rem 0.9rem; border-radius: 10px;
+    border: 1.5px solid rgba(90,45,145,0.15);
+    background: #faf8ff; cursor: pointer;
+    font-size: 0.85rem; color: var(--text);
+    transition: all 0.2s; user-select: none;
+  }
+  .ativ-opcao:hover { border-color: var(--purple-mid); background: var(--purple-light); }
+  .ativ-opcao.correta { border-color: var(--green); background: #e8f5ef; color: var(--green); font-weight: 700; }
+  .ativ-opcao.errada  { border-color: var(--orange); background: #fce8e3; color: var(--orange); }
+  .ativ-opcao .radio-dot {
+    width: 18px; height: 18px; min-width: 18px; border-radius: 50%;
+    border: 2px solid rgba(90,45,145,0.3);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .ativ-opcao.correta .radio-dot { border-color: var(--green); background: var(--green); }
+  .ativ-opcao.correta .radio-dot::after { content: '✓'; color: var(--white); font-size: 0.7rem; font-weight: 900; }
+  .ativ-opcao.errada  .radio-dot { border-color: var(--orange); background: var(--orange); }
+  .ativ-opcao.errada  .radio-dot::after { content: '✕'; color: var(--white); font-size: 0.7rem; font-weight: 900; }
+  .ativ-feedback {
+    margin-top: 0.75rem; padding: 0.65rem 0.9rem;
+    border-radius: 10px; font-size: 0.83rem; line-height: 1.5;
+    display: none;
+  }
+  .ativ-feedback.show { display: block; }
+  .ativ-feedback.ok  { background: #e8f5ef; color: var(--green); border: 1px solid rgba(45,106,79,0.2); }
+  .ativ-feedback.nok { background: #fce8e3; color: var(--orange); border: 1px solid rgba(193,68,14,0.2); }
+
+  /* ── CONEXÃO COM O PRESENTE ── */
+  .presente-section { padding: 2rem 0 0; }
+  .presente-card {
+    background: var(--dark); border-radius: 20px; padding: 1.75rem 2rem;
+    position: relative; overflow: hidden; margin-bottom: 2rem;
+    display: grid; grid-template-columns: 80px 1fr; gap: 1.5rem; align-items: center;
+  }
+  .presente-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(45,106,79,0.45) 0%, transparent 70%); pointer-events: none; }
+  .presente-icon {
+    width: 72px; height: 72px; min-width: 72px;
+    border-radius: 16px; background: rgba(200,133,26,0.15);
+    border: 1px solid rgba(200,133,26,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.2rem; position: relative; z-index: 1;
+  }
+  .presente-inner { position: relative; z-index: 1; }
+  .presente-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+  .presente-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--white); margin-bottom: 0.4rem; }
+  .presente-card p { color: rgba(255,255,255,0.7); font-size: 0.88rem; line-height: 1.65; }
+
+  /* ── CONSTRUÇÃO COLETIVA ── */
+  .coletiva-section {
+    background: var(--white); border-radius: 20px;
+    border: 1px solid rgba(90,45,145,0.1); overflow: hidden; margin-bottom: 3rem;
+  }
+  .coletiva-header {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--purple-mid) 100%);
+    padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem;
+  }
+  .coletiva-header .icon-slot {
+    width: 34px; height: 34px; background: rgba(255,255,255,0.2);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .coletiva-header h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--white); font-weight: 700; }
+  .coletiva-body { padding: 1.5rem; }
+  .coletiva-intro { font-size: 0.9rem; line-height: 1.7; color: var(--text); margin-bottom: 1.25rem; }
+  .coletiva-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.4rem; }
+  textarea.coletiva-ta {
+    width: 100%; min-height: 130px; resize: vertical;
+    border: 1.5px solid rgba(90,45,145,0.2); border-radius: 12px;
+    padding: 0.85rem 1rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; line-height: 1.6; color: var(--text);
+    background: #faf8ff; outline: none; transition: border-color 0.2s;
+  }
+  textarea.coletiva-ta:focus { border-color: var(--purple-mid); }
+  textarea.coletiva-ta::placeholder { color: #b0a0c8; }
+  .btn-save-sm { margin-top: 0.75rem; background: var(--purple); color: var(--white); border: none; border-radius: 10px; padding: 0.65rem 1.5rem; font-size: 0.84rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+  .btn-save-sm:hover { background: var(--purple-mid); }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+  .btn-nav-lg { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 2rem; border-radius: 10px; font-size: 0.9rem; font-weight: 700; text-decoration: none; transition: all 0.25s; }
+  .btn-prev-lg { background: rgba(90,45,145,0.1); color: var(--purple); border: 1px solid rgba(90,45,145,0.2); }
+  .btn-prev-lg:hover { background: rgba(90,45,145,0.18); }
+  .btn-next-lg { background: var(--gold); color: var(--dark); }
+  .btn-next-lg:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  /* ── RESPONSIVO ── */
+  @media (max-width: 900px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { display: none; }
+    .page-hero { padding: 5.5rem 1.5rem 2rem; }
+    .intro-grid { grid-template-columns: 1fr; }
+    .resistencias-grid { grid-template-columns: 1fr; }
+    .right-col { position: static; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-simbolo-visible { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="index.html">
+    <div class="nav-brand-text">
+      <strong>CAETANA DISSE NÃO</strong>
+      <span>uma história de resistência</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-drop-toggle">Etapas ▾</a>
+      <ul class="dropdown-menu">
+        <li><a href="etapa_1.html">Etapa 1 – Quem foi Caetana?</a></li>
+        <li><a href="etapa_2.html">Etapa 2 – O processo judicial</a></li>
+        <li><a href="etapa_3.html">Etapa 3 – Princesas também decidem</a></li>
+        <li><a href="etapa_4.html" style="color:var(--gold-light)">Etapa 4 – Que tipo de resistência?</a></li>
+        <li><a href="etapa_5.html">Etapa 5 – Produção final</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="etapa-nav-top">
+      <div class="etapa-pill">✦ Etapa 4 de 5</div>
+      <div class="nav-etapa-btns">
+        <a href="etapa_3.html" class="btn-etapa btn-etapa-prev">← Etapa anterior</a>
+        <a href="etapa_5.html" class="btn-etapa btn-etapa-next">Próxima etapa →</a>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div>
+        <h1>Que tipo de <em>resistência</em> é essa? <em>E hoje?</em></h1>
+        <div class="fonte-documental">
+          <div class="icon-slot">✊</div>
+          <p><strong>Contexto histórico:</strong> durante a escravidão no Brasil, pessoas escravizadas resistiram de muitas formas — da fuga à Justiça. Conheça cada uma delas.</p>
+        </div>
+      </div>
+      <div class="hero-simbolo-visible">
+        <!-- símbolo_resistencia.png — 90×90 recortado -->
+        <img src="imgs/simbolo_resistencia.png" alt="Símbolo de resistência"
+             onerror="this.style.display='none'; this.parentElement.innerHTML='✊';">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INTRO + IMAGEM CAPOEIRA -->
+<div class="container intro-section">
+  <div class="intro-grid">
+
+    <div class="intro-text">
+      <div class="section-label" style="margin-bottom:0.75rem;">
+        <div class="icon-slot">📜</div>
+        <h2>Resistência escravizada no Brasil</h2>
+      </div>
+      <p>Durante o período da escravidão no Brasil, as pessoas escravizadas enfrentaram condições extremamente difíceis e injustas. No entanto, elas não aceitaram essa situação de forma passiva.</p>
+      <p>De diferentes maneiras, homens, mulheres e crianças buscaram resistir à opressão, preservar sua cultura, proteger suas famílias e conquistar sua liberdade.</p>
+      <p>Essas ações demonstram a coragem, a organização e a determinação daqueles que lutaram contra o sistema escravista, deixando importantes exemplos de resistência ao longo da história brasileira.</p>
+    </div>
+
+    <!-- Imagem capoeira 860×564 -->
+    <div class="img-placeholder-card">
+      <div class="img-slot-main">
+        <img src="imgs/imagem_capuera.jpg" alt="Dois homens praticando capoeira"
+             onload="this.nextElementSibling.style.display='none';"
+             onerror="this.style.display='none';">
+        <div class="img-slot-placeholder">
+          <span>🤸🏿</span>
+          <p>Insira <code>imagem_capuera.jpg</code><br>na pasta <code>imgs/</code></p>
+        </div>
+      </div>
+      <div class="img-caption">Dois homens praticando capoeira. Domínio público — Autor: Augusto Earle</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TIMELINE RESISTÊNCIAS + COLUNA DIREITA -->
+<div class="container resistencias-section">
+  <div class="section-label" style="margin-bottom:1.25rem;">
+    <div class="icon-slot">⛓️</div>
+    <h2>Formas de resistência</h2>
+  </div>
+
+  <div class="resistencias-grid">
+
+    <!-- ── TIMELINE VERTICAL ── -->
+    <div class="vtimeline">
+      <div class="vtimeline-track"></div>
+
+      <!-- 1. Fuga -->
+      <div class="vt-item vt-fuga">
+        <div class="vt-circle" style="border:3px solid #2d6a4f !important; box-shadow: 0 0 0 3px #2d6a4f, 0 4px 16px rgba(0,0,0,0.1) !important; background:#2d6a4f !important;">
+          <!-- Coloque aqui a imagem circular do ícone de Fuga -->
+          <img src="imgs/fuga.png" alt="Fuga" class="icone-fuga"
+               onload="this.nextElementSibling.style.display='none';"
+               onerror="this.style.display='none';">
+          <div class="emoji-fallback" style="display:none;">🏃🏿</div>
+        </div>
+        <div class="vt-content">
+          <div class="vt-card">
+            <div class="vt-titulo">Fuga</div>
+            <div class="vt-desc">Muitos escravizados fugiam das fazendas e cidades em direção aos quilombos, comunidades formadas por pessoas que escapavam da escravidão.</div>
+            <div class="vt-exemplo">✦ Exemplo: Quilombo dos Palmares</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Quilombos -->
+      <div class="vt-item vt-quilombos">
+        <div class="vt-circle" style="border:3px solid #c8a87a !important; box-shadow: 0 0 0 3px #7b4a1a, 0 4px 16px rgba(0,0,0,0.1) !important; background:#f5e6c8 !important;">
+          <img src="imgs/quilombo.png" alt="Quilombos" class="icone-quilombo"
+               onload="this.nextElementSibling.style.display='none';"
+               onerror="this.style.display='none';">
+          <div class="emoji-fallback" style="display:none;">🏘️</div>
+        </div>
+        <div class="vt-content">
+          <div class="vt-card">
+            <div class="vt-titulo">Formação de Quilombos</div>
+            <div class="vt-desc">Além de fugir, os escravizados organizaram comunidades autônomas onde podiam viver livres, cultivar alimentos e preservar suas tradições culturais.</div>
+            <div class="vt-exemplo">✦ Exemplo: Quilombo dos Palmares</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Jurídica — destaque Caetana -->
+      <div class="vt-item vt-juridica">
+        <div class="vt-circle" style="border:3px solid #1a4a7a !important; box-shadow: 0 0 0 3px #1a4a7a, 0 4px 16px rgba(0,0,0,0.1) !important; background:#1a4a7a !important;">
+          <img src="imgs/Juridico.png" alt="Resistência Jurídica" class="icone-juridico"
+               onload="this.nextElementSibling.style.display='none';"
+               onerror="this.style.display='none';">
+          <div class="emoji-fallback" style="display:none;">⚖️</div>
+        </div>
+        <div class="vt-content">
+          <div class="vt-card" style="border-color: rgba(26,74,122,0.3);">
+            <div class="vt-titulo">Resistência Jurídica</div>
+            <div class="vt-desc">Algumas pessoas escravizadas utilizaram os recursos legais disponíveis na época para buscar sua liberdade. Com o apoio de advogados, abolicionistas ou pessoas influentes, recorreram à Justiça para contestar sua condição, exigir o cumprimento de leis ou reivindicar direitos garantidos pela legislação vigente.</div>
+            <div class="vt-exemplo">✦ Exemplo: Caetana entrou com processo para anular seu casamento forçado</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Revoltas -->
+      <div class="vt-item vt-revoltas">
+        <div class="vt-circle">
+          <img src="imgs/Resistencia.png" alt="Revoltas e Rebeliões" class="icone-resistencia"
+               onload="this.nextElementSibling.style.display='none';"
+               onerror="this.style.display='none';">
+          <div class="emoji-fallback" style="display:none;">✊🏿</div>
+        </div>
+        <div class="vt-content">
+          <div class="vt-card">
+            <div class="vt-titulo">Revoltas e Rebeliões</div>
+            <div class="vt-desc">Em alguns momentos, grupos de escravizados se uniam para enfrentar seus senhores e lutar contra o sistema escravista.</div>
+            <div class="vt-exemplo">✦ Exemplo: Revolta dos Malês (1835)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Sabotagem -->
+      <div class="vt-item vt-sabotagem">
+        <div class="vt-circle">
+          <img src="imgs/Sabotagem.png" alt="Sabotagem do Trabalho" class="icone-sabotagem"
+               onload="this.nextElementSibling.style.display='none';"
+               onerror="this.style.display='none';">
+          <div class="emoji-fallback" style="display:none;">🔨</div>
+        </div>
+        <div class="vt-content">
+          <div class="vt-card">
+            <div class="vt-titulo">Sabotagem do Trabalho</div>
+            <div class="vt-desc">Alguns resistiam diminuindo o ritmo de trabalho, quebrando ferramentas ou realizando tarefas de forma inadequada para prejudicar a produção.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Cultural -->
+      <div class="vt-item vt-cultural">
+        <div class="vt-circle">
+          <img src="imgs/cultura.png" alt="Resistência Cultural" class="icone-cultura"
+               onload="this.nextElementSibling.style.display='none';"
+               onerror="this.style.display='none';">
+          <div class="emoji-fallback" style="display:none;">🥁</div>
+        </div>
+        <div class="vt-content">
+          <div class="vt-card">
+            <div class="vt-titulo">Resistência Cultural</div>
+            <div class="vt-desc">A manutenção de tradições africanas, como danças, músicas, religiões e idiomas, ajudava a preservar a identidade e a cultura dos povos escravizados.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Negociação -->
+      <div class="vt-item vt-negociacao">
+        <div class="vt-circle">
+          <img src="imgs/negociacao.png" alt="Negociação e Reivindicação" class="icone-negociacao"
+               onload="this.nextElementSibling.style.display='none';"
+               onerror="this.style.display='none';">
+          <div class="emoji-fallback" style="display:none;">🤝</div>
+        </div>
+        <div class="vt-content">
+          <div class="vt-card">
+            <div class="vt-titulo">Negociação e Reivindicação</div>
+            <div class="vt-desc">Em determinadas situações, escravizados buscavam negociar melhores condições de vida, como dias de descanso, redução de castigos ou a possibilidade de comprar sua liberdade.</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /vtimeline -->
+
+    <!-- ── COLUNA DIREITA ── -->
+    <div class="right-col">
+
+      <!-- Imagem Palmares 960×540 -->
+      <div class="img-placeholder-card">
+        <div class="img-slot-main wide">
+          <img src="imgs/Quadro-Palmares-960x540.webp" alt="Quilombo dos Palmares"
+               onload="this.nextElementSibling.style.display='none';"
+               onerror="this.style.display='none';">
+          <div class="img-slot-placeholder">
+            <span>🏘️</span>
+            <p>Insira <code>Quadro-Palmares-960x540.webp</code><br>na pasta <code>imgs/</code></p>
+          </div>
+        </div>
+        <div class="img-caption">Representação do Quilombo dos Palmares. Domínio público</div>
+      </div>
+
+      <!-- Atividade: Você consegue identificar? -->
+      <div class="ativ-card">
+        <div class="ativ-header">
+          <div class="icon-slot">❓</div>
+          <h3>Você consegue identificar?</h3>
+        </div>
+        <div class="ativ-body">
+          <p class="ativ-pergunta">Caetana entrou com um processo na Justiça para anular seu casamento forçado.<br><strong>Qual tipo de resistência é essa?</strong></p>
+          <div class="ativ-opcoes">
+            <div class="ativ-opcao" onclick="responderAtiv(this, false)">
+              <div class="radio-dot"></div> Fuga
+            </div>
+            <div class="ativ-opcao" onclick="responderAtiv(this, false)">
+              <div class="radio-dot"></div> Resistência cultural
+            </div>
+            <div class="ativ-opcao" onclick="responderAtiv(this, true)">
+              <div class="radio-dot"></div> Resistência jurídica
+            </div>
+            <div class="ativ-opcao" onclick="responderAtiv(this, false)">
+              <div class="radio-dot"></div> Revolta ou rebelião
+            </div>
+          </div>
+          <div class="ativ-feedback ok" id="feedback-ok">✅ Correto! Caetana usou a Justiça — uma forma de resistência jurídica.</div>
+          <div class="ativ-feedback nok" id="feedback-nok">❌ Não exatamente. Pense: Caetana foi ao tribunal. Que tipo de resistência usa a lei?</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CONEXÃO COM O PRESENTE -->
+<div class="container presente-section">
+  <div class="presente-card">
+    <div class="presente-icon">⚖️</div>
+    <div class="presente-inner">
+      <div class="presente-tag">✦ Conexão com o presente</div>
+      <h3>Hoje, dizer "não" ao casamento é um direito.</h3>
+      <p>No Brasil, casamento forçado é crime, e a Lei Maria da Penha protege mulheres em situação de violência. O que Caetana lutou por quase 200 anos atrás hoje está garantido em lei — mas ainda precisa ser defendido todos os dias.</p>
+    </div>
+  </div>
+
+  <!-- Construção coletiva -->
+  <div class="coletiva-section">
+    <div class="coletiva-header">
+      <div class="icon-slot">🗣️</div>
+      <h3>Construção coletiva do conceito de resistência</h3>
+    </div>
+    <div class="coletiva-body">
+      <p class="coletiva-intro">Momento para pensar juntos: com base em tudo que estudamos — o processo de Caetana, as formas de resistência e as conexões com o presente — <strong>como a turma definiria "resistência"?</strong></p>
+      <div class="coletiva-label">Campo para registro da resposta coletiva:</div>
+      <textarea class="coletiva-ta" placeholder="Escreva aqui a definição construída pela turma...&#10;&#10;Pense: o que todas as formas de resistência têm em comum? O que faz uma ação ser considerada resistência?"></textarea>
+      <button class="btn-save-sm" onclick="salvarResposta(this)">💾 Salvar resposta</button>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <a href="etapa_3.html" class="btn-nav-lg btn-prev-lg">← Etapa 3</a>
+  <a href="etapa_5.html" class="btn-nav-lg btn-next-lg">Etapa 5 →</a>
+</div>
+
+<script>
+  let respondido = false;
+
+  function responderAtiv(el, correta) {
+    if (respondido) return;
+    respondido = true;
+
+    const opcoes = el.closest('.ativ-opcoes').querySelectorAll('.ativ-opcao');
+    opcoes.forEach(o => o.style.pointerEvents = 'none');
+
+    if (correta) {
+      el.classList.add('correta');
+      document.getElementById('feedback-ok').classList.add('show');
+    } else {
+      el.classList.add('errada');
+      // destaca a correta
+      opcoes.forEach(o => {
+        if (o.textContent.trim().includes('Resistência jurídica')) o.classList.add('correta');
+      });
+      document.getElementById('feedback-nok').classList.add('show');
+    }
+  }
+
+  function salvarResposta(btn) {
+    const ta = btn.previousElementSibling;
+    if (!ta.value.trim()) { alert('Escreva a resposta antes de salvar! 😊'); return; }
+    btn.textContent = '✅ Salvo!';
+    btn.style.background = '#2d6a4f';
+    setTimeout(() => { btn.textContent = '💾 Salvar resposta'; btn.style.background = ''; }, 3000);
+  }
+</script>
+
+</body>
+</html>

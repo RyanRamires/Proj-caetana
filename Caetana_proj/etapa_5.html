@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Etapa 5 – Mural de Resistências</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark:#1a0a04;--gold:#c8851a;--gold-light:#e8a832;--cream:#f5ede0;--warm:#faf3e8;
+    --purple:#3d1f6e;--purple-mid:#5a2d91;--purple-light:#ede8f7;
+    --text:#2a1206;--text-muted:#6b5c7c;--white:#ffffff;
+    --green:#2d6a4f;--green-light:#e8f5ef;--orange:#c1440e;--blue:#1a4a7a;--blue-light:#e8f0f8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--warm);color:var(--text);overflow-x:hidden;}
+
+  nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(26,10,4,0.96);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:64px;border-bottom:1px solid rgba(200,133,26,0.25);}
+  .nav-brand{display:flex;align-items:center;text-decoration:none;}
+  .nav-brand-text strong{display:block;font-family:'Playfair Display',serif;color:var(--white);font-size:1.05rem;letter-spacing:.08em;}
+  .nav-brand-text span{font-family:'Lora',serif;color:var(--gold);font-style:italic;font-size:.75rem;}
+  .nav-links{display:flex;gap:.25rem;list-style:none;}
+  .nav-links a{display:block;padding:.5rem 1rem;color:rgba(255,255,255,.7);text-decoration:none;font-size:.85rem;font-weight:500;border-radius:6px;transition:all .2s;}
+  .nav-links a:hover{color:var(--gold-light);background:rgba(200,133,26,.1);}
+  .nav-dropdown{position:relative;}
+  .nav-dropdown::after{content:'';position:absolute;top:100%;left:0;width:100%;height:16px;}
+  .nav-drop-toggle{cursor:pointer;}
+  .dropdown-menu{display:none;position:absolute;top:calc(100% + 4px);left:0;background:rgba(26,10,4,.98);border:1px solid rgba(200,133,26,.25);border-radius:10px;list-style:none;min-width:240px;padding:.5rem 0;box-shadow:0 12px 40px rgba(0,0,0,.5);z-index:200;}
+  .nav-dropdown:hover .dropdown-menu{display:block;}
+  .dropdown-menu li a{display:block;padding:.6rem 1.25rem;color:rgba(255,255,255,.75);font-size:.83rem;white-space:nowrap;}
+  .dropdown-menu li a:hover{color:var(--gold-light);background:rgba(200,133,26,.1);}
+
+  .page-hero{background:var(--dark);padding:6.5rem 3rem 3rem;position:relative;overflow:hidden;}
+  .page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 70% 50%,rgba(90,45,145,.4) 0%,transparent 70%);}
+  .page-hero-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;}
+  .etapa-nav-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
+  .etapa-pill{display:inline-flex;align-items:center;gap:.5rem;background:rgba(200,133,26,.15);border:1px solid rgba(200,133,26,.35);color:var(--gold-light);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:.35rem 1rem;border-radius:999px;}
+  .nav-etapa-btns{display:flex;gap:.75rem;}
+  .btn-etapa{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1.1rem;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none;transition:all .2s;}
+  .btn-etapa-prev{background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.15);}
+  .btn-etapa-prev:hover{background:rgba(255,255,255,.15);color:var(--white);}
+  .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.6rem);color:var(--white);font-weight:900;line-height:1.15;margin-bottom:.75rem;}
+  .page-hero h1 em{color:var(--gold);font-style:normal;}
+  .hero-grid{display:grid;grid-template-columns:1fr 100px;gap:2rem;align-items:center;}
+  .hero-simbolo{width:90px;height:90px;flex-shrink:0;border-radius:50%;overflow:hidden;background:rgba(155,32,32,.2);border:2px solid rgba(200,133,26,.3);display:flex;align-items:center;justify-content:center;}
+  .hero-simbolo img{width:76px;height:76px;object-fit:contain;}
+  .fonte-documental{background:rgba(255,255,255,.06);border:1px solid rgba(200,133,26,.2);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:.75rem 1.25rem;margin-top:.5rem;display:flex;align-items:flex-start;gap:.75rem;}
+  .fonte-documental .icon-slot{width:28px;height:28px;flex-shrink:0;background:rgba(200,133,26,.15);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+  .fonte-documental p{color:rgba(255,255,255,.7);font-size:.85rem;line-height:1.5;}
+  .fonte-documental strong{color:var(--gold-light);}
+
+  .container{max-width:1200px;margin:0 auto;padding:0 2rem;}
+  .section-label{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;}
+  .section-label .icon-slot{width:30px;height:30px;flex-shrink:0;background:var(--purple-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+  .section-label h2{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--purple);font-weight:700;}
+
+  /* INTRO */
+  .intro-section{padding:2.5rem 0 0;}
+  .intro-resistencias{background:var(--white);border-radius:16px;border:1px solid rgba(90,45,145,.1);padding:1.25rem 1.5rem;margin-bottom:2rem;display:flex;align-items:center;gap:1.25rem;}
+  .simbolo-slot{width:72px;height:72px;min-width:72px;border-radius:50%;overflow:hidden;background:var(--purple-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .simbolo-slot img{width:58px;height:58px;object-fit:contain;}
+  .intro-resistencias p{font-size:.92rem;line-height:1.75;color:var(--text);}
+
+  /* GRID ESCOLHA + MATERIAIS */
+  .escolha-materiais-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;}
+  .escolha-card,.materiais-card{background:var(--white);border-radius:16px;overflow:hidden;}
+  .escolha-card{border:1px solid rgba(90,45,145,.1);}
+  .materiais-card{border:1px solid rgba(45,106,79,.15);}
+  .escolha-header{background:var(--purple);padding:.85rem 1.25rem;display:flex;align-items:center;gap:.75rem;}
+  .materiais-header{background:var(--green);padding:.85rem 1.25rem;display:flex;align-items:center;gap:.75rem;}
+  .card-header-icon{width:30px;height:30px;background:rgba(255,255,255,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+  .card-header-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--white);font-weight:700;}
+  .escolha-body,.materiais-body{padding:1.1rem 1.25rem;}
+  .escolha-body p{font-size:.88rem;line-height:1.65;color:var(--text);margin-bottom:.75rem;}
+  .materiais-cols{display:flex;gap:0;}
+  .materiais-col{flex:1;}
+  .materiais-col+.materiais-col{padding-left:1.25rem;border-left:1px solid rgba(45,106,79,.15);}
+  .material-item{display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:var(--text);padding:.35rem 0;}
+  .mat-icon{font-size:1.1rem;flex-shrink:0;width:24px;text-align:center;}
+
+  /* FICHA + VISUAL */
+  .ficha-visual-section{margin-bottom:2rem;}
+  .ficha-visual-aviso{background:var(--blue-light);border:1px solid rgba(26,74,122,.2);border-left:4px solid var(--blue);border-radius:0 12px 12px 0;padding:.75rem 1.25rem;font-size:.85rem;color:var(--blue);margin-bottom:1.25rem;display:flex;align-items:center;gap:.75rem;}
+  .ficha-visual-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+  .ficha-card{background:var(--white);border-radius:16px;border:1.5px solid rgba(26,74,122,.2);overflow:hidden;}
+  .ficha-header{background:var(--blue);padding:.85rem 1.25rem;}
+  .ficha-header h3{font-family:'Playfair Display',serif;font-size:1rem;color:var(--white);font-weight:700;}
+  .ficha-body{padding:1.1rem 1.25rem;display:flex;flex-direction:column;gap:1rem;}
+  .ficha-campo{display:flex;align-items:flex-start;gap:.85rem;}
+  .fc-icon{width:36px;height:36px;min-width:36px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;margin-top:2px;}
+  .fc-text{flex:1;}
+  .fc-label{font-size:.8rem;font-weight:700;color:var(--blue);margin-bottom:.2rem;}
+  .fc-sub{font-size:.73rem;color:var(--text-muted);margin-bottom:.5rem;}
+  .fc-lines{display:flex;flex-direction:column;gap:8px;}
+  .fc-lines span{display:block;height:1px;background:rgba(26,74,122,.2);width:100%;}
+
+  .visual-card{background:var(--white);border-radius:16px;border:1.5px solid rgba(90,45,145,.2);overflow:hidden;}
+  .visual-header{background:var(--purple);padding:.85rem 1.25rem;text-align:center;}
+  .visual-header h3{font-family:'Playfair Display',serif;font-size:1rem;color:var(--white);font-weight:900;letter-spacing:.08em;text-transform:uppercase;}
+  .visual-body{padding:1.1rem 1.25rem;}
+  .visual-subtitulo{font-size:.82rem;font-weight:700;color:var(--purple);text-align:center;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem;}
+  .visual-escolha-label{font-size:.8rem;color:var(--text-muted);text-align:center;margin-bottom:.85rem;}
+  .visual-opcoes{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:1rem;}
+  .visual-opcao{border:1.5px solid rgba(90,45,145,.2);border-radius:10px;padding:.65rem .4rem;text-align:center;cursor:pointer;transition:all .2s;background:#faf8ff;}
+  .visual-opcao:hover{border-color:var(--purple-mid);background:var(--purple-light);}
+  .visual-opcao.selected{border-color:var(--purple);background:var(--purple-light);}
+  .vo-icon{font-size:1.6rem;display:block;margin-bottom:.3rem;}
+  .vo-label{font-size:.72rem;font-weight:600;color:var(--purple);}
+  .visual-area-dashed{border:2px dashed rgba(90,45,145,.25);border-radius:10px;height:110px;display:flex;align-items:center;justify-content:center;background:#fdfcff;color:rgba(90,45,145,.3);font-size:.78rem;text-align:center;padding:1rem;}
+
+  /* MURAL */
+  .mural-section{margin-bottom:2rem;}
+  .mural-card{background:var(--dark);border-radius:20px;padding:1.75rem 2rem;position:relative;overflow:hidden;display:grid;grid-template-columns:80px 1fr;gap:1.5rem;align-items:center;}
+  .mural-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 90% 50%,rgba(90,45,145,.45) 0%,transparent 70%);pointer-events:none;}
+  .mural-icon{width:72px;height:72px;min-width:72px;border-radius:16px;background:rgba(200,133,26,.15);border:1px solid rgba(200,133,26,.3);display:flex;align-items:center;justify-content:center;font-size:2.2rem;position:relative;z-index:1;}
+  .mural-inner{position:relative;z-index:1;}
+  .mural-tag{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
+  .mural-card h3{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--white);margin-bottom:.4rem;}
+  .mural-card p{color:rgba(255,255,255,.7);font-size:.88rem;line-height:1.65;}
+
+  /* SOCIALIZAÇÃO */
+  .socializacao-section{margin-bottom:2rem;}
+  .socializacao-card{background:var(--white);border-radius:16px;border:1px solid rgba(45,106,79,.15);overflow:hidden;}
+  .socializacao-header{background:var(--green);padding:.85rem 1.5rem;display:flex;align-items:center;justify-content:center;}
+  .socializacao-header h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--white);font-weight:900;letter-spacing:.1em;text-transform:uppercase;}
+  .socializacao-body{padding:1.25rem 1.5rem;display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:center;}
+  .socializacao-intro{font-size:.85rem;color:var(--text-muted);margin-bottom:.85rem;display:flex;align-items:center;gap:.5rem;}
+  .chat-icon{width:28px;height:28px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;}
+  .socializacao-lista{display:flex;flex-direction:column;gap:.5rem;}
+  .socializacao-lista li{display:flex;align-items:center;gap:.75rem;font-size:.88rem;color:var(--text);list-style:none;padding:.55rem .9rem;background:var(--green-light);border-radius:10px;border:1px solid rgba(45,106,79,.12);}
+  .socializacao-lista li::before{content:'•';color:var(--green);font-weight:900;font-size:1rem;flex-shrink:0;}
+  .socializacao-img{width:120px;min-width:120px;height:150px;border-radius:12px;overflow:hidden;background:var(--cream);display:flex;align-items:flex-end;justify-content:center;}
+  .socializacao-img img{width:100%;height:100%;object-fit:cover;object-position:center top;}
+
+  /* VAMOS PENSAR */
+  .pensar-section{margin-bottom:3rem;}
+  .pensar-card{background:var(--white);border-radius:20px;border:1px solid rgba(200,133,26,.2);overflow:hidden;}
+  .pensar-header{background:linear-gradient(135deg,#c8851a 0%,#e8a832 100%);padding:1rem 1.5rem;display:flex;align-items:center;gap:.75rem;}
+  .pensar-header .lamp{font-size:1.5rem;}
+  .pensar-header h3{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--dark);font-weight:900;letter-spacing:.08em;text-transform:uppercase;}
+  .pensar-body{padding:1.5rem;display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:start;}
+  .pensar-pergunta{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:1rem;}
+  textarea.pensar-ta{width:100%;min-height:110px;resize:vertical;border:1.5px solid rgba(200,133,26,.3);border-radius:12px;padding:.85rem 1rem;font-family:'DM Sans',sans-serif;font-size:.88rem;line-height:1.6;color:var(--text);background:#fffbf4;outline:none;transition:border-color .2s;}
+  textarea.pensar-ta:focus{border-color:var(--gold);}
+  textarea.pensar-ta::placeholder{color:#c8a87a;}
+  .btn-save-sm{margin-top:.6rem;background:var(--gold);color:var(--dark);border:none;border-radius:10px;padding:.6rem 1.4rem;font-size:.83rem;font-weight:700;cursor:pointer;transition:all .2s;}
+  .btn-save-sm:hover{background:var(--gold-light);}
+  .pensar-img{width:120px;min-width:120px;height:160px;border-radius:12px;overflow:hidden;background:#fff8e8;display:flex;align-items:flex-end;justify-content:center;}
+  .pensar-img img{width:100%;height:100%;object-fit:cover;object-position:center top;}
+  .img-fallback{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;height:100%;font-size:.7rem;color:rgba(200,133,26,.4);text-align:center;padding:.5rem;}
+
+  .bottom-nav{max-width:1200px;margin:0 auto;padding:2rem 2rem 3rem;display:flex;justify-content:space-between;align-items:center;}
+  .btn-nav-lg{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border-radius:10px;font-size:.9rem;font-weight:700;text-decoration:none;transition:all .25s;}
+  .btn-prev-lg{background:rgba(90,45,145,.1);color:var(--purple);border:1px solid rgba(90,45,145,.2);}
+  .btn-prev-lg:hover{background:rgba(90,45,145,.18);}
+  .concluir-btn{background:var(--green);color:var(--white);border-radius:10px;padding:.85rem 2rem;font-size:.9rem;font-weight:700;border:none;cursor:pointer;transition:all .25s;display:inline-flex;align-items:center;gap:.5rem;}
+  .concluir-btn:hover{background:#235a40;transform:translateY(-2px);}
+
+  @media(max-width:900px){
+    nav{padding:0 1.25rem;}
+    .nav-links{display:none;}
+    .page-hero{padding:5.5rem 1.5rem 2rem;}
+    .hero-grid,.escolha-materiais-grid,.ficha-visual-grid,.mural-card{grid-template-columns:1fr;}
+    .hero-simbolo,.socializacao-img,.pensar-img{display:none;}
+    .socializacao-body,.pensar-body{grid-template-columns:1fr;}
+    .visual-opcoes{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">
+    <div class="nav-brand-text">
+      <strong>CAETANA DISSE NÃO</strong>
+      <span>uma história de resistência</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-drop-toggle">Etapas ▾</a>
+      <ul class="dropdown-menu">
+        <li><a href="etapa_1.html">Etapa 1 – Quem foi Caetana?</a></li>
+        <li><a href="etapa_2.html">Etapa 2 – O processo judicial</a></li>
+        <li><a href="etapa_3.html">Etapa 3 – Princesas também decidem</a></li>
+        <li><a href="etapa_4.html">Etapa 4 – Que tipo de resistência?</a></li>
+        <li><a href="etapa_5.html" style="color:var(--gold-light)">Etapa 5 – Mural de Resistências</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="etapa-nav-top">
+      <div class="etapa-pill">✦ Etapa 5 de 5</div>
+      <div class="nav-etapa-btns">
+        <a href="etapa_4.html" class="btn-etapa btn-etapa-prev">← Etapa anterior</a>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div>
+        <h1>Mural de Resistências: <em>outras vozes, outras lutas</em></h1>
+        <div class="fonte-documental">
+          <div class="icon-slot">🗺️</div>
+          <p><strong>Produção final:</strong> a turma deverá pesquisar histórias de resistência e montar um mural coletivo — com a história de Caetana no centro e as demais ao redor.</p>
+        </div>
+      </div>
+      <div class="hero-simbolo">
+        <img src="imgs/simbolo_resistencia.png" alt="Símbolo de resistência"
+             onerror="this.style.display='none';this.parentElement.innerHTML='✊';">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container intro-section">
+
+  <!-- Bloco intro com símbolo -->
+  <div class="intro-resistencias">
+    <div class="simbolo-slot">
+      <img src="imgs/simbolo_resistencia.png" alt="Resistência"
+           onerror="this.style.display='none';this.parentElement.innerHTML='✊';">
+    </div>
+    <p>Ao longo da história, muitas pessoas e grupos enfrentaram injustiças e lutaram por seus direitos. Essas resistências aconteceram em diferentes épocas, lugares e contextos. Agora é o momento de conhecer outras histórias de coragem, organização e transformação social.</p>
+  </div>
+
+  <!-- Escolha + Materiais -->
+  <div class="escolha-materiais-grid">
+    <div class="escolha-card">
+      <div class="escolha-header">
+        <div class="card-header-icon">🔍</div>
+        <span class="card-header-title">Escolha da história</span>
+      </div>
+      <div class="escolha-body">
+        <p>A dupla escolhe uma <strong>história de resistência</strong> para pesquisar. O tema é livre, pode ser uma pessoa, grupo ou movimento de qualquer época ou lugar.</p>
+        <p style="font-size:.82rem;color:var(--text-muted);">Use as perguntas de direcionamento a baixo  para guiar a pesquisa e preencher a ficha.</p>
+      </div>
+    </div>
+    <div class="materiais-card">
+      <div class="materiais-header">
+        <div class="card-header-icon">🧰</div>
+        <span class="card-header-title">Materiais sugeridos</span>
+      </div>
+      <div class="materiais-body">
+        <div class="materiais-cols">
+          <div class="materiais-col">
+            <div class="material-item"><span class="mat-icon">📄</span>Folhas de papel colorido</div>
+            <div class="material-item"><span class="mat-icon">✂️</span>Tesoura</div>
+            <div class="material-item"><span class="mat-icon">🖊️</span>Canetinhas</div>
+            <div class="material-item"><span class="mat-icon">🫙</span>Cola</div>
+          </div>
+          <div class="materiais-col">
+            <div class="material-item"><span class="mat-icon">🖼️</span>Imagens impressas</div>
+            <div class="material-item"><span class="mat-icon">📚</span>Livros</div>
+            <div class="material-item"><span class="mat-icon">🌐</span>Internet para pesquisa</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ficha + Visual — folha à parte -->
+  <div class="ficha-visual-section">
+    <div class="ficha-visual-aviso">
+      <span style="font-size:1.2rem;flex-shrink:0;">📋</span>
+      <span>As atividades abaixo devem ser realizadas em <strong>uma folha à parte</strong>, que será colada no mural coletivo da turma.</span>
+    </div>
+    <div class="ficha-visual-grid">
+
+      <!-- Ficha de pesquisa -->
+      <div class="ficha-card">
+        <div class="ficha-header">
+          <h3>📝 Ficha de pesquisa</h3>
+        </div>
+        <div class="ficha-body">
+          <div class="ficha-campo">
+            <div class="fc-icon">👥</div>
+            <div class="fc-text">
+              <div class="fc-label">Quem foi / Quem são?</div>
+              <div class="fc-sub">Nome da pessoa, grupo ou movimento pesquisado.</div>
+              <div class="fc-lines"><span></span><span></span></div>
+            </div>
+          </div>
+          <div class="ficha-campo">
+            <div class="fc-icon">⚖️</div>
+            <div class="fc-text">
+              <div class="fc-label">Qual era a injustiça que buscaram ou buscam combater?</div>
+              <div class="fc-sub">Explique o problema enfrentado.</div>
+              <div class="fc-lines"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+          <div class="ficha-campo">
+            <div class="fc-icon">✊</div>
+            <div class="fc-text">
+              <div class="fc-label">Qual foi a forma de resistência utilizada?</div>
+              <div class="fc-sub">Como aconteceu a luta ou mobilização?</div>
+              <div class="fc-lines"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Representação visual -->
+      <div class="visual-card">
+        <div class="visual-header">
+          <h3>Representação Visual</h3>
+        </div>
+        <div class="visual-body">
+          <div class="visual-subtitulo">Como vamos representar essa história?</div>
+          <div class="visual-escolha-label">Escolha uma opção:</div>
+          <div class="visual-opcoes">
+            <div class="visual-opcao" onclick="selecionarVisual(this)">
+              <span class="vo-icon">🎨</span><span class="vo-label">Desenho</span>
+            </div>
+            <div class="visual-opcao" onclick="selecionarVisual(this)">
+              <span class="vo-icon">📷</span><span class="vo-label">Foto</span>
+            </div>
+            <div class="visual-opcao" onclick="selecionarVisual(this)">
+              <span class="vo-icon">✊</span><span class="vo-label">Símbolo</span>
+            </div>
+            <div class="visual-opcao" onclick="selecionarVisual(this)">
+              <span class="vo-icon">✂️</span><span class="vo-label">Colagem</span>
+            </div>
+          </div>
+          <div class="visual-area-dashed">
+            Cole ou desenhe a representação visual aqui<br>
+            <span style="font-size:.68rem;margin-top:.25rem;display:block;">(espaço para a imagem na folha física)</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mural coletivo -->
+  <div class="mural-section">
+    <div class="mural-card">
+      <div class="mural-icon">🗺️</div>
+      <div class="mural-inner">
+        <div class="mural-tag">✦ Montagem coletiva</div>
+        <h3>Painel Coletivo de Resistências</h3>
+        <p>Após a pesquisa realizada em conjunto, montaremos o Painel Coletivo de Resistências. Todas as histórias pesquisadas serão organizadas em uma parede ou mural, <strong style="color:var(--gold-light);">a história de Caetana fica no centro</strong> e as demais fichas são colocadas ao redor, divulgando os conhecimentos e pesquisas desenvolvidas pela turma.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Socialização -->
+  <div class="socializacao-section">
+    <div class="socializacao-card">
+      <div class="socializacao-header">
+        <h3>Socialização</h3>
+      </div>
+      <div class="socializacao-body">
+        <div>
+          <div class="socializacao-intro">
+            <div class="chat-icon">💬</div>
+            <span>Cada dupla fará uma apresentação rápida:</span>
+          </div>
+          <ul class="socializacao-lista">
+            <li>Quem foi ao alvo da pesquisa?</li>
+            <li>Qual injustiça enfrentou?</li>
+            <li>Como resistiu?</li>
+            <li>O que podemos aprender com essa história?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vamos pensar juntos -->
+  <div class="pensar-section">
+    <div class="pensar-card">
+      <div class="pensar-header">
+        <span class="lamp">💡</span>
+        <h3>Vamos pensar juntos</h3>
+      </div>
+      <div class="pensar-body">
+        <div>
+          <div class="pensar-pergunta">O que todas essas histórias têm em comum?</div>
+          <textarea class="pensar-ta" placeholder="Escreva aqui as observações da turma...&#10;&#10;Pense: o que une Caetana e todas as outras histórias pesquisadas? O que faz uma pessoa ou grupo resistir?"></textarea>
+          <button class="btn-save-sm" onclick="salvarResposta(this)">💾 Salvar resposta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="bottom-nav">
+  <a href="etapa_4.html" class="btn-nav-lg btn-prev-lg">← Etapa 4</a>
+  <button class="concluir-btn" onclick="concluir()">🎉 Concluir projeto</button>
+</div>
+
+<script>
+  function selecionarVisual(el){
+    el.closest('.visual-opcoes').querySelectorAll('.visual-opcao').forEach(o=>o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  function salvarResposta(btn){
+    const ta=btn.previousElementSibling;
+    if(!ta.value.trim()){alert('Escreva a resposta antes de salvar! 😊');return;}
+    btn.textContent='✅ Salvo!';btn.style.background='#2d6a4f';btn.style.color='#fff';
+    setTimeout(()=>{btn.textContent='💾 Salvar resposta';btn.style.background='';btn.style.color='';},3000);
+  }
+  function concluir(){
+    alert('🎉 Parabéns! Vocês concluíram o projeto "Caetana Disse Não". Agora é hora de montar o mural!');
+  }
+</script>
+</body>
+</html>
