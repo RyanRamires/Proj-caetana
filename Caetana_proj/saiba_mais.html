@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conteúdo Adicional – Caetana Disse Não</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark:#1a0a04;--gold:#c8851a;--gold-light:#e8a832;--cream:#f5ede0;--warm:#faf3e8;
+    --purple:#3d1f6e;--purple-mid:#5a2d91;--purple-light:#ede8f7;
+    --text:#2a1206;--text-muted:#6b5c7c;--white:#ffffff;
+    --green:#2d6a4f;--green-light:#e8f5ef;--orange:#c1440e;
+    --blue:#1a4a7a;--blue-light:#e8f0f8;
+    --brown:#7b4a1a;--brown-light:#f8efe3;
+    --red:#9b2020;--red-light:#fce8e8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--warm);color:var(--text);overflow-x:hidden;}
+
+  /* ── NAV ── */
+  nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(26,10,4,0.96);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:64px;border-bottom:1px solid rgba(200,133,26,0.25);}
+  .nav-brand{display:flex;align-items:center;text-decoration:none;}
+  .nav-brand-text strong{display:block;font-family:'Playfair Display',serif;color:var(--white);font-size:1.05rem;letter-spacing:.08em;}
+  .nav-brand-text span{font-family:'Lora',serif;color:var(--gold);font-style:italic;font-size:.75rem;}
+  .nav-links{display:flex;gap:.25rem;list-style:none;}
+  .nav-links a{display:block;padding:.5rem 1rem;color:rgba(255,255,255,.7);text-decoration:none;font-size:.85rem;font-weight:500;border-radius:6px;transition:all .2s;}
+  .nav-links a:hover{color:var(--gold-light);background:rgba(200,133,26,.1);}
+  .nav-dropdown{position:relative;}
+  .nav-dropdown::after{content:'';position:absolute;top:100%;left:0;width:100%;height:16px;}
+  .nav-drop-toggle{cursor:pointer;}
+  .dropdown-menu{display:none;position:absolute;top:calc(100% + 4px);left:0;background:rgba(26,10,4,.98);border:1px solid rgba(200,133,26,.25);border-radius:10px;list-style:none;min-width:240px;padding:.5rem 0;box-shadow:0 12px 40px rgba(0,0,0,.5);z-index:200;}
+  .nav-dropdown:hover .dropdown-menu{display:block;}
+  .dropdown-menu li a{display:block;padding:.6rem 1.25rem;color:rgba(255,255,255,.75);font-size:.83rem;white-space:nowrap;}
+  .dropdown-menu li a:hover{color:var(--gold-light);background:rgba(200,133,26,.1);}
+
+  /* ── HERO ── */
+  .page-hero{background:var(--dark);padding:6.5rem 3rem 3rem;position:relative;overflow:hidden;}
+  .page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 70% at 75% 50%,rgba(123,74,26,0.4) 0%,transparent 70%);}
+  .page-hero-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;}
+  .hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(200,133,26,.15);border:1px solid rgba(200,133,26,.35);color:var(--gold-light);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:.35rem 1rem;border-radius:999px;margin-bottom:1.25rem;}
+  .nav-etapa-btns{display:flex;gap:.75rem;}
+  .btn-etapa{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1.1rem;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none;transition:all .2s;}
+  .btn-etapa-prev{background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.15);}
+  .btn-etapa-prev:hover{background:rgba(255,255,255,.15);color:var(--white);}
+  .hero-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
+  .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.6rem);color:var(--white);font-weight:900;line-height:1.15;margin-bottom:.75rem;}
+  .page-hero h1 em{color:var(--gold);font-style:normal;}
+  .fonte-documental{background:rgba(255,255,255,.06);border:1px solid rgba(200,133,26,.2);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:.75rem 1.25rem;margin-top:.5rem;display:flex;align-items:flex-start;gap:.75rem;}
+  .fonte-documental .icon-slot{width:28px;height:28px;flex-shrink:0;background:rgba(200,133,26,.15);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+  .fonte-documental p{color:rgba(255,255,255,.7);font-size:.85rem;line-height:1.5;}
+  .fonte-documental strong{color:var(--gold-light);}
+
+  /* ── ÍNDICE LATERAL ── */
+  .container{max-width:1200px;margin:0 auto;padding:0 2rem;}
+  .page-layout{display:block;padding:2.5rem 0 3rem;}
+  .sidebar{display:none;}
+  .sidebar-nav{background:var(--white);border-radius:14px;border:1px solid rgba(90,45,145,.1);overflow:hidden;}
+  .sidebar-nav-header{background:var(--purple);padding:.75rem 1rem;}
+  .sidebar-nav-header span{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.8);}
+  .sidebar-nav ul{list-style:none;padding:.5rem 0;}
+  .sidebar-nav ul li a{display:flex;align-items:center;gap:.6rem;padding:.55rem 1rem;font-size:.82rem;color:var(--text-muted);text-decoration:none;transition:all .2s;border-left:3px solid transparent;}
+  .sidebar-nav ul li a:hover{color:var(--purple);background:var(--purple-light);border-left-color:var(--purple-mid);}
+  .sidebar-nav ul li a.active{color:var(--purple);background:var(--purple-light);border-left-color:var(--purple);font-weight:600;}
+  .sidebar-nav ul li a .nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+  /* ── CONTEÚDO PRINCIPAL ── */
+  .main-content{display:flex;flex-direction:column;gap:2.5rem;max-width:860px;margin:0 auto;}
+
+  /* ── SECTION LABEL ── */
+  .section-label{display:flex;align-items:center;gap:.6rem;margin-bottom:1.1rem;}
+  .section-label .icon-slot{width:30px;height:30px;flex-shrink:0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+  .section-label h2{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;}
+
+  /* ── CARD BASE ── */
+  .ctx-card{background:var(--white);border-radius:20px;overflow:hidden;border:1px solid rgba(0,0,0,.07);}
+  .ctx-header{padding:.9rem 1.5rem;display:flex;align-items:center;gap:.85rem;}
+  .ctx-header .ch-icon{width:38px;height:38px;min-width:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+  .ctx-header h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;}
+  .ctx-body{padding:1.1rem 1.5rem 1.4rem;}
+  .ctx-body p{font-size:.9rem;line-height:1.78;color:var(--text);}
+  .ctx-body p+p{margin-top:.75rem;}
+
+  /* Fazenda — marrom */
+  .card-fazenda .ctx-header{background:var(--brown-light);}
+  .card-fazenda .ctx-header .ch-icon{background:var(--brown);color:var(--white);}
+  .card-fazenda .ctx-header h3{color:var(--brown);}
+  .card-fazenda{border-color:rgba(123,74,26,.15);}
+
+  /* Café — verde */
+  .card-cafe .ctx-header{background:var(--green-light);}
+  .card-cafe .ctx-header .ch-icon{background:var(--green);color:var(--white);}
+  .card-cafe .ctx-header h3{color:var(--green);}
+  .card-cafe{border-color:rgba(45,106,79,.15);}
+
+  /* Escravidão — roxo */
+  .card-escravidao .ctx-header{background:var(--purple-light);}
+  .card-escravidao .ctx-header .ch-icon{background:var(--purple);color:var(--white);}
+  .card-escravidao .ctx-header h3{color:var(--purple);}
+  .card-escravidao{border-color:rgba(90,45,145,.15);}
+
+  /* Lei Maria da Penha — vermelho/laranja */
+  .card-lei .ctx-header{background:var(--red-light);}
+  .card-lei .ctx-header .ch-icon{background:var(--red);color:var(--white);}
+  .card-lei .ctx-header h3{color:var(--red);}
+  .card-lei{border-color:rgba(155,32,32,.15);}
+
+  /* destaque inline */
+  .destaque-inline{display:inline-flex;align-items:center;gap:.4rem;background:rgba(200,133,26,.1);border:1px solid rgba(200,133,26,.25);border-radius:8px;padding:.3rem .75rem;font-size:.82rem;font-weight:700;color:#7a5010;margin:.5rem 0;}
+
+  /* quote */
+  .ctx-quote{background:rgba(90,45,145,.07);border-left:3px solid var(--purple);border-radius:0 10px 10px 0;padding:.85rem 1.1rem;margin:.85rem 0;font-family:'Lora',serif;font-style:italic;font-size:.9rem;color:var(--purple);line-height:1.55;}
+
+  /* ── SEÇÃO FOTOS DO LIVRO ── */
+  .livro-section{background:var(--dark);border-radius:24px;padding:2rem;position:relative;overflow:hidden;}
+  .livro-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 15% 50%,rgba(200,133,26,.2) 0%,transparent 65%);pointer-events:none;}
+  .livro-section-inner{position:relative;z-index:1;}
+  .livro-tag{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
+  .livro-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--white);margin-bottom:.35rem;}
+  .livro-sub{color:rgba(255,255,255,.6);font-size:.85rem;line-height:1.6;margin-bottom:1.5rem;}
+  .livro-sub em{color:var(--gold-light);font-style:italic;}
+
+  /* Layout: capa à esquerda + 3 fotos à direita */
+  .livro-grid{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:start;}
+
+  /* Capa do livro */
+  .livro-capa-wrap{display:flex;flex-direction:column;align-items:center;gap:.6rem;}
+  .livro-capa{
+    width:180px;
+    aspect-ratio:365/547;
+    border-radius:6px;overflow:hidden;
+    background:rgba(255,255,255,.08);
+    border:2px solid rgba(200,133,26,.3);
+    box-shadow:6px 6px 24px rgba(0,0,0,.5);
+    position:relative;
+  }
+  .livro-capa img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+  .livro-capa-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;color:rgba(200,133,26,.4);font-size:.7rem;text-align:center;padding:.75rem;}
+  .livro-capa-label{font-size:.7rem;color:rgba(255,255,255,.5);font-style:italic;text-align:center;max-width:180px;line-height:1.4;}
+
+  /* 3 fotos da Caetana */
+  .fotos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+  .foto-item{display:flex;flex-direction:column;gap:.5rem;}
+  .foto-slot{
+    border-radius:10px;overflow:hidden;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.12);
+    position:relative;
+  }
+  /* proporções individuais */
+  .foto-slot.f1{aspect-ratio:696/730;}  /* ~1:1 */
+  .foto-slot.f2{aspect-ratio:522/563;}  /* ~1:1 */
+  .foto-slot.f3{aspect-ratio:285/509;}  /* retrato */
+  .foto-slot img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;position:absolute;inset:0;}
+  .foto-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;color:rgba(255,255,255,.25);font-size:.7rem;text-align:center;padding:.5rem;}
+  .foto-placeholder span{font-size:1.8rem;}
+  .foto-caption{font-size:.68rem;color:rgba(255,255,255,.45);font-style:italic;text-align:center;line-height:1.4;}
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav{max-width:1200px;margin:0 auto;padding:1.5rem 2rem 3rem;display:flex;justify-content:flex-start;}
+  .btn-nav-lg{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border-radius:10px;font-size:.9rem;font-weight:700;text-decoration:none;transition:all .25s;}
+  .btn-prev-lg{background:rgba(90,45,145,.1);color:var(--purple);border:1px solid rgba(90,45,145,.2);}
+  .btn-prev-lg:hover{background:rgba(90,45,145,.18);}
+
+  /* ── RESPONSIVO ── */
+  @media(max-width:1000px){
+    .page-layout{grid-template-columns:1fr;}
+    .sidebar{display:none;}
+  }
+  @media(max-width:900px){
+    nav{padding:0 1.25rem;}
+    .nav-links{display:none;}
+    .page-hero{padding:5.5rem 1.5rem 2rem;}
+    .livro-grid{grid-template-columns:1fr;}
+    .fotos-grid{grid-template-columns:repeat(2,1fr);}
+    .livro-capa{width:140px;}
+  }
+  @media(max-width:500px){
+    .fotos-grid{grid-template-columns:1fr;}
+  }
+
+  /* ── VÍDEO ── */
+  .video-section{margin-top:1.25rem;}
+  .video-ref{display:flex;align-items:flex-start;gap:.75rem;background:var(--purple-light);border:1px solid rgba(90,45,145,.15);border-left:3px solid var(--purple-mid);border-radius:0 10px 10px 0;padding:.75rem 1.1rem;margin-bottom:1rem;}
+  .video-ref-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+  .video-ref p{font-size:.83rem;line-height:1.55;color:var(--purple);font-family:'Lora',serif;font-style:italic;}
+  .video-ref p strong{font-style:normal;color:var(--purple-mid);}
+  .video-wrapper{position:relative;width:100%;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 8px 32px rgba(0,0,0,.2);}
+  .video-wrapper iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="index.html">
+    <div class="nav-brand-text">
+      <strong>CAETANA DISSE NÃO</strong>
+      <span>uma história de resistência</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-drop-toggle">Etapas ▾</a>
+      <ul class="dropdown-menu">
+        <li><a href="etapa_1.html">Etapa 1 – Quem foi Caetana?</a></li>
+        <li><a href="etapa_2.html">Etapa 2 – Princesas também decidem</a></li>
+        <li><a href="etapa_3.html">Etapa 3 – O processo judicial</a></li>
+        <li><a href="etapa_4.html">Etapa 4 – Que tipo de resistência?</a></li>
+        <li><a href="etapa_5.html">Etapa 5 – Produção final</a></li>
+      </ul>
+    </li>
+    <li><a href="saiba_mais.html">Saiba mais</a></li>
+    <li><a href="referencias.html">Referências</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="hero-top-row">
+      <div class="hero-tag">✦ Conteúdo adicional</div>
+      <div class="nav-etapa-btns">
+        <a href="etapa_5.html" class="btn-etapa btn-etapa-prev">← Voltar às etapas</a>
+      </div>
+    </div>
+    <h1>Contextos: <em>para entender mais</em></h1>
+    <div class="fonte-documental">
+      <div class="icon-slot">📖</div>
+      <p><strong>Material de aprofundamento:</strong> saiba mais sobre a Fazenda Rio Claro, a escravidão no Brasil, a Lei Maria da Penha e veja imagens do livro original de Sandra Lauderdale Graham.</p>
+    </div>
+  </div>
+</div>
+
+<!-- LAYOUT COM SIDEBAR -->
+<div class="container">
+  <div class="page-layout">
+
+    <!-- ÍNDICE LATERAL -->
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-header"><span>Nesta página</span></div>
+        <ul>
+          <li><a href="#fazenda" class="active"><span class="nav-dot" style="background:#7b4a1a;"></span>Fazenda Rio Claro</a></li>
+          <li><a href="#cafe"><span class="nav-dot" style="background:#2d6a4f;"></span>Fazendas de café</a></li>
+          <li><a href="#escravidao"><span class="nav-dot" style="background:#3d1f6e;"></span>Escravidão</a></li>
+          <li><a href="#lei"><span class="nav-dot" style="background:#9b2020;"></span>Lei Maria da Penha</a></li>
+          <li><a href="#video"><span class="nav-dot" style="background:#5a2d91;"></span>Vídeo</a></li>
+          <li><a href="#livro"><span class="nav-dot" style="background:#c8851a;"></span>Fotos do livro</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main class="main-content">
+
+      <!-- 1. Fazenda Rio Claro -->
+      <div id="fazenda">
+        <div class="section-label">
+          <div class="icon-slot" style="background:var(--brown-light);">🏡</div>
+          <h2 style="color:var(--brown);">Fazenda Rio Claro</h2>
+        </div>
+        <div class="ctx-card card-fazenda">
+          <div class="ctx-header">
+            <div class="ch-icon">🗺️</div>
+            <h3>Localização e contexto</h3>
+          </div>
+          <div class="ctx-body">
+            <p>A Fazenda Rio Claro ficava no Vale do Paraíba, entre os rios Paraitinga e Paraibuna, na vila de Santo Antônio de Paraibuna (SP). Era uma grande propriedade produtora de café, uma das principais atividades econômicas do Brasil no século XIX.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Fazendas de café / Produção -->
+      <div id="cafe">
+        <div class="section-label">
+          <div class="icon-slot" style="background:var(--green-light);">☕</div>
+          <h2 style="color:var(--green);">Fazendas de café</h2>
+        </div>
+        <div class="ctx-card card-cafe">
+          <div class="ctx-header">
+            <div class="ch-icon">🌱</div>
+            <h3>Produção de café</h3>
+          </div>
+          <div class="ctx-body">
+            <p>A fazenda tinha cerca de <strong>30 mil pés de café</strong>. Em 1830, produziu aproximadamente <strong>30 mil quilos (2 mil arrobas)</strong> de café, o que representou quase um décimo de todo o café vendido no distrito naquele ano.</p>
+            <div class="destaque-inline">✦ ~1/10 de toda a produção do distrito em 1830</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Escravidão -->
+      <div id="escravidao">
+        <div class="section-label">
+          <div class="icon-slot" style="background:var(--purple-light);">⛓️</div>
+          <h2 style="color:var(--purple);">Escravidão no Brasil</h2>
+        </div>
+        <div class="ctx-card card-escravidao">
+          <div class="ctx-header">
+            <div class="ch-icon">📜</div>
+            <h3>Mais de trezentos anos de brutalidade e resistência</h3>
+          </div>
+          <div class="ctx-body">
+            <p>A escravidão no Brasil durou mais de trezentos anos e foi um sistema brutal no qual milhões de pessoas foram trazidas da África contra a sua vontade. Homens, mulheres e crianças eram forçados a trabalhar nas lavouras de cana-de-açúcar, café, mineração e nas casas dos senhores, sem receber nada em troca e sofrendo castigos físicos.</p>
+            <div class="ctx-quote">Apesar da violência, os escravizados resistiram de muitas formas: formaram quilombos, lutaram na Justiça quando possível, mantiveram suas religiões e costumes africanos e, como Caetana, disseram "não" a ordens que consideravam injustas.</div>
+            <p>A escravidão só foi abolida em <strong>1888</strong>, mas seu impacto na sociedade brasileira ainda é sentido até hoje.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vídeo: Escravidão no Brasil -->
+      <div id="video" class="video-section">
+        <div class="video-ref">
+          <span class="video-ref-icon">📺</span>
+          <p>TODA MATÉRIA. <strong>Escravidão no Brasil: um resumo completo</strong>: YouTube, 2024. Disponível em:</p>
+        </div>
+        <div class="video-wrapper">
+          <iframe width="560" height="315"
+            src="https://www.youtube.com/embed/KIWJClnWMO8?si=s9smCooNmy6jc9_s"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <!-- 4. Lei Maria da Penha -->
+      <div id="lei">
+        <div class="section-label">
+          <div class="icon-slot" style="background:var(--red-light);">⚖️</div>
+          <h2 style="color:var(--red);">Lei Maria da Penha</h2>
+        </div>
+        <div class="ctx-card card-lei">
+          <div class="ctx-header">
+            <div class="ch-icon">🛡️</div>
+            <h3>Lei nº 11.340, sancionada em 2006</h3>
+          </div>
+          <div class="ctx-body">
+            <p>A Lei Maria da Penha é um marco na proteção das mulheres no Brasil, criando mecanismos para prevenir e punir a violência doméstica e familiar. Ela é nomeada em homenagem à farmacêutica cearense <strong>Maria da Penha Maia Fernandes</strong>, que lutou por quase 20 anos para ver seu agressor condenado após sofrer duas tentativas de feminicídio que a deixaram paraplégica.</p>
+            <p>Essa lei ampliou os direitos das mulheres, transformando a violência doméstica, antes tratada como um "problema privado" em um <strong>crime de relevância pública</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Fotos do livro -->
+      <div id="livro">
+        <div class="section-label">
+          <div class="icon-slot" style="background:rgba(200,133,26,.15);">📷</div>
+          <h2 style="color:var(--brown);">Imagens do livro original</h2>
+        </div>
+
+        <div class="livro-section">
+          <div class="livro-section-inner">
+            <div class="livro-tag">✦ Fonte bibliográfica</div>
+            <div class="livro-title">Caetana Disse Não Sandra Lauderdale Graham</div>
+            <div class="livro-sub">As fotos a seguir foram retiradas do livro <em>"Caetana Diz Não"</em> de Sandra Lauderdale Graham.</div>
+
+            <div class="livro-grid">
+
+              <!-- Capa -->
+              <div class="livro-capa-wrap">
+                <div class="livro-capa">
+                  <img src="imgs/capa_livro_caetana.jpeg" alt="Capa do livro Caetana Disse Não"
+                       onload="this.nextElementSibling.style.display='none';"
+                       onerror="this.style.display='none';">
+                  <div class="livro-capa-placeholder">
+                    <span style="font-size:2rem;">📚</span>
+                    <p>capa_livro.jpg<br>365×547</p>
+                  </div>
+                </div>
+                <div class="livro-capa-label">Capa do livro original<br><em>Sandra Lauderdale Graham</em></div>
+              </div>
+
+              <!-- 3 fotos -->
+              <div class="fotos-grid">
+
+                <div class="foto-item">
+                  <div class="foto-slot f1">
+                    <img src="imgs/foto_caetana_1.jpeg" alt="Foto 1 — Caetana"
+                         onload="this.nextElementSibling.style.display='none';"
+                         onerror="this.style.display='none';">
+                    <div class="foto-placeholder">
+                      <span>🖼️</span>
+                      <p>caetana_foto1.jpg<br>696×730</p>
+                    </div>
+                  </div>
+                  <div class="foto-caption">Imagem do livro<br><em>Caetana Disse Não</em></div>
+                </div>
+
+                <div class="foto-item">
+                  <div class="foto-slot f2">
+                    <img src="imgs/foto_caetana_2.jpeg" alt="Foto 2 — Caetana"
+                         onload="this.nextElementSibling.style.display='none';"
+                         onerror="this.style.display='none';">
+                    <div class="foto-placeholder">
+                      <span>🖼️</span>
+                      <p>caetana_foto2.jpg<br>522×563</p>
+                    </div>
+                  </div>
+                  <div class="foto-caption">Imagem do livro<br><em>Caetana Disse Não</em></div>
+                </div>
+
+                <div class="foto-item">
+                  <div class="foto-slot f3">
+                    <img src="imgs/foto caetana_3.jpeg" alt="Foto 3 — Caetana"
+                         onload="this.nextElementSibling.style.display='none';"
+                         onerror="this.style.display='none';">
+                    <div class="foto-placeholder">
+                      <span>🖼️</span>
+                      <p>caetana_foto3.jpg<br>285×509</p>
+                    </div>
+                  </div>
+                  <div class="foto-caption">Imagem do livro<br><em>Caetana Disse Não</em></div>
+                </div>
+
+              </div><!-- /fotos-grid -->
+            </div><!-- /livro-grid -->
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div class="bottom-nav">
+  <a href="etapa_5.html" class="btn-nav-lg btn-prev-lg">← Voltar às etapas</a>
+</div>
+
+<script>
+  // Highlight sidebar link on scroll
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('.sidebar-nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+
+</body>
+</html>
