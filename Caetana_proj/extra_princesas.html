@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Etapa 3 – Princesas também tomam decisões</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark:         #1a0a04;
+    --gold:         #c8851a;
+    --gold-light:   #e8a832;
+    --cream:        #f5ede0;
+    --warm:         #faf3e8;
+    --purple:       #3d1f6e;
+    --purple-mid:   #5a2d91;
+    --purple-light: #ede8f7;
+    --text:         #2a1206;
+    --text-muted:   #6b5c7c;
+    --white:        #ffffff;
+    --green:        #2d6a4f;
+    --orange:       #c1440e;
+    --blue:         #1a4a7a;
+    --blue-light:   #e8f0f8;
+
+    /* Cores das princesas */
+    --mulan-bg:     #fef3f0;
+    --mulan-accent: #c0392b;
+    --mulan-dark:   #7d1a10;
+    --merida-bg:    #f0f7ee;
+    --merida-accent:#2d7a3a;
+    --merida-dark:  #1a4e22;
+    --moana-bg:     #edf6fb;
+    --moana-accent: #1a6b9e;
+    --moana-dark:   #0e4169;
+    --tiana-bg:     #f2f9f3;
+    --tiana-accent: #2d7a3a;
+    --tiana-dark:   #1a4a22;
+    --caetana-bg:   var(--purple-light);
+    --caetana-accent: var(--purple);
+    --caetana-dark: #2a0f50;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--warm); color: var(--text); overflow-x: hidden; }
+
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(26,10,4,0.96); backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 64px;
+    border-bottom: 1px solid rgba(200,133,26,0.25);
+  }
+  .nav-brand { display: flex; align-items: center; text-decoration: none; }
+  .nav-brand-text strong { display: block; font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.05rem; letter-spacing: 0.08em; }
+  .nav-brand-text span { font-family: 'Lora', serif; color: var(--gold); font-style: italic; font-size: 0.75rem; }
+  .nav-links { display: flex; gap: 0.25rem; list-style: none; }
+  .nav-links a { display: block; padding: 0.5rem 1rem; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; font-weight: 500; border-radius: 6px; transition: all 0.2s; }
+  .nav-links a:hover { color: var(--gold-light); background: rgba(200,133,26,0.1); }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown::after { content: ''; position: absolute; top: 100%; left: 0; width: 100%; height: 16px; }
+  .nav-drop-toggle { cursor: pointer; }
+  .dropdown-menu { display: none; position: absolute; top: calc(100% + 4px); left: 0; background: rgba(26,10,4,0.98); border: 1px solid rgba(200,133,26,0.25); border-radius: 10px; list-style: none; min-width: 240px; padding: 0.5rem 0; box-shadow: 0 12px 40px rgba(0,0,0,0.5); z-index: 200; }
+  .nav-dropdown:hover .dropdown-menu { display: block; }
+  .dropdown-menu li a { display: block; padding: 0.6rem 1.25rem; color: rgba(255,255,255,0.75); font-size: 0.83rem; white-space: nowrap; border-radius: 0; }
+  .dropdown-menu li a:hover { color: var(--gold-light); background: rgba(200,133,26,0.1); }
+
+  
+  .page-hero {
+    background: var(--dark); padding: 6.5rem 3rem 3rem;
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(90,45,145,0.4) 0%, transparent 70%);
+  }
+  .page-hero-inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; }
+  .etapa-nav-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+  .etapa-pill { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(200,133,26,0.15); border: 1px solid rgba(200,133,26,0.35); color: var(--gold-light); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 999px; }
+  .nav-etapa-btns { display: flex; gap: 0.75rem; }
+  .btn-etapa { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1.1rem; border-radius: 8px; font-size: 0.82rem; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+  .btn-etapa-prev { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.15); }
+  .btn-etapa-prev:hover { background: rgba(255,255,255,0.15); color: var(--white); }
+  .btn-etapa-next { background: var(--gold); color: var(--dark); }
+  .btn-etapa-next:hover { background: var(--gold-light); }
+  .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3.5vw, 2.6rem); color: var(--white); font-weight: 900; line-height: 1.15; margin-bottom: 0.75rem; }
+  .page-hero h1 em { color: var(--gold); font-style: normal; }
+  .fonte-documental { background: rgba(255,255,255,0.06); border: 1px solid rgba(200,133,26,0.2); border-left: 3px solid var(--gold); border-radius: 0 10px 10px 0; padding: 0.75rem 1.25rem; margin-top: 0.5rem; display: flex; align-items: flex-start; gap: 0.75rem; }
+  .fonte-documental .icon-slot { width: 28px; height: 28px; flex-shrink: 0; background: rgba(200,133,26,0.15); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+  .fonte-documental p { color: rgba(255,255,255,0.7); font-size: 0.85rem; line-height: 1.5; }
+  .fonte-documental strong { color: var(--gold-light); }
+
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+
+  .section-intro { padding: 2.5rem 0 0; }
+  .section-label { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
+  .section-label .icon-slot { width: 30px; height: 30px; flex-shrink: 0; background: var(--purple-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+  .section-label h2 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--purple); font-weight: 700; }
+  .intro-text { font-size: 0.92rem; line-height: 1.75; color: var(--text); background: var(--white); border-radius: 12px; padding: 1.25rem 1.5rem; border: 1px solid rgba(90,45,145,0.1); margin-bottom: 2rem; }
+
+
+  .princesas-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; margin-bottom: 2.5rem; }
+
+  .princesa-card { background: var(--white); border-radius: 20px; border: 1px solid rgba(0,0,0,0.07); overflow: hidden; display: flex; flex-direction: row; transition: transform 0.2s, box-shadow 0.2s; }
+  .princesa-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.09); }
+
+  .princesa-img-slot { width: 160px; min-width: 160px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .princesa-img-slot img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .princesa-img-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.78rem; text-align: center; padding: 1rem; width: 100%; height: 100%; }
+
+  .princesa-badge { position: absolute; top: 8px; left: 8px; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 999px; }
+
+  .princesa-body { padding: 1rem 1.1rem 1.1rem; flex: 1; display: flex; flex-direction: column; gap: 0.4rem; justify-content: center; }
+  .princesa-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; line-height: 1; }
+  .princesa-origin { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; }
+  .princesa-desc { font-size: 0.83rem; line-height: 1.6; color: var(--text); margin-top: 0.2rem; text-align: justify;}
+
+  .princesa-nao-tag { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.4rem; padding: 0.5rem 0.8rem; border-radius: 10px; }
+  .princesa-nao-tag .label { font-size: 0.63rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.65; }
+  .princesa-nao-tag .valor { font-size: 0.8rem; font-weight: 600; line-height: 1.35; }
+
+
+  .card-mulan .princesa-img-slot { background: #fde8e3; }
+  .card-mulan .princesa-img-placeholder { color: rgba(192,57,43,0.3); }
+  .card-mulan .princesa-badge { background: var(--mulan-accent); color: var(--white); }
+  .card-mulan .princesa-name { color: var(--mulan-dark); }
+  .card-mulan .princesa-origin { color: var(--mulan-accent); }
+  .card-mulan .princesa-nao-tag { background: var(--mulan-bg); }
+  .card-mulan .princesa-nao-tag .label { color: var(--mulan-accent); }
+  .card-mulan .princesa-nao-tag .valor { color: var(--mulan-dark); }
+
+
+  .card-merida .princesa-img-slot { background: #e4f2e5; }
+  .card-merida .princesa-img-placeholder { color: rgba(45,122,58,0.3); }
+  .card-merida .princesa-badge { background: var(--merida-accent); color: var(--white); }
+  .card-merida .princesa-name { color: var(--merida-dark); }
+  .card-merida .princesa-origin { color: var(--merida-accent); }
+  .card-merida .princesa-nao-tag { background: var(--merida-bg); }
+  .card-merida .princesa-nao-tag .label { color: var(--merida-accent); }
+  .card-merida .princesa-nao-tag .valor { color: var(--merida-dark); }
+
+
+  .card-moana .princesa-img-slot { background: #dff0f8; }
+  .card-moana .princesa-img-placeholder { color: rgba(26,107,158,0.3); }
+  .card-moana .princesa-badge { background: var(--moana-accent); color: var(--white); }
+  .card-moana .princesa-name { color: var(--moana-dark); }
+  .card-moana .princesa-origin { color: var(--moana-accent); }
+  .card-moana .princesa-nao-tag { background: var(--moana-bg); }
+  .card-moana .princesa-nao-tag .label { color: var(--moana-accent); }
+  .card-moana .princesa-nao-tag .valor { color: var(--moana-dark); }
+
+
+  .card-tiana .princesa-img-slot { background: #dff2e3; }
+  .card-tiana .princesa-img-placeholder { color: rgba(45,122,58,0.3); }
+  .card-tiana .princesa-badge { background: var(--tiana-accent); color: var(--white); }
+  .card-tiana .princesa-name { color: var(--tiana-dark); }
+  .card-tiana .princesa-origin { color: var(--tiana-accent); }
+  .card-tiana .princesa-nao-tag { background: var(--tiana-bg); }
+  .card-tiana .princesa-nao-tag .label { color: var(--tiana-accent); }
+  .card-tiana .princesa-nao-tag .valor { color: var(--tiana-dark); }
+
+
+  .sistematizacao-banner {
+    background: var(--dark); border-radius: 20px; padding: 1.75rem 2rem;
+    position: relative; overflow: hidden; margin-bottom: 2.5rem;
+    display: grid; grid-template-columns: 80px 1fr; gap: 1.5rem; align-items: center;
+  }
+  .sistematizacao-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(200,133,26,0.35) 0%, transparent 70%); pointer-events: none; }
+  .sistematizacao-icon {
+    width: 72px; height: 72px; min-width: 72px;
+    border-radius: 16px; background: rgba(200,133,26,0.15);
+    border: 1px solid rgba(200,133,26,0.3);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; z-index: 1; font-size: 2.2rem;
+  }
+  .sistematizacao-inner { position: relative; z-index: 1; }
+  .sistematizacao-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+  .sistematizacao-banner h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--white); margin-bottom: 0.35rem; }
+  .sistematizacao-banner p { color: rgba(255,255,255,0.7); font-size: 0.88rem; line-height: 1.6; }
+
+
+  .ativ-section { padding: 0 0 0; }
+  .ativ-pergunta-box {
+    background: var(--white); border-radius: 16px; border: 1px solid rgba(90,45,145,0.1);
+    padding: 1.1rem 1.5rem; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .ativ-pergunta-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .ativ-pergunta-box p { font-size: 0.93rem; line-height: 1.55; color: var(--text); }
+  .ativ-pergunta-box strong { color: var(--purple-mid); }
+
+
+  .tabela-wrapper { background: var(--white); border-radius: 20px; border: 1px solid rgba(90,45,145,0.1); overflow: hidden; margin-bottom: 2.5rem; }
+  .tabela-header { background: var(--purple); padding: 0.9rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+  .tabela-header .icon-slot { width: 32px; height: 32px; flex-shrink: 0; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .tabela-header h3 { color: var(--white); font-size: 0.92rem; font-weight: 700; }
+
+  table.resistencia-table { width: 100%; border-collapse: collapse; }
+  table.resistencia-table thead tr { background: var(--purple-light); }
+  table.resistencia-table th { padding: 0.75rem 1.25rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--purple); text-align: left; border-bottom: 2px solid rgba(90,45,145,0.15); }
+  table.resistencia-table th:last-child { width: 65%; }
+
+  table.resistencia-table tbody tr { border-bottom: 1px solid rgba(90,45,145,0.07); transition: background 0.15s; }
+  table.resistencia-table tbody tr:last-child { border-bottom: none; }
+  table.resistencia-table tbody tr:hover { background: #faf8ff; }
+
+  .personagem-cell { display: flex; align-items: center; gap: 0.85rem; padding: 0.85rem 1.25rem; }
+  .personagem-dot { width: 36px; height: 36px; min-width: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+  .personagem-dot.mulan    { background: var(--mulan-bg);    }
+  .personagem-dot.merida   { background: var(--merida-bg);   }
+  .personagem-dot.moana    { background: var(--moana-bg);    }
+  .personagem-dot.tiana    { background: var(--tiana-bg);    }
+  .personagem-dot.caetana  { background: var(--caetana-bg);  }
+
+  .personagem-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; }
+  .personagem-name.mulan    { color: var(--mulan-dark);    }
+  .personagem-name.merida   { color: var(--merida-dark);   }
+  .personagem-name.moana    { color: var(--moana-dark);    }
+  .personagem-name.tiana    { color: var(--tiana-dark);    }
+  .personagem-name.caetana  { color: var(--caetana-dark);  }
+
+  .personagem-film { font-size: 0.7rem; color: var(--text-muted); }
+
+  td.resposta-cell { padding: 0.7rem 1.25rem 0.7rem 0; }
+  textarea.tabela-ta {
+    width: 100%; min-height: 68px; resize: vertical;
+    border: 1.5px solid rgba(90,45,145,0.15); border-radius: 10px;
+    padding: 0.65rem 0.85rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.84rem; line-height: 1.55; color: var(--text);
+    background: #faf8ff; outline: none; transition: border-color 0.2s;
+  }
+  textarea.tabela-ta:focus { border-color: var(--purple-mid); }
+  textarea.tabela-ta::placeholder { color: #b8aad0; }
+
+  .caetana-row { background: var(--purple-light) !important; }
+  .caetana-row td.resposta-cell textarea { background: #f5f0ff; border-color: rgba(90,45,145,0.25); }
+
+
+  .pergunta2-card {
+    background: var(--white); border-radius: 16px;
+    border: 1px solid rgba(90,45,145,0.1); overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .pergunta2-header {
+    background: linear-gradient(135deg, var(--purple-light) 0%, #ddd4f5 100%);
+    padding: 0.9rem 1.5rem; border-bottom: 1px solid rgba(90,45,145,0.12);
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .pergunta2-header .icon-slot { width: 30px; height: 30px; flex-shrink: 0; background: var(--purple); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+  .pergunta2-header h3 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--purple); font-weight: 700; }
+  .pergunta2-body { padding: 1.25rem 1.5rem; }
+  .pergunta2-body p { font-size: 0.9rem; line-height: 1.7; color: var(--text); margin-bottom: 1rem; }
+  .opcoes-escolha { display: flex; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .opcao-btn {
+    padding: 0.5rem 1.2rem; border-radius: 10px; border: 2px solid rgba(90,45,145,0.2);
+    background: transparent; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 600; color: var(--purple-mid); transition: all 0.2s;
+  }
+  .opcao-btn:hover, .opcao-btn.selected { background: var(--purple); color: var(--white); border-color: var(--purple); }
+
+  .justificativa-area { margin-top: 0.5rem; }
+  .justificativa-area label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  textarea.justificativa-ta {
+    width: 100%; min-height: 80px; resize: vertical;
+    border: 1.5px solid rgba(90,45,145,0.2); border-radius: 10px;
+    padding: 0.75rem 0.9rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; line-height: 1.55; color: var(--text);
+    background: #faf8ff; outline: none; transition: border-color 0.2s;
+  }
+  textarea.justificativa-ta:focus { border-color: var(--purple-mid); }
+  textarea.justificativa-ta::placeholder { color: #b0a0c8; }
+
+  .btn-save-sm { margin-top: 0.6rem; background: var(--purple); color: var(--white); border: none; border-radius: 8px; padding: 0.6rem 1.25rem; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+  .btn-save-sm:hover { background: var(--purple-mid); }
+
+
+  .emcomum-section { margin-bottom: 3rem; }
+  .emcomum-card {
+    background: var(--dark); border-radius: 20px; padding: 0;
+    position: relative; overflow: hidden;
+    display: grid; grid-template-columns: 1fr 420px;
+  }
+  .emcomum-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 50% 70% at 20% 50%, rgba(90,45,145,0.55) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .emcomum-left { padding: 2rem 2.5rem; position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; gap: 1rem; }
+  .emcomum-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+  .emcomum-left h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--white); line-height: 1.3; }
+  .emcomum-left p { color: rgba(255,255,255,0.65); font-size: 0.88rem; line-height: 1.7; }
+  .emcomum-right { background: rgba(255,255,255,0.04); border-left: 1px solid rgba(255,255,255,0.08); padding: 1.75rem; position: relative; z-index: 1; display: flex; flex-direction: column; gap: 0.75rem; }
+  .emcomum-right label { display: block; font-size: 0.72rem; font-weight: 700; color: rgba(200,133,26,0.9); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.25rem; }
+  textarea.emcomum-ta {
+    width: 100%; min-height: 130px; resize: vertical;
+    border: 1.5px solid rgba(200,133,26,0.25); border-radius: 12px;
+    padding: 0.85rem 1rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; line-height: 1.6; color: var(--white);
+    background: rgba(255,255,255,0.07); outline: none; transition: border-color 0.2s;
+  }
+  textarea.emcomum-ta:focus { border-color: var(--gold); }
+  textarea.emcomum-ta::placeholder { color: rgba(255,255,255,0.3); }
+  .btn-save-gold { background: var(--gold); color: var(--dark); border: none; border-radius: 10px; padding: 0.65rem 1.5rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s; align-self: flex-start; }
+  .btn-save-gold:hover { background: var(--gold-light); }
+
+ 
+  .bottom-nav { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+  .btn-nav-lg { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 2rem; border-radius: 10px; font-size: 0.9rem; font-weight: 700; text-decoration: none; transition: all 0.25s; }
+  .btn-prev-lg { background: rgba(90,45,145,0.1); color: var(--purple); border: 1px solid rgba(90,45,145,0.2); }
+  .btn-prev-lg:hover { background: rgba(90,45,145,0.18); }
+  .btn-next-lg { background: var(--gold); color: var(--dark); }
+  .btn-next-lg:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  
+  @media (max-width: 900px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { display: none; }
+    .page-hero { padding: 5.5rem 1.5rem 2rem; }
+    .princesas-grid { grid-template-columns: 1fr; }
+    .princesa-card { flex-direction: column; }
+    .princesa-img-slot { width: 100%; min-width: unset; height: 200px; }
+    .emcomum-card { grid-template-columns: 1fr; }
+    .emcomum-right { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); }
+  }
+  @media (max-width: 600px) {
+    .princesas-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+
+<nav>
+  <a class="nav-brand" href="index.html">
+    <div class="nav-brand-text">
+      <strong>CAETANA DISSE NÃO</strong>
+      <span>uma história de resistência</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-drop-toggle">Etapas ▾</a>
+      <ul class="dropdown-menu">
+        <li><a href="etapa_1.html">Etapa 1 – Quem foi Caetana?</a></li>
+        <li><a href="etapa_2.html">Etapa 2 – O processo judicial</a></li>
+        <li><a href="etapa_3.html">Etapa 3 – Casamento infantil</a></li>
+        <li><a href="etapa_4.html">Etapa 4 – Que tipo de resistência?</a></li>
+        <li><a href="etapa_5.html">Etapa 5 – Produção final</a></li>
+        <li><a href="extra_princesas.html" style="color:var(--gold-light)">Extra – Princesas</a></li>
+      </ul>
+    </li>
+    <li><a href="saiba_mais.html">Saiba mais</a></li>
+    <li><a href="referencias.html">Referências</a></li>
+  </ul>
+</nav>
+
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="etapa-nav-top">
+      <div class="etapa-pill">✦ Extra – Princesas</div>
+      <div class="nav-etapa-btns">
+        <a href="etapa_3.html" class="btn-etapa btn-etapa-prev">← Etapa 3</a>
+        <a href="etapa_4.html" class="btn-etapa btn-etapa-next">Etapa 4 →</a>
+      </div>
+    </div>
+    <h1>Extra: Princesas também <em>tomam decisões</em></h1>
+    <div class="fonte-documental">
+      <div class="icon-slot">🎬</div>
+      <p><strong>Conexão com o repertório cultural:</strong> você já conhece essas personagens? Vamos comparar as histórias delas com a de Caetana e descobrir o que têm em comum.</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="container section-intro">
+  <div class="section-label">
+    <div class="icon-slot">🎞️</div>
+    <h2>Observe as imagens das princesas abaixo, você as conhece?</h2>
+  </div>
+  <div class="intro-text">
+    Cada uma das personagens a seguir enfrentou uma situação em que precisou dizer <strong>"não"</strong> a algo que considerava injusto. Leia os perfis, observe as imagens e, em seguida, faça a atividade investigativa.
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="princesas-grid">
+
+  
+    <div class="princesa-card card-mulan">
+      <div class="princesa-img-slot">
+        <img src="imgs/capa_mulan.jpg" alt="Mulan"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="princesa-img-placeholder" style="display:none; background:#fde8e3; color:rgba(192,57,43,0.35);">
+          <span style="font-size:3rem;">🏮</span>
+          <p style="font-size:0.78rem;">Insira <code>mulan.jpg</code><br>na pasta imgs/</p>
+        </div>
+        <div class="princesa-badge" style="background:var(--mulan-accent);color:#fff;">Disney · 1998</div>
+      </div>
+      <div class="princesa-body">
+        <div class="princesa-origin" style="color:var(--mulan-accent);">China Imperial · Disney</div>
+        <div class="princesa-name" style="color:var(--mulan-dark);">Mulan</div>
+        <p class="princesa-desc">Uma jovem determinada, inteligente e corajosa que desafia as expectativas de sua época para proteger sua família. Quando seu pai é convocado para a guerra, Mulan assume seu lugar no exército disfarçada de homem. Ao longo de sua jornada, ela demonstra liderança, perseverança e grande habilidade estratégica, tornando-se uma heroína admirada por sua coragem e por seu compromisso com aqueles que ama.</p>
+        <div class="princesa-nao-tag" style="background:var(--mulan-bg);">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="princesa-card card-merida">
+      <div class="princesa-img-slot">
+        <img src="imgs/capa_valente.webp" alt="Merida"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="princesa-img-placeholder" style="display:none; background:#e4f2e5; color:rgba(45,122,58,0.35);">
+          <span style="font-size:3rem;">🏹</span>
+          <p style="font-size:0.78rem;">Insira <code>merida.jpg</code><br>na pasta imgs/</p>
+        </div>
+        <div class="princesa-badge" style="background:var(--merida-accent);color:#fff;">Pixar · 2012</div>
+      </div>
+      <div class="princesa-body">
+        <div class="princesa-origin" style="color:var(--merida-accent);">Escócia Medieval · Pixar</div>
+        <div class="princesa-name" style="color:var(--merida-dark);">Merida</div>
+        <p class="princesa-desc">Princesa do reino de DunBroch e filha do rei e da rainha. Independente, corajosa e habilidosa com o arco e flecha, Merida prefere a liberdade e a aventura às tradições da realeza. Sua história gira em torno do conflito entre seguir seu próprio caminho e cumprir as responsabilidades esperadas de uma futura líder, aprendendo a valorizar tanto sua independência quanto os laços familiares.</p>
+        <div class="princesa-nao-tag" style="background:var(--merida-bg);">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="princesa-card card-moana">
+      <div class="princesa-img-slot">
+        <img src="imgs/capa_moana.jpg" alt="Moana"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="princesa-img-placeholder" style="display:none; background:#dff0f8; color:rgba(26,107,158,0.35);">
+          <span style="font-size:3rem;">🌊</span>
+          <p style="font-size:0.78rem;">Insira <code>moana.jpg</code><br>na pasta imgs/</p>
+        </div>
+        <div class="princesa-badge" style="background:var(--moana-accent);color:#fff;">Disney · 2016</div>
+      </div>
+      <div class="princesa-body">
+        <div class="princesa-origin" style="color:var(--moana-accent);">Polinésia · Disney</div>
+        <div class="princesa-name" style="color:var(--moana-dark);">Moana</div>
+        <p class="princesa-desc">Filha do chefe da tribo de sua ilha e futura líder de seu povo. Por causa dessa posição, ela carrega a responsabilidade de proteger a comunidade, preservar as tradições e tomar decisões importantes para o bem de todos. Sua jornada mostra como ela desenvolve as qualidades de uma líder, equilibrando o respeito às tradições com a coragem de buscar novos caminhos.</p>
+        <div class="princesa-nao-tag" style="background:var(--moana-bg);">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="princesa-card card-tiana">
+      <div class="princesa-img-slot">
+        <img src="imgs/capa_tiana.webp" alt="Tiana"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="princesa-img-placeholder" style="display:none; background:#dff2e3; color:rgba(45,122,58,0.35);">
+          <span style="font-size:3rem;">🌿</span>
+          <p style="font-size:0.78rem;">Insira <code>tiana.jpg</code><br>na pasta imgs/</p>
+        </div>
+        <div class="princesa-badge" style="background:var(--tiana-accent);color:#fff;">Disney · 2009</div>
+      </div>
+      <div class="princesa-body">
+        <div class="princesa-origin" style="color:var(--tiana-accent);">Nova Orleans · Disney</div>
+        <div class="princesa-name" style="color:var(--tiana-dark);">Tiana</div>
+        <p class="princesa-desc">Uma jovem trabalhadora, determinada e ambiciosa que sonha em abrir seu próprio restaurante. Diferente de muitas princesas, ela conquista seus objetivos principalmente por meio de esforço, dedicação e perseverança. Ao longo de sua jornada, Tiana aprende a equilibrar sua busca pelo sucesso com a importância dos relacionamentos, da amizade e do amor.</p>
+        <div class="princesa-nao-tag" style="background:var(--tiana-bg);">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="sistematizacao-banner">
+    <div class="sistematizacao-icon">🔎</div>
+    <div class="sistematizacao-inner">
+      <div class="sistematizacao-tag">Sistematização — Atividade investigativa</div>
+      <h3>Agora que relembramos quem são essas personagens, vamos pensar!</h3>
+      <p>Preencha a tabela abaixo comparando como cada personagem resistiu a algo injusto e depois responda às questões de reflexão.</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="container ativ-section">
+
+
+  <div class="ativ-pergunta-box">
+    <div class="ativ-pergunta-icon">💬</div>
+    <p><strong>Essas princesas precisaram de um príncipe para resolver seus problemas?</strong> Pense nisso enquanto preenche a tabela.</p>
+  </div>
+
+
+  <div class="tabela-wrapper">
+    <div class="tabela-header">
+      <div class="icon-slot">📋</div>
+      <h3>Como cada personagem resistiu? Preencha a tabela</h3>
+    </div>
+    <table class="resistencia-table">
+      <thead>
+        <tr>
+          <th style="width:35%;">Personagem</th>
+          <th>Como resistiu?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="personagem-cell">
+              <div class="personagem-dot moana">🌊</div>
+              <div>
+                <div class="personagem-name moana">Moana</div>
+                <div class="personagem-film">Moana — Disney, 2016</div>
+              </div>
+            </div>
+          </td>
+          <td class="resposta-cell">
+            <textarea class="tabela-ta" placeholder="Como Moana resistiu a algo injusto ou limitador?"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="personagem-cell">
+              <div class="personagem-dot mulan">🏮</div>
+              <div>
+                <div class="personagem-name mulan">Mulan</div>
+                <div class="personagem-film">Mulan — Disney, 1998</div>
+              </div>
+            </div>
+          </td>
+          <td class="resposta-cell">
+            <textarea class="tabela-ta" placeholder="Como Mulan resistiu a algo injusto ou limitador?"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="personagem-cell">
+              <div class="personagem-dot merida">🏹</div>
+              <div>
+                <div class="personagem-name merida">Merida</div>
+                <div class="personagem-film">Brave — Pixar, 2012</div>
+              </div>
+            </div>
+          </td>
+          <td class="resposta-cell">
+            <textarea class="tabela-ta" placeholder="Como Merida resistiu a algo injusto ou limitador?"></textarea>
+          </td>
+        </tr>
+         <tr>
+          <td>
+            <div class="personagem-cell">
+              <div class="personagem-dot merida">🐸</div>
+              <div>
+                <div class="personagem-name merida">Tiana</div>
+                <div class="personagem-film">A Princesa e o Sapo — Disney, 2009</div>
+              </div>
+            </div>
+          </td>
+          <td class="resposta-cell">
+            <textarea class="tabela-ta" placeholder="Como Tiana resistiu a algo injusto ou limitador?"></textarea>
+          </td>
+        </tr>
+        <tr class="caetana-row">
+          <td>
+            <div class="personagem-cell">
+              <div class="personagem-dot caetana">⚖️</div>
+              <div>
+                <div class="personagem-name caetana">Caetana</div>
+                <div class="personagem-film">Brasil — Século XIX (história real)</div>
+              </div>
+            </div>
+          </td>
+          <td class="resposta-cell">
+            <textarea class="tabela-ta" placeholder="Com base no que estudamos nas etapas anteriores, como Caetana resistiu?"></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pergunta2-card">
+    <div class="pergunta2-header">
+      <div class="icon-slot">👑</div>
+      <h3>Essas princesas precisam de um príncipe para resolver seus problemas?</h3>
+    </div>
+    <div class="pergunta2-body">
+      <p>Pense nas histórias que você acabou de ler. Cada uma dessas personagens: Mulan, Merida, Moana, Tiana e Caetana, enfrentaram seus desafios de que maneira?</p>
+      <div class="opcoes-escolha">
+        <button class="opcao-btn" onclick="selecionarOpcao(this, 'sim')">Sim, precisaram de um príncipe</button>
+        <button class="opcao-btn" onclick="selecionarOpcao(this, 'nao')">Não, agiram por conta própria</button>
+        <button class="opcao-btn" onclick="selecionarOpcao(this, 'parcial')">Por vezes pediram ajuda, mas decidiram sozinhas</button>
+      </div>
+      <div class="justificativa-area">
+        <label>Justifique sua resposta com exemplos das personagens:</label>
+        <textarea class="justificativa-ta" placeholder="Escreva aqui sua justificativa, citando ao menos duas personagens..."></textarea>
+      </div>
+      <button class="btn-save-sm" onclick="salvarResposta(this)">💾 Salvar resposta</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="container emcomum-section">
+  <div class="emcomum-card">
+    <div class="emcomum-left">
+      <div class="emcomum-tag">✦ Reflexão final da etapa</div>
+      <h3>O que essas princesas têm em comum com Caetana?</h3>
+      <p>Todas elas viveram em épocas e lugares diferentes, mas enfrentaram um desafio parecido: a sociedade tentou limitar suas escolhas. Cada uma encontrou um jeito próprio de resistir. Escreva ao lado o que você percebeu de semelhante entre elas e a história de Caetana.</p>
+    </div>
+    <div class="emcomum-right">
+      <label>Escreva suas observações:</label>
+      <textarea class="emcomum-ta" placeholder="O que Mulan, Merida, Moana, Tiana e Caetana têm em comum? Pense nas escolhas que fizeram, nos obstáculos que enfrentaram e na coragem que demonstraram..."></textarea>
+      <button class="btn-save-gold" onclick="salvarRespostaGold(this)">💾 Salvar reflexão</button>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-nav">
+  <a href="etapa_3.html" class="btn-nav-lg btn-prev-lg">← Etapa 3</a>
+  <a href="etapa_4.html" class="btn-nav-lg btn-next-lg">Etapa 4 →</a>
+</div>
+
+<script>
+  function salvarResposta(btn) {
+    const prev = btn.previousElementSibling;
+    const ta = prev.tagName === 'TEXTAREA' ? prev : prev.querySelector('textarea');
+    const val = ta ? ta.value.trim() : '';
+    if (!val) { alert('Escreva a resposta antes de salvar! 😊'); return; }
+    btn.textContent = '✅ Salvo!';
+    btn.style.background = '#2d6a4f';
+    setTimeout(() => { btn.textContent = '💾 Salvar resposta'; btn.style.background = ''; }, 3000);
+  }
+
+  function salvarRespostaGold(btn) {
+    const ta = btn.previousElementSibling;
+    if (!ta.value.trim()) { alert('Escreva sua reflexão antes de salvar! 😊'); return; }
+    btn.textContent = '✅ Reflexão salva!';
+    btn.style.background = '#2d6a4f';
+    btn.style.color = '#fff';
+    setTimeout(() => { btn.textContent = '💾 Salvar reflexão'; btn.style.background = ''; btn.style.color = ''; }, 3000);
+  }
+
+  function selecionarOpcao(btn, valor) {
+    const parent = btn.closest('.opcoes-escolha');
+    parent.querySelectorAll('.opcao-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+</script>
+
+</body>
+</html>
