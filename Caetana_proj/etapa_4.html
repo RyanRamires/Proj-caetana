@@ -321,6 +321,14 @@
   .ativ-feedback.show { display: block; }
   .ativ-feedback.ok  { background: #e8f5ef; color: var(--green); border: 1px solid rgba(45,106,79,0.2); }
   .ativ-feedback.nok { background: #fce8e3; color: var(--orange); border: 1px solid rgba(193,68,14,0.2); }
+  .ativ-feedback.nok .btn-refazer {
+    display: block; margin-top: 0.6rem;
+    background: var(--orange); color: var(--white); border: none;
+    border-radius: 8px; padding: 0.45rem 1rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 700;
+    cursor: pointer; transition: filter 0.2s;
+  }
+  .ativ-feedback.nok .btn-refazer:hover { filter: brightness(1.15); }
 
   /* ── CONEXÃO COM O PRESENTE ── */
   .presente-section { padding: 2rem 0 0; }
@@ -379,6 +387,155 @@
   .btn-prev-lg:hover { background: rgba(90,45,145,0.18); }
   .btn-next-lg { background: var(--gold); color: var(--dark); }
   .btn-next-lg:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  /* ── BOTÃO ANALISAR IMAGEM ── */
+  .img-analisar-btn {
+    display: flex; align-items: center; justify-content: center; gap: 0.55rem;
+    width: 100%; padding: 0.75rem 1rem;
+    background: linear-gradient(135deg, var(--purple) 0%, var(--purple-mid) 100%);
+    color: var(--white); border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.03em; transition: all 0.25s;
+  }
+  .img-analisar-btn:hover { filter: brightness(1.15); }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 500;
+    background: rgba(10, 4, 26, 0.82); backdrop-filter: blur(6px);
+    align-items: center; justify-content: center; padding: 1.5rem;
+  }
+  .modal-overlay.aberto { display: flex; animation: fadeIn 0.25s ease; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .modal-box {
+    background: var(--white); border-radius: 20px; overflow: hidden;
+    width: 100%; max-width: 960px; max-height: 90vh;
+    display: flex; flex-direction: column;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.55);
+    animation: slideUp 0.3s ease;
+  }
+
+  .modal-header {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--purple-mid) 100%);
+    padding: 1rem 1.35rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    flex-shrink: 0;
+  }
+  .modal-header-titulo {
+    font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700;
+    color: var(--white); display: flex; align-items: center; gap: 0.5rem;
+  }
+  .modal-fechar {
+    background: rgba(255,255,255,0.15); border: none; color: var(--white);
+    width: 34px; height: 34px; border-radius: 50%; font-size: 1.1rem;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background 0.2s;
+  }
+  .modal-fechar:hover { background: rgba(255,255,255,0.3); }
+
+  .modal-corpo {
+    display: grid; grid-template-columns: 1fr 1fr;
+    overflow: hidden; flex: 1; min-height: 0;
+  }
+
+  /* Coluna imagem */
+  .modal-img-col {
+    background: var(--dark); display: flex; flex-direction: column;
+    align-items: center; justify-content: center; padding: 1.5rem;
+    gap: 0.85rem;
+  }
+  .modal-img-col img {
+    width: 100%; max-height: 340px; object-fit: contain; border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+  .modal-img-caption {
+    font-size: 0.72rem; color: rgba(255,255,255,0.5); font-style: italic;
+    text-align: center; line-height: 1.5;
+  }
+
+  /* Coluna atividade */
+  .modal-ativ-col {
+    overflow-y: auto; padding: 1.35rem 1.5rem 1.5rem;
+    display: flex; flex-direction: column; gap: 1.1rem;
+  }
+  .modal-ativ-col::-webkit-scrollbar { width: 6px; }
+  .modal-ativ-col::-webkit-scrollbar-track { background: var(--purple-light); border-radius: 3px; }
+  .modal-ativ-col::-webkit-scrollbar-thumb { background: rgba(90,45,145,0.35); border-radius: 3px; }
+
+  .analise-bloco { display: flex; flex-direction: column; gap: 0.45rem; }
+  .analise-bloco-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--purple-mid);
+  }
+  .analise-pergunta {
+    font-size: 0.87rem; line-height: 1.6; color: var(--text);
+  }
+
+  .tipo-doc-opcoes {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+  }
+  .tipo-doc-opcao {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.38rem 0.8rem; border-radius: 999px;
+    border: 1.5px solid rgba(90,45,145,0.25);
+    background: var(--white); font-size: 0.81rem; color: var(--text);
+    cursor: pointer; transition: all 0.2s; user-select: none;
+  }
+  .tipo-doc-opcao:hover { border-color: var(--purple-mid); background: #f0ebfc; }
+  .tipo-doc-opcao.selecionado {
+    border-color: var(--purple); background: var(--purple);
+    color: var(--white); font-weight: 700;
+  }
+  .tipo-doc-opcao .circulo {
+    width: 13px; height: 13px; border-radius: 50%;
+    border: 2px solid currentColor; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tipo-doc-opcao.selecionado .circulo::after { content: '●'; font-size: 0.5rem; color: var(--white); }
+
+  .analise-divider {
+    border: none; border-top: 1px dashed rgba(90,45,145,0.2); margin: 0;
+  }
+
+  .analise-item { display: flex; flex-direction: column; gap: 0.35rem; }
+  .analise-item-label {
+    font-size: 0.84rem; font-weight: 600; color: var(--purple); line-height: 1.45;
+  }
+  .analise-item-label span { color: var(--purple-mid); }
+  .analise-textarea {
+    width: 100%; min-height: 72px; resize: vertical;
+    border: 1.5px solid rgba(90,45,145,0.2); border-radius: 10px;
+    padding: 0.6rem 0.85rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.84rem;
+    line-height: 1.55; color: var(--text);
+    background: #faf8ff; outline: none; transition: border-color 0.2s;
+  }
+  .analise-textarea:focus { border-color: var(--purple-mid); }
+  .analise-textarea::placeholder { color: #b0a0c8; }
+
+  .btn-analise-salvar {
+    display: inline-flex; align-items: center; gap: 0.4rem; align-self: flex-start;
+    background: var(--purple); color: var(--white); border: none;
+    border-radius: 10px; padding: 0.6rem 1.4rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.83rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-analise-salvar:hover { background: var(--purple-mid); }
+
+  @media (max-width: 700px) {
+    .modal-corpo { grid-template-columns: 1fr; }
+    .modal-img-col { max-height: 220px; padding: 1rem; }
+    .modal-img-col img { max-height: 160px; }
+  }
 
   /* ── RESPONSIVO ── */
   @media (max-width: 900px) {
@@ -475,6 +632,11 @@
         </div>
       </div>
       <div class="img-caption">Dois homens praticando capoeira. Dominio publico <br> Autor: Augusto Earle — fonte: Wikimedia Commons</div>
+
+      <button class="img-analisar-btn" onclick="abrirModal()">
+        🔍 Interpretando o documento
+      </button>
+
     </div>
 
   </div>
@@ -652,7 +814,10 @@
             </div>
           </div>
           <div class="ativ-feedback ok" id="feedback-ok">✅ Correto! Caetana usou a Justiça, uma forma de resistência jurídica.</div>
-          <div class="ativ-feedback nok" id="feedback-nok">❌ Não exatamente. Pense: Caetana foi ao tribunal. Que tipo de resistência usa a lei?</div>
+          <div class="ativ-feedback nok" id="feedback-nok">
+            ❌ Não exatamente. Pense melhor e tente novamente!
+            <button class="btn-refazer" onclick="refazerQuiz()">🔄 Tentar novamente</button>
+          </div>
         </div>
       </div>
 
@@ -687,17 +852,133 @@
 </div>
 
 <!-- BOTTOM NAV -->
+
+<style>
+  .btn-download-etapa {
+    background: var(--green);
+    color: var(--white);
+    font-weight: 700; font-size: 0.9rem; letter-spacing: 0.03em;
+    padding: 0.85rem 2rem; border-radius: 10px;
+    border: none; cursor: pointer; transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-download-etapa:hover { background: #235a40; transform: translateY(-2px); }
+  .download-etapa-wrap {
+    display: flex; justify-content: flex-start;
+    padding: 0 0 1rem 0;
+  }
+</style>
+
+<div class="download-etapa-wrap">
+  <button class="btn-download-etapa" onclick="baixarAtividadesEtapa4()">
+    ⬇️ Salvar atividades desta etapa
+  </button>
+</div>
+
+<script>
+function baixarAtividadesEtapa4() {
+  var linhas = [];
+  linhas.push("ATIVIDADES – ETAPA 4");
+  linhas.push("Que tipo de resistência?");
+  linhas.push("=".repeat(50));
+  linhas.push("");
+
+  // Quiz
+  linhas.push("SEÇÃO 1 – Quiz: Você consegue identificar?");
+  linhas.push("-".repeat(40));
+  linhas.push("Pergunta: Caetana entrou com um processo na Justiça para anular seu casamento forçado. Qual tipo de resistência é essa?");
+  var opcoes = document.querySelectorAll('.ativ-opcao');
+  var respostaQuiz = "(não respondido)";
+  opcoes.forEach(function(op) {
+    if (op.classList.contains('correta') || op.classList.contains('errada')) {
+      respostaQuiz = op.textContent.trim();
+      if (op.classList.contains('correta')) respostaQuiz += " ✅ (correta)";
+      else respostaQuiz += " ❌ (incorreta)";
+    }
+  });
+  linhas.push("Resposta: " + respostaQuiz);
+  linhas.push("");
+
+  // Modal – Interpretando o documento
+  linhas.push("SEÇÃO 2 – Interpretando o documento (modal de análise)");
+  linhas.push("-".repeat(40));
+
+  linhas.push("Pergunta 1: Que tipo de documento é esse?");
+  var tipoSelecionado = document.querySelector('.tipo-doc-opcao.selecionado');
+  linhas.push("Resposta: " + (tipoSelecionado ? tipoSelecionado.textContent.trim() : "(não selecionado)"));
+  linhas.push("");
+
+  var pergsModal = [
+    "Quem você acredita que eram as pessoas retratadas?",
+    "O que a presença do homem uniformizado pode indicar?",
+    "O que essa imagem nos ensina sobre a sociedade brasileira do século XIX?"
+  ];
+  document.querySelectorAll('textarea.analise-textarea').forEach(function(ta, i) {
+    linhas.push("Pergunta " + (i + 2) + ": " + (pergsModal[i] || "Pergunta " + (i + 2)));
+    linhas.push("Resposta: " + (ta.value.trim() ? ta.value.trim() : "(não respondido)"));
+    linhas.push("");
+  });
+
+  // Construção coletiva
+  linhas.push("SEÇÃO 3 – Construção coletiva do conceito de resistência");
+  linhas.push("-".repeat(40));
+  linhas.push('Pergunta: Como a turma definiria "resistência"?');
+  var coletiva = document.querySelector('textarea.coletiva-ta');
+  linhas.push("Resposta: " + (coletiva && coletiva.value.trim() ? coletiva.value.trim() : "(não respondido)"));
+  linhas.push("");
+
+  var conteudo = linhas.join("\n");
+  var blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'atividades_etapa_4.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+
 <div class="bottom-nav">
   <a href="etapa_3.html" class="btn-nav-lg btn-prev-lg">← Etapa 3</a>
   <a href="etapa_5.html" class="btn-nav-lg btn-next-lg">Etapa 5 →</a>
 </div>
 
 <script>
-  let respondido = false;
+  /* ── Modal análise de imagem ── */
+  function abrirModal() {
+    document.getElementById('modal-analise').classList.add('aberto');
+    document.body.style.overflow = 'hidden';
+  }
+  function fecharModal() {
+    document.getElementById('modal-analise').classList.remove('aberto');
+    document.body.style.overflow = '';
+  }
+  function fecharModalFora(e) {
+    if (e.target === document.getElementById('modal-analise')) fecharModal();
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
 
+  function selecionarTipo(el) {
+    el.closest('.tipo-doc-opcoes').querySelectorAll('.tipo-doc-opcao')
+      .forEach(o => o.classList.remove('selecionado'));
+    el.classList.add('selecionado');
+  }
+
+  function salvarAnalise(btn) {
+    const col = btn.closest('.modal-ativ-col');
+    const textos = col.querySelectorAll('.analise-textarea');
+    const selecionado = col.querySelector('.tipo-doc-opcao.selecionado');
+    if (!selecionado) { alert('Selecione o tipo de documento antes de salvar! 😊'); return; }
+    if ([...textos].some(t => !t.value.trim())) { alert('Responda todas as perguntas antes de salvar! 😊'); return; }
+    btn.textContent = '✅ Respostas salvas!';
+    btn.style.background = '#2d6a4f';
+    setTimeout(() => { btn.innerHTML = '💾 Salvar respostas'; btn.style.background = ''; }, 3000);
+  }
+
+  /* ── Quiz resistência ── */
   function responderAtiv(el, correta) {
-    if (respondido) return;
-    respondido = true;
+    if (window._quizRespondido) return;
+    window._quizRespondido = true;
 
     const opcoes = el.closest('.ativ-opcoes').querySelectorAll('.ativ-opcao');
     opcoes.forEach(o => o.style.pointerEvents = 'none');
@@ -707,12 +988,26 @@
       document.getElementById('feedback-ok').classList.add('show');
     } else {
       el.classList.add('errada');
-      // destaca a correta
-      opcoes.forEach(o => {
-        if (o.textContent.trim().includes('Resistência jurídica')) o.classList.add('correta');
-      });
       document.getElementById('feedback-nok').classList.add('show');
     }
+
+    // persiste a escolha
+    const ei = [...opcoes].indexOf(el);
+    const PAGE = location.pathname.split('/').pop() || 'index';
+    localStorage.setItem('caetana:' + PAGE + ':quiz:resposta', ei);
+  }
+
+  function refazerQuiz() {
+    window._quizRespondido = false;
+    const opcoes = document.querySelectorAll('.ativ-opcao');
+    opcoes.forEach(o => {
+      o.classList.remove('correta', 'errada');
+      o.style.pointerEvents = '';
+    });
+    document.getElementById('feedback-ok').classList.remove('show');
+    document.getElementById('feedback-nok').classList.remove('show');
+    const PAGE = location.pathname.split('/').pop() || 'index';
+    localStorage.removeItem('caetana:' + PAGE + ':quiz:resposta');
   }
 
   function salvarResposta(btn) {
@@ -724,5 +1019,197 @@
   }
 </script>
 
+<!-- MODAL ANÁLISE DE IMAGEM -->
+<div class="modal-overlay" id="modal-analise" onclick="fecharModalFora(event)">
+  <div class="modal-box">
+
+    <div class="modal-header">
+      <div class="modal-header-titulo">📄 Interpretando o documento</div>
+      <button class="modal-fechar" onclick="fecharModal()">✕</button>
+    </div>
+
+    <div class="modal-corpo">
+
+      <!-- Coluna imagem ampliada -->
+      <div class="modal-img-col">
+        <img src="imgs/imagem_capuera.jpg" alt="Dois homens praticando capoeira">
+        <div class="modal-img-caption">
+          Dois homens praticando capoeira. Domínio público<br>
+          Autor: Augusto Earle — fonte: Wikimedia Commons
+        </div>
+      </div>
+
+      <!-- Coluna atividade -->
+      <div class="modal-ativ-col">
+
+        <!-- Pergunta 1: tipo de documento -->
+        <div class="analise-bloco">
+          <div class="analise-bloco-label">Pergunta 1</div>
+          <p class="analise-pergunta">Que tipo de documento é esse?</p>
+          <div class="tipo-doc-opcoes">
+            <div class="tipo-doc-opcao" onclick="selecionarTipo(this)">
+              <span class="circulo"></span> Fotografia
+            </div>
+            <div class="tipo-doc-opcao" onclick="selecionarTipo(this)">
+              <span class="circulo"></span> Pintura / ilustração
+            </div>
+            <div class="tipo-doc-opcao" onclick="selecionarTipo(this)">
+              <span class="circulo"></span> Mapa
+            </div>
+            <div class="tipo-doc-opcao" onclick="selecionarTipo(this)">
+              <span class="circulo"></span> Carta
+            </div>
+          </div>
+        </div>
+
+        <hr class="analise-divider">
+
+        <!-- Perguntas abertas -->
+        <div class="analise-bloco">
+          <div class="analise-bloco-label">Agora vamos pensar sobre o significado da imagem</div>
+        </div>
+
+        <div class="analise-item">
+          <div class="analise-item-label">
+            <span>1.</span> Quem você acredita que eram as pessoas retratadas?
+          </div>
+          <textarea class="analise-textarea" placeholder="Escreva sua resposta aqui…"></textarea>
+        </div>
+
+        <div class="analise-item">
+          <div class="analise-item-label">
+            <span>2.</span> O que a presença do homem uniformizado pode indicar?
+          </div>
+          <textarea class="analise-textarea" placeholder="Escreva sua resposta aqui…"></textarea>
+        </div>
+
+        <div class="analise-item">
+          <div class="analise-item-label">
+            <span>3.</span> O que essa imagem nos ensina sobre a sociedade brasileira do século XIX?
+          </div>
+          <textarea class="analise-textarea" placeholder="Escreva sua resposta aqui…"></textarea>
+        </div>
+
+        <button class="btn-analise-salvar" onclick="salvarAnalise(this)">💾 Salvar respostas</button>
+
+      </div><!-- /modal-ativ-col -->
+    </div><!-- /modal-corpo -->
+  </div><!-- /modal-box -->
+</div><!-- /modal-overlay -->
+
+<script>
+/* ── PERSISTÊNCIA localStorage ──────────────────────────────────────────────
+   Salva e restaura automaticamente todos os campos interativos da página.
+   Cada campo recebe uma chave baseada em: pagina + tipo + índice.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+(function () {
+  const PAGE = location.pathname.split('/').pop() || 'index';
+
+  function key(suffix) { return 'caetana:' + PAGE + ':' + suffix; }
+
+  /* ── TEXTAREAS ── */
+  function initTextareas() {
+    document.querySelectorAll('textarea').forEach((ta, i) => {
+      const k = key('ta:' + i);
+      const saved = localStorage.getItem(k);
+      if (saved !== null) ta.value = saved;
+      ta.addEventListener('input', () => localStorage.setItem(k, ta.value));
+    });
+  }
+
+  /* ── BOTÕES DE VOTO (etapa 1) ── */
+  function initVotos() {
+    document.querySelectorAll('.vote-btns').forEach((grupo, gi) => {
+      const k = key('voto:' + gi);
+      const saved = localStorage.getItem(k);
+      if (saved) {
+        const btn = grupo.querySelector('[data-tipo="' + saved + '"]') ||
+          [...grupo.querySelectorAll('.vote-btn')].find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + saved + "'"));
+        if (btn) btn.classList.add('selected');
+      }
+      grupo.querySelectorAll('.vote-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          // extrai o tipo do onclick="votar(this,'sim')"
+          const m = btn.getAttribute('onclick') && btn.getAttribute('onclick').match(/'(\w+)'/);
+          if (m) localStorage.setItem(k, m[1]);
+        });
+      });
+    });
+  }
+
+  /* ── OPÇÕES SELECIONÁVEIS GENÉRICAS ─────────────────────────────────────
+     Cobre: .tipo-doc-opcao, .ativ-opcao, .visual-opcao, .opcao-btn          */
+  function initSelecoes(selector, cssClass, grupoSelector) {
+    document.querySelectorAll(grupoSelector).forEach((grupo, gi) => {
+      const k = key(selector + ':' + gi);
+      const saved = localStorage.getItem(k);
+      if (saved !== null) {
+        const itens = grupo.querySelectorAll(selector);
+        if (itens[+saved]) itens[+saved].classList.add(cssClass);
+      }
+      grupo.querySelectorAll(selector).forEach((el, ei) => {
+        el.addEventListener('click', () => localStorage.setItem(k, ei));
+      });
+    });
+  }
+
+  /* ── QUIZ RESISTÊNCIA (etapa 4) — restaura estado correto/errado ── */
+  function initQuiz() {
+    const k = key('quiz:respondido');
+    const kResp = key('quiz:resposta'); // índice clicado
+    const saved = localStorage.getItem(kResp);
+    if (saved !== null) {
+      const opcoes = document.querySelectorAll('.ativ-opcao');
+      if (!opcoes.length) return;
+      window._quizRespondido = true; // sinaliza para a função original
+      opcoes.forEach(o => o.style.pointerEvents = 'none');
+      const el = opcoes[+saved];
+      if (!el) return;
+      const correta = el.getAttribute('onclick') && el.getAttribute('onclick').includes('true');
+      if (correta) {
+        el.classList.add('correta');
+        const fb = document.getElementById('feedback-ok');
+        if (fb) fb.classList.add('show');
+      } else {
+        el.classList.add('errada');
+        const fb = document.getElementById('feedback-nok');
+        if (fb) fb.classList.add('show');
+      }
+    }
+    // o save é feito pelo próprio responderAtiv — nada a interceptar aqui
+  }
+
+  /* ── TIPO-DOC (modal etapa 4): grupo único, sem wrapper ── */
+  function initTipoDoc() {
+    const grupo = document.querySelector('.tipo-doc-opcoes');
+    if (!grupo) return;
+    const k = key('tipo-doc');
+    const saved = localStorage.getItem(k);
+    if (saved !== null) {
+      const itens = grupo.querySelectorAll('.tipo-doc-opcao');
+      if (itens[+saved]) {
+        itens[+saved].classList.add('selecionado');
+      }
+    }
+    grupo.querySelectorAll('.tipo-doc-opcao').forEach((el, ei) => {
+      el.addEventListener('click', () => localStorage.setItem(k, ei));
+    });
+  }
+
+  /* ── INIT ── */
+  document.addEventListener('DOMContentLoaded', function () {
+    initTextareas();
+    initVotos();
+    initQuiz();
+    initTipoDoc();
+    // .visual-opcao (etapa 5) — grupo = .visual-opcoes
+    initSelecoes('.visual-opcao', 'selected', '.visual-opcoes');
+    // .opcao-btn (extra_princesas) — grupo = .opcoes-escolha
+    initSelecoes('.opcao-btn', 'selected', '.opcoes-escolha');
+  });
+})();
+
+</script>
 </body>
 </html>

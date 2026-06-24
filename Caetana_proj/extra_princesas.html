@@ -621,6 +621,79 @@
   </div>
 </div>
 
+
+<style>
+  .btn-download-etapa {
+    background: var(--green);
+    color: var(--white);
+    font-weight: 700; font-size: 0.9rem; letter-spacing: 0.03em;
+    padding: 0.85rem 2rem; border-radius: 10px;
+    border: none; cursor: pointer; transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-download-etapa:hover { background: #235a40; transform: translateY(-2px); }
+  .download-etapa-wrap {
+    display: flex; justify-content: flex-start;
+    padding: 0 0 1rem 0;
+  }
+</style>
+
+<div class="download-etapa-wrap">
+  <button class="btn-download-etapa" onclick="baixarAtividadesExtra()">
+    ⬇️ Salvar atividades desta etapa
+  </button>
+</div>
+
+<script>
+function baixarAtividadesExtra() {
+  var linhas = [];
+  linhas.push("ATIVIDADES – EXTRA: Princesas também tomam decisões");
+  linhas.push("=".repeat(50));
+  linhas.push("");
+
+  // Tabela comparativa
+  linhas.push("SEÇÃO 1 – Tabela comparativa: formas de resistência");
+  linhas.push("-".repeat(40));
+  var nomesPrincesas = ["Moana", "Mulan", "Merida (Valente)", "Tiana", "Caetana"];
+  var pergsTabela = [
+    "Como Moana resistiu a algo injusto ou limitador?",
+    "Como Mulan resistiu a algo injusto ou limitador?",
+    "Como Merida resistiu a algo injusto ou limitador?",
+    "Como Tiana resistiu a algo injusto ou limitador?",
+    "Com base no que estudamos nas etapas anteriores, como Caetana resistiu?"
+  ];
+  document.querySelectorAll('textarea.tabela-ta').forEach(function(ta, i) {
+    linhas.push("Personagem: " + (nomesPrincesas[i] || "Personagem " + (i + 1)));
+    linhas.push("Pergunta: " + (pergsTabela[i] || "Como resistiu?"));
+    linhas.push("Resposta: " + (ta.value.trim() ? ta.value.trim() : "(não respondido)"));
+    linhas.push("");
+  });
+
+  // Pergunta 2 – opção selecionada
+  linhas.push("SEÇÃO 2 – Essas princesas precisaram de um príncipe para resolver seus problemas?");
+  linhas.push("-".repeat(40));
+  linhas.push("Pergunta: Pense nas histórias que você acabou de ler. Cada uma dessas personagens — Mulan, Merida, Moana, Tiana e Caetana — enfrentaram seus desafios de que maneira?");
+  var opcaoSelecionada = document.querySelector('.opcao-btn.selected');
+  linhas.push("Resposta: " + (opcaoSelecionada ? opcaoSelecionada.textContent.trim() : "(não selecionado)"));
+  linhas.push("");
+
+  // Justificativa
+  linhas.push("Pergunta: Justifique sua resposta, citando ao menos duas personagens.");
+  var justTa = document.querySelector('textarea.justificativa-ta');
+  linhas.push("Resposta: " + (justTa && justTa.value.trim() ? justTa.value.trim() : "(não respondido)"));
+  linhas.push("");
+
+  var conteudo = linhas.join("\n");
+  var blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'atividades_etapa_extra.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+
 <div class="bottom-nav">
   <a href="etapa_3.html" class="btn-nav-lg btn-prev-lg">← Etapa 3</a>
   <a href="etapa_4.html" class="btn-nav-lg btn-next-lg">Etapa 4 →</a>
@@ -653,5 +726,129 @@
   }
 </script>
 
+<script>
+/* ── PERSISTÊNCIA localStorage ──────────────────────────────────────────────
+   Salva e restaura automaticamente todos os campos interativos da página.
+   Cada campo recebe uma chave baseada em: pagina + tipo + índice.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+(function () {
+  const PAGE = location.pathname.split('/').pop() || 'index';
+
+  function key(suffix) { return 'caetana:' + PAGE + ':' + suffix; }
+
+  /* ── TEXTAREAS ── */
+  function initTextareas() {
+    document.querySelectorAll('textarea').forEach((ta, i) => {
+      const k = key('ta:' + i);
+      const saved = localStorage.getItem(k);
+      if (saved !== null) ta.value = saved;
+      ta.addEventListener('input', () => localStorage.setItem(k, ta.value));
+    });
+  }
+
+  /* ── BOTÕES DE VOTO (etapa 1) ── */
+  function initVotos() {
+    document.querySelectorAll('.vote-btns').forEach((grupo, gi) => {
+      const k = key('voto:' + gi);
+      const saved = localStorage.getItem(k);
+      if (saved) {
+        const btn = grupo.querySelector('[data-tipo="' + saved + '"]') ||
+          [...grupo.querySelectorAll('.vote-btn')].find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + saved + "'"));
+        if (btn) btn.classList.add('selected');
+      }
+      grupo.querySelectorAll('.vote-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          // extrai o tipo do onclick="votar(this,'sim')"
+          const m = btn.getAttribute('onclick') && btn.getAttribute('onclick').match(/'(\w+)'/);
+          if (m) localStorage.setItem(k, m[1]);
+        });
+      });
+    });
+  }
+
+  /* ── OPÇÕES SELECIONÁVEIS GENÉRICAS ─────────────────────────────────────
+     Cobre: .tipo-doc-opcao, .ativ-opcao, .visual-opcao, .opcao-btn          */
+  function initSelecoes(selector, cssClass, grupoSelector) {
+    document.querySelectorAll(grupoSelector).forEach((grupo, gi) => {
+      const k = key(selector + ':' + gi);
+      const saved = localStorage.getItem(k);
+      if (saved !== null) {
+        const itens = grupo.querySelectorAll(selector);
+        if (itens[+saved]) itens[+saved].classList.add(cssClass);
+      }
+      grupo.querySelectorAll(selector).forEach((el, ei) => {
+        el.addEventListener('click', () => localStorage.setItem(k, ei));
+      });
+    });
+  }
+
+  /* ── QUIZ RESISTÊNCIA (etapa 4) — restaura estado correto/errado ── */
+  function initQuiz() {
+    const k = key('quiz:respondido');
+    const kResp = key('quiz:resposta'); // índice clicado
+    const saved = localStorage.getItem(kResp);
+    if (saved !== null) {
+      const opcoes = document.querySelectorAll('.ativ-opcao');
+      if (!opcoes.length) return;
+      window._quizRespondido = true; // sinaliza para a função original
+      opcoes.forEach(o => o.style.pointerEvents = 'none');
+      const el = opcoes[+saved];
+      if (!el) return;
+      const correta = el.getAttribute('onclick') && el.getAttribute('onclick').includes('true');
+      if (correta) {
+        el.classList.add('correta');
+        const fb = document.getElementById('feedback-ok');
+        if (fb) fb.classList.add('show');
+      } else {
+        el.classList.add('errada');
+        opcoes.forEach(o => {
+          if (o.getAttribute('onclick') && o.getAttribute('onclick').includes('true')) o.classList.add('correta');
+        });
+        const fb = document.getElementById('feedback-nok');
+        if (fb) fb.classList.add('show');
+      }
+    }
+    // intercepta cliques futuros
+    document.querySelectorAll('.ativ-opcao').forEach((el, ei) => {
+      el.addEventListener('click', () => {
+        if (window._quizRespondido) return;
+        window._quizRespondido = true;
+        localStorage.setItem(kResp, ei);
+      }, true); // capture = true para rodar antes do onclick
+    });
+  }
+
+  /* ── TIPO-DOC (modal etapa 4): grupo único, sem wrapper ── */
+  function initTipoDoc() {
+    const grupo = document.querySelector('.tipo-doc-opcoes');
+    if (!grupo) return;
+    const k = key('tipo-doc');
+    const saved = localStorage.getItem(k);
+    if (saved !== null) {
+      const itens = grupo.querySelectorAll('.tipo-doc-opcao');
+      if (itens[+saved]) {
+        itens[+saved].classList.add('selecionado');
+      }
+    }
+    grupo.querySelectorAll('.tipo-doc-opcao').forEach((el, ei) => {
+      el.addEventListener('click', () => localStorage.setItem(k, ei));
+    });
+  }
+
+  /* ── INIT ── */
+  document.addEventListener('DOMContentLoaded', function () {
+    initTextareas();
+    initVotos();
+    initQuiz();
+    initTipoDoc();
+    // .visual-opcao (etapa 5) — grupo = .visual-opcoes
+    initSelecoes('.visual-opcao', 'selected', '.visual-opcoes');
+    // .opcao-btn (extra_princesas) — grupo = .opcoes-escolha
+    initSelecoes('.opcao-btn', 'selected', '.opcoes-escolha');
+  });
+})();
+
+</script>
 </body>
 </html>
