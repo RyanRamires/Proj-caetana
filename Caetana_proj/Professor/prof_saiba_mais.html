@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saiba mais – Materiais de Apoio | Manual do Professor | Caetana Disse Não</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark:         #0d1a0f;
+    --green-deep:   #14431f;
+    --green-mid:    #1e6b30;
+    --green:        #2d8a47;
+    --green-light:  #e6f4ea;
+    --gold:         #c8851a;
+    --gold-light:   #e8a832;
+    --cream:        #f0f7f1;
+    --warm:         #f6faf6;
+    --text:         #0e2114;
+    --text-muted:   #4a7058;
+    --white:        #ffffff;
+    --purple:       #3d1f6e;
+    --orange:       #c1440e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(13,26,15,0.97);
+    backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 64px;
+    border-bottom: 1px solid rgba(45,138,71,0.3);
+  }
+  .nav-brand { display: flex; align-items: center; text-decoration: none; gap: 0.75rem; }
+  .nav-badge {
+    background: var(--green-mid); color: var(--white);
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 4px;
+  }
+  .nav-brand-text strong {
+    display: block; font-family: 'Playfair Display', serif;
+    color: var(--white); font-size: 1.05rem; letter-spacing: 0.08em;
+  }
+  .nav-brand-text span {
+    font-family: 'Lora', serif; color: var(--gold);
+    font-style: italic; font-size: 0.75rem;
+  }
+  .nav-links { display: flex; gap: 0.25rem; list-style: none; align-items: center; }
+  .nav-links a {
+    display: block; padding: 0.5rem 1rem;
+    color: rgba(255,255,255,0.7); text-decoration: none;
+    font-size: 0.85rem; font-weight: 500; border-radius: 6px; transition: all 0.2s;
+  }
+  .nav-links a:hover { color: #7edda0; background: rgba(45,138,71,0.15); }
+  .nav-links .active { color: #7edda0 !important; }
+  .nav-dropdown { position: relative; }
+  .nav-drop-toggle { cursor: pointer; }
+  .dropdown-menu {
+    display: none; position: absolute; top: calc(100% + 4px); left: 0;
+    background: rgba(13,26,15,0.98); border: 1px solid rgba(45,138,71,0.3);
+    border-radius: 10px; list-style: none; min-width: 260px;
+    padding: 0.5rem 0; box-shadow: 0 12px 40px rgba(0,0,0,0.5); z-index: 200;
+  }
+  .nav-dropdown:hover .dropdown-menu { display: block; }
+  .nav-dropdown::after {
+    content: ''; position: absolute; top: 100%; left: 0; width: 100%; height: 16px;
+  }
+  .dropdown-menu li a {
+    display: block; padding: 0.6rem 1.25rem;
+    color: rgba(255,255,255,0.75); font-size: 0.83rem; white-space: nowrap; border-radius: 0;
+  }
+  .dropdown-menu li a:hover { color: #7edda0; background: rgba(45,138,71,0.15); }
+  .dropdown-divider { height: 1px; background: rgba(45,138,71,0.2); margin: 0.35rem 1.25rem; }
+  .nav-alunos-btn {
+    background: var(--gold); color: var(--dark) !important;
+    font-weight: 700 !important; border-radius: 8px !important;
+    padding: 0.45rem 1rem !important;
+  }
+  .nav-alunos-btn:hover { background: var(--gold-light) !important; color: var(--dark) !important; }
+
+  /* ── HERO ── */
+  .page-hero {
+    background: var(--dark);
+    padding: 7rem 3rem 4rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(30,107,48,0.35) 0%, transparent 70%);
+  }
+  .page-hero-inner { position: relative; z-index: 1; }
+  .prof-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(45,138,71,0.2); border: 1px solid rgba(45,138,71,0.45);
+    color: #7edda0; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 0.35rem 1rem; border-radius: 999px; margin-bottom: 1.25rem;
+  }
+  .page-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--white); font-weight: 900; line-height: 1.1;
+    margin-bottom: 0.75rem;
+  }
+  .page-hero h1 em { color: var(--gold); font-style: italic; }
+  .page-hero-sub {
+    font-family: 'Lora', serif; font-style: italic;
+    color: rgba(255,255,255,0.5); font-size: 1rem; margin-top: 0.5rem;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+  /* ── SEÇÃO APRESENTAÇÃO ── */
+  .section-bloco {
+    padding: 3rem 0 0;
+  }
+  .section-titulo {
+    display: flex; align-items: center; gap: 0.85rem;
+    margin-bottom: 1.75rem;
+  }
+  .section-titulo-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--green-deep); border: 1px solid rgba(45,138,71,0.4);
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .section-titulo h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700; color: var(--text);
+  }
+  .section-titulo h2 span { color: var(--green-mid); }
+
+  /* ── CARD BASE ── */
+  .card {
+    background: var(--white); border-radius: 18px;
+    border: 1px solid rgba(45,138,71,0.12);
+    box-shadow: 0 4px 20px rgba(20,67,31,0.06);
+    overflow: hidden; margin-bottom: 1.5rem;
+  }
+  .card-header {
+    background: var(--green-deep);
+    padding: 1rem 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .card-header-icon {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .card-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--white); }
+  .card-header p  { font-size: 0.75rem; color: rgba(255,255,255,0.6); }
+  .card-body { padding: 1.5rem; }
+  .card-body p {
+    font-size: 0.9rem; line-height: 1.8; color: #1a3322;
+    margin-bottom: 1rem; text-align: justify;
+  }
+  .card-body p:last-child { margin-bottom: 0; }
+
+  /* ── DESTAQUE / ALERTA ── */
+  .destaque {
+    border-radius: 12px; padding: 1rem 1.25rem;
+    display: flex; align-items: flex-start; gap: 0.85rem;
+    margin-bottom: 1rem;
+  }
+  .destaque-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 1px; }
+  .destaque-body { flex: 1; }
+  .destaque-body strong { display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .destaque-body p { font-size: 0.85rem; line-height: 1.65; margin: 0; }
+
+  .destaque.verde    { background: var(--green-light); border-left: 3px solid var(--green-mid); }
+  .destaque.verde strong, .destaque.verde p { color: var(--green-deep); }
+  .destaque.dourado  { background: #fdf4e3; border-left: 3px solid var(--gold); }
+  .destaque.dourado strong { color: #7a4a00; }
+  .destaque.dourado p { color: #6b4200; }
+  .destaque.roxo     { background: #ede8f7; border-left: 3px solid var(--purple); }
+  .destaque.roxo strong, .destaque.roxo p { color: var(--purple); }
+
+  /* ── LISTA DE CONCEITOS / HABILIDADES ── */
+  .tag-list { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.75rem; }
+  .tag {
+    display: inline-block; padding: 0.3rem 0.85rem;
+    border-radius: 999px; font-size: 0.78rem; font-weight: 600;
+  }
+  .tag.verde  { background: var(--green-light); color: var(--green-deep); border: 1px solid rgba(45,138,71,0.25); }
+  .tag.ouro   { background: #fdf4e3; color: #7a4a00; border: 1px solid rgba(200,133,26,0.3); }
+  .tag.roxo   { background: #ede8f7; color: var(--purple); border: 1px solid rgba(90,45,145,0.25); }
+
+  /* ── GRID 2 colunas ── */
+  .grid-2 {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── LINK PARA ALUNOS ── */
+  .link-aluno-card {
+    background: linear-gradient(135deg, var(--green-deep) 0%, var(--green-mid) 100%);
+    border-radius: 16px; padding: 1.5rem;
+    display: flex; align-items: center; gap: 1.25rem;
+    text-decoration: none; transition: all 0.25s;
+    margin-bottom: 1.5rem;
+  }
+  .link-aluno-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(20,67,31,0.3); }
+  .link-aluno-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; flex-shrink: 0;
+  }
+  .link-aluno-text strong {
+    display: block; font-size: 0.95rem; font-weight: 700; color: var(--white);
+    margin-bottom: 0.2rem;
+  }
+  .link-aluno-text span { font-size: 0.82rem; color: rgba(255,255,255,0.65); }
+  .link-aluno-arrow { margin-left: auto; color: rgba(255,255,255,0.5); font-size: 1.2rem; }
+
+  /* ── SEÇÃO ETAPA 1 ── */
+  .etapa-header {
+    background: var(--dark); border-radius: 18px;
+    padding: 2rem 2.5rem; margin-bottom: 1.5rem;
+    position: relative; overflow: hidden;
+  }
+  .etapa-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 100% at 10% 50%, rgba(30,107,48,0.4) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .etapa-header-inner { position: relative; z-index: 1; }
+  .etapa-num {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; color: #7edda0; margin-bottom: 0.4rem;
+  }
+  .etapa-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 900; color: var(--white); line-height: 1.1;
+  }
+  .etapa-header h2 em { color: var(--gold); font-style: italic; }
+  .etapa-header-sub {
+    margin-top: 0.5rem; font-size: 0.87rem; color: rgba(255,255,255,0.55);
+    font-family: 'Lora', serif; font-style: italic;
+  }
+
+  /* ── PASSOS / TIMELINE ── */
+  .passos { display: flex; flex-direction: column; gap: 0; }
+  .passo {
+    display: flex; gap: 1.25rem; padding-bottom: 1.5rem;
+    position: relative;
+  }
+  .passo:not(:last-child)::before {
+    content: '';
+    position: absolute; left: 19px; top: 40px; bottom: 0;
+    width: 2px; background: rgba(45,138,71,0.2);
+  }
+  .passo-num {
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    background: var(--green-mid); color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.9rem; position: relative; z-index: 1;
+  }
+  .passo-content { flex: 1; padding-top: 0.55rem; }
+  .passo-titulo { font-size: 0.95rem; font-weight: 700; color: var(--green-deep); margin-bottom: 0.4rem; }
+  .passo-texto { font-size: 0.87rem; line-height: 1.75; color: #1a3322; }
+
+  /* ── DIVISOR ── */
+  .section-divider {
+    border: none; border-top: 2px dashed rgba(45,138,71,0.15);
+    margin: 2.5rem 0;
+  }
+
+  /* ── RODAPÉ NAV ── */
+  .footer-nav {
+    padding: 3rem 0 4rem;
+    display: flex; justify-content: flex-end;
+  }
+  .btn-proximo {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: var(--green-mid); color: var(--white);
+    text-decoration: none; border-radius: 12px;
+    padding: 0.85rem 1.75rem; font-size: 0.9rem; font-weight: 700;
+    transition: all 0.2s;
+  }
+  .btn-proximo:hover { background: var(--green); transform: translateX(3px); }
+
+  /* ── IMPORTANTE BADGE ── */
+  .importante {
+    background: #fff8e6; border: 1px solid rgba(200,133,26,0.3);
+    border-radius: 14px; padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .importante-titulo {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.7rem;
+  }
+  .importante p { font-size: 0.88rem; line-height: 1.75; color: #5a3a00; }
+
+  @media (max-width: 760px) {
+    nav { padding: 0 1.25rem; }
+    .page-hero { padding: 6rem 1.5rem 3rem; }
+    .container { padding: 0 1.25rem; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+
+  .ref-item { margin-bottom: 0; }
+  .ref-etiqueta {
+    display: inline-block; font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.2rem 0.7rem; border-radius: 999px; margin-bottom: 0.5rem;
+  }
+  .ref-etiqueta.verde  { background: var(--green-light); color: var(--green-deep); }
+  .ref-etiqueta.roxo   { background: #ede8f7; color: var(--purple); }
+  .ref-etiqueta.dourado { background: #fdf4e3; color: #7a4a00; }
+  .ref-titulo {
+    font-size: 0.9rem; font-weight: 600; color: var(--text); line-height: 1.45;
+    margin-bottom: 0.4rem;
+  }
+  .ref-titulo em { font-style: italic; color: var(--green-mid); }
+  .ref-desc {
+    font-size: 0.85rem; line-height: 1.7; color: #1a3322; margin-bottom: 0.6rem;
+  }
+  .ref-etapas { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .ref-divider {
+    border: none; border-top: 1px dashed rgba(45,138,71,0.15);
+    margin: 1.1rem 0;
+  }
+</style>
+</head>
+<body><nav>
+  <a class="nav-brand" href="prof_apresentacao.html">
+    <div class="nav-brand-text">
+      <strong>CAETANA DISSE NÃO</strong>
+      <span>manual do professor</span>
+    </div>
+    <span class="nav-badge">PROFESSOR</span>
+  </a>
+  <ul class="nav-links">
+    <li class="nav-dropdown">
+      <a href="#" class="nav-drop-toggle">Manual do Professor ▾</a>
+      <ul class="dropdown-menu">
+        <li><a href="prof_apresentacao.html">Apresentação do Material</a></li>
+        <li><a href="prof_etapa1.html">Etapa 1 – Quem foi Caetana?</a></li>
+        <li><a href="prof_etapa2.html">Etapa 2 – O processo judicial</a></li>
+        <li><a href="prof_etapa3.html">Etapa 3 – Casamento infantil</a></li>
+        <li><a href="prof_etapa4.html">Etapa 4 – Formas de resistência</a></li>
+        <li><a href="prof_etapa5.html">Etapa 5 – Produção do mural</a></li>
+        <li><a href="prof_extra.html">Extra – Princesas</a></li>
+        <li><a href="prof_saiba_mais.html" style="color:#7edda0">Saiba mais</a></li>
+      </ul>
+    </li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-drop-toggle">Área dos Alunos ▾</a>
+      <ul class="dropdown-menu">
+        <li><a href="../index.html">Início</a></li>
+        <li><div class="dropdown-divider"></div></li>
+        <li><a href="../etapa_1.html">Etapa 1 – Quem foi Caetana?</a></li>
+        <li><a href="../etapa_2.html">Etapa 2 – O processo judicial</a></li>
+        <li><a href="../etapa_3.html">Etapa 3 – Casamento infantil</a></li>
+        <li><a href="../etapa_4.html">Etapa 4 – Que tipo de resistência?</a></li>
+        <li><a href="../etapa_5.html">Etapa 5 – Produção final</a></li>
+        <li><div class="dropdown-divider"></div></li>
+        <li><a href="../extra_princesas.html">Extra – Princesas</a></li>
+        <li><a href="../saiba_mais.html">Saiba mais</a></li>
+      </ul>
+    </li>
+    <li><a href="prof_apoio.html">Material de apoio</a></li>
+    <li><a href="prof_avaliacao.html">Proposta de avaliação</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="prof-pill">📘 Manual do Professor</div>
+    <h1><em>Saiba mais</em></h1>
+    <p class="page-hero-sub">Orientações sobre os conteúdos complementares</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="section-bloco">
+    <div class="section-titulo">
+      <div class="section-titulo-icon">📚</div>
+      <h2><span>Saiba mais</span></h2>
+    </div>
+
+    <div class="card" style="margin-bottom:1.5rem">
+      <div class="card-header">
+        <div class="card-header-icon">📖</div>
+        <div><h3>Sobre esta seção</h3></div>
+      </div>
+      <div class="card-body">
+        <p>A seção reúne conteúdos complementares que ampliam as discussões da sequência didática. Não conduz uma atividade específica, mas oferece possibilidades de aprofundamento para professor e alunos, conforme os interesses da turma e o tempo disponível. Os materiais podem ser utilizados antes, durante ou após a sequência principal, apoiando o esclarecimento de conceitos, a contextualização histórica e a resposta a questionamentos.</p>
+        <p>Também podem subsidiar pesquisas individuais ou em grupo, atividades interdisciplinares, rodas de conversa, produção de textos, seminários ou projetos de investigação, ampliando o uso do material para além da sequência proposta. Recomenda-se explorar esses recursos para incentivar a curiosidade e mostrar que a pesquisa histórica é um processo contínuo.</p>
+      </div>
+    </div>
+
+    <a class="link-aluno-card" href="../saiba_mais.html">
+      <div class="link-aluno-icon">👩‍🎓</div>
+      <div class="link-aluno-text">
+        <strong>Ver Saiba mais como os alunos verão</strong>
+        <span>Conteúdos complementares para alunos</span>
+      </div>
+      <span class="link-aluno-arrow">→</span>
+    </a>
+  </div>
+
+
+
+    <div class="footer-nav" style="justify-content:space-between">
+    <a class="btn-proximo" href="prof_extra.html" style="background:var(--green-deep)">← Extra – Princesas</a>
+    <a class="btn-proximo" href="prof_apoio.html">Próximo: Material de Apoio →</a>
+  </div>
+</div>
+</body>
+</html>
